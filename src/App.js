@@ -1,25 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+
+import Header from "./components/Header";
+import Player from "./components/Player";
+import Queue from "./components/Queue";
+import Home from "./pages/Home";
+import ArtistAlbums from "./pages/ArtistAlbums";
+import Album from "./pages/Album";
+import Albums from "./pages/Albums";
+import Upload from "./pages/Upload";
+import NotFound from "./pages/NotFound";
+import { QueueProvider } from "./QueueContext";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueueProvider>
+      <Router>
+        <Header />
+        <main>
+          <Switch>
+            <Redirect exact from="/" to="/artists" />
+            <Route exact path="/artists" component={Home} />
+            <Route exact path="/artist/:artistId" component={ArtistAlbums} />
+            <Route exact path="/albums" component={Albums} />
+            <Route exact path="/album/:albumId" component={Album} />
+            <Route exact path="/upload" component={Upload} />
+            <Route component={NotFound} status={404} />
+          </Switch>
+        </main>
+        <Player />
+        <Queue />
+      </Router>
+    </QueueProvider>
   );
 }
 

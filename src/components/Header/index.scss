@@ -1,0 +1,47 @@
+header#main-header {
+  // ToDo: Enable this color when the scroll position are > 0
+  // background-color: #1b0b2f;
+  display: flex;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  align-items: center;
+  padding: 15px 30px;
+  justify-content: space-between;
+  background-color: rgba(18, 29, 59, 0.6);
+
+  a {
+    text-decoration: none;
+  }
+
+  h1 {
+    margin: 0;
+    img {
+      display: block;
+      max-height: 50px;
+    }
+  }
+
+  nav {
+    font-weight: bold;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+
+    a:not(:last-child) {
+      margin-right: 1.3em;
+    }
+    a {
+      color: rgba(255, 255, 255, 0.4);
+      transition: all 0.2s;
+    }
+    a.active,
+    a:hover {
+      color: white;
+    }
+
+    img.avatar {
+      border-radius: 25px;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g transform="translate(-764 -1644) translate(764 1644)">
+                <path stroke="#CDCDED" stroke-width="2" d="M11.764 7L1 1.618v10.764L11.764 7z"/>
+                <rect width="1.556" height="14" x="12.444" fill="#ADADC8" rx=".778"/>
+            </g>
+        </g>
+    </g>
+</svg>

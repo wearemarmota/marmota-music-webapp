@@ -1,0 +1,45 @@
+// @import "~bootstrap/scss/bootstrap.scss";
+@import "~bootstrap/scss/bootstrap-grid";
+
+html {
+  min-height: 100%;
+}
+body {
+  margin: 0;
+  padding: 80px 0 100px 0;
+  font-family: Mulish;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #d9d9d9;
+  background-color: #000d2e;
+  min-height: 100%;
+}
+
+body > div#root > main > .container {
+  max-width: 1440px;
+  padding: 15px 25px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+a {
+  color: inherit;
+}
+
+button.unstyled {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+button.link {
+  @extend button.unstyled;
+  text-decoration: underline;
+}

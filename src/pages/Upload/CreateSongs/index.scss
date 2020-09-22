@@ -1,0 +1,31 @@
+aside.create-songs {
+  border: none;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  margin-bottom: 15px;
+
+  h3 {
+    margin-top: 0;
+  }
+
+  .songs-dropzone {
+    background-color: #1e1529;
+    text-align: center;
+    padding: 30px;
+    border-radius: 10px;
+    border: 2px dashed #3c304c;
+
+    &:focus {
+      border-color: #9d78ce;
+      outline: none;
+    }
+  }
+
+  table {
+    td {
+      border: 1px solid white;
+      padding: 0.5rem;
+    }
+  }
+}

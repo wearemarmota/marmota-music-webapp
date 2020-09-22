@@ -1,0 +1,77 @@
+aside#player {
+  background-color: #151f43;
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 8px 21px 0 rgba(0, 0, 0, 0.1);
+  border-top: 9px solid #ff01f9;
+  height: 100px;
+
+  div#song {
+    flex-basis: 40%;
+    display: flex;
+    align-items: center;
+    img.cover {
+      width: 70px;
+      height: 70px;
+      border-radius: 4px;
+      margin-right: 20px;
+    }
+    div.title {
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+    }
+    div.artist-and-album {
+      font-size: 14px;
+      color: #cdcded;
+    }
+    div.duration-and-proggress {
+      font-size: 12px;
+      color: #cdcded;
+    }
+  }
+
+  div#controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 20%;
+  }
+
+  div#context {
+    display: flex;
+    justify-content: flex-end;
+    flex-basis: 40%;
+  }
+
+  button {
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    transition: all 0.2s;
+
+    &:disabled {
+      opacity: 0.5;
+    }
+
+    &.previous,
+    &.next {
+      padding: 17px;
+    }
+
+    &.queue {
+      padding: 11.5px 13px;
+    }
+
+    svg {
+      display: block;
+    }
+  }
+}
