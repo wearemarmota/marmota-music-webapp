@@ -57,7 +57,7 @@ export function IconPrevious() {
     >
       <g stroke="#CDCDED" fill="none">
         <g transform="translate(-662 -1644) rotate(-180 338 829)">
-          <path stroke-width="2" d="M11.764 7L1 1.618v10.764L11.764 7z" />
+          <path strokeWidth="2" d="M11.764 7L1 1.618v10.764L11.764 7z" />
           <rect
             width="1"
             height="13"
@@ -80,12 +80,12 @@ export function IconNext() {
       height="14"
       viewBox="0 0 14 14"
     >
-      <g fill="none" fill-rule="evenodd">
+      <g fill="none" fillRule="evenodd">
         <g>
           <g transform="translate(-764 -1644) translate(764 1644)">
             <path
               stroke="#CDCDED"
-              stroke-width="2"
+              strokeWidth="2"
               d="M11.764 7L1 1.618v10.764L11.764 7z"
             />
             <rect
@@ -110,8 +110,8 @@ export function IconQueue() {
       height="22"
       viewBox="0 0 25 22"
     >
-      <g fill="none" fill-rule="evenodd">
-        <g fill="#CDCDED" fill-rule="nonzero">
+      <g fill="none" fillRule="evenodd">
+        <g fill="#CDCDED" fillRule="nonzero">
           <path
             d="M1320.428 1640.354c.362.296.572.74.572 1.208v2.78l-5.313 1.063v13h-.104c0 1.727-1.75 3.125-3.906 3.125s-3.906-1.398-3.906-3.125c0-1.726 1.75-3.125 3.906-3.125.536 0 1.046.087 1.511.243v-13.024c0-.744.526-1.385 1.256-1.531l4.687-.938c.46-.091.935.027 1.297.324zm-18.178 14.926c.431 0 .781.56.781 1.25s-.35 1.25-.781 1.25h-5.469c-.431 0-.781-.56-.781-1.25s.35-1.25.781-1.25h5.469zm6.25-6.25c.431 0 .781.56.781 1.25s-.35 1.25-.781 1.25h-11.719c-.431 0-.781-.56-.781-1.25s.35-1.25.781-1.25h11.719zm0-6.25c.431 0 .781.56.781 1.25s-.35 1.25-.781 1.25h-11.719c-.431 0-.781-.56-.781-1.25s.35-1.25.781-1.25h11.719z"
             transform="translate(-1296 -1640)"
