@@ -14,7 +14,7 @@ class Player extends Component {
     return (
       <div id="queue" className={classNames({ visible: queue.visible })}>
         {queue.songs.length > 0 ? (
-          <SongsList songs={queue.songs} />
+          <SongsList songs={queue.songs} currentSong={queue.getCurrentSong()} />
         ) : (
           <EmptyQueue />
         )}
@@ -24,10 +24,18 @@ class Player extends Component {
 }
 
 function SongsList(props) {
+  
+  const currentSongUUID = props.currentSong.uuid;
+
   return (
     <>
       {props.songs.map((song, index) => (
-        <div className="song-item" key={index}>
+        <div
+          className={classNames("song-item", {
+            current: song.uuid === currentSongUUID,
+          })}
+          key={index}
+        >
           <img src="https://www.placehold.it/90x90" />
           <div className="info">
             <div className="title">{song.title}</div>
