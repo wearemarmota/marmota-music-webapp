@@ -126,6 +126,7 @@ class QueueProvider extends Component {
           setPlaying,
           setVisible,
           setSongs,
+          setCurrentIndex,
           getCurrentSong,
           hasNextSong,
           hasPreviousSong,
