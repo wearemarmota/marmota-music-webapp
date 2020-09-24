@@ -1,31 +1,77 @@
 import React, { Component } from "react";
-import QueueContext from "../../QueueContext";
+import withQueueContext from "../../hoc/queue";
 
-import { IconNext, IconPrevious, IconPlay, IconQueue } from "./icons";
+import {
+  IconNext,
+  IconPrevious,
+  IconPlay,
+  IconPause,
+  IconQueue,
+} from "./icons";
 
 import "./index.scss";
 
 class Player extends Component {
-  static contextType = QueueContext;
+
+  constructor(props) {
+    super(props);
+    this.audioRef = React.createRef();
+  }
+
+  componentDidUpdate(prevProps){
+    if (this.props.queueContext.playing !== prevProps.queueContext.playing) {
+      if(this.props.queueContext.playing){
+        this.play();
+      }else{
+        this.pause();
+      }
+    }
+  
+  }
+
+  play = () => {
+    this.audioRef.current.play();
+    this.props.queueContext.setPlaying(true);
+  };
+
+  pause = () => {
+    this.audioRef.current.pause();
+    this.props.queueContext.setPlaying(false);
+  };
+
+  next = () => {
+    this.props.queueContext.next().then(() => {
+      this.play();
+    });
+  }
+
+  previous = () => {
+    this.props.queueContext.previous().then(() => {
+      this.play();
+    });
+  }
 
   render() {
-    const queue = this.context;
+    const { queueContext } = this.props;
     return (
       <aside id="player">
-        {/* {JSON.stringify(queue)} */}
+        { queueContext.getCurrentSong() &&
+          <audio ref={this.audioRef} src={queueContext.getCurrentSong().fileUri} />
+        }
+
         <div id="song">
-          {queue.getCurrentSong() && (
+          {queueContext.getCurrentSong() && (
             <>
               <img src="https://www.placehold.it/90x90" className="cover" />
               <div>
-                <div className="title">{queue.getCurrentSong().title}</div>
+                <div className="title">{queueContext.getCurrentSong().title}</div>
                 <div className="artist-and-album">
-                  {queue.getCurrentSong().album.title} {" - "}
-                  {queue.getCurrentSong().album.artist.name}
+                  {queueContext.getCurrentSong().album.title} {" - "}
+                  {queueContext.getCurrentSong().album.artist.name}
                 </div>
                 <div className="duration-and-proggress">
                   00:00 {" - "}
-                  {new Date(queue.getCurrentSong().duration * 1000)
+                  {new Date(queueContext.getCurrentSong().duration * 1000)
                     .toISOString()
                     .substr(14, 5)}
                 </div>
@@ -37,20 +83,20 @@ class Player extends Component {
         <div id="controls">
           <button
             className="previous"
-            onClick={queue.previous}
-            disabled={!queue.hasPreviousSong()}
+            onClick={this.previous}
+            disabled={!queueContext.hasPreviousSong()}
           >
             <IconPrevious />
           </button>
 
-          <button disabled={!queue.getCurrentSong()}>
-            <IconPlay />
+          <button disabled={!queueContext.getCurrentSong()} onClick={ queueContext.playing ? this.pause : this.play }>
+            {queueContext.playing ? <IconPause /> : <IconPlay />}
           </button>
 
           <button
             className="next"
-            onClick={queue.next}
-            disabled={!queue.hasNextSong()}
+            onClick={this.next}
+            disabled={!queueContext.hasNextSong()}
           >
             <IconNext />
           </button>
@@ -60,7 +106,7 @@ class Player extends Component {
           <button
             className="queue"
             onClick={() => {
-              queue.setVisible(!queue.visible);
+              queueContext.setVisible(!queueContext.visible);
             }}
           >
             <IconQueue />
@@ -71,4 +117,4 @@ class Player extends Component {
   }
 }
 
-export default Player;
+export default withQueueContext(Player);

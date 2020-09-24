@@ -34,7 +34,6 @@ class Album extends Component {
       setCurrentIndex(0).then(() => {
         setPlaying(true);
       });
-
     });
   };
 
