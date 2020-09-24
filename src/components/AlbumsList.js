@@ -7,8 +7,8 @@ class AlbumsList extends Component {
       <div className="row">
         {this.props.albums.map((album, index) => {
           return (
-            <div className="col-4 col-md-3 col-lg-2 col-xl-1">
-              <Album key={index} album={album} />
+            <div key={index} className="col-4 col-md-3 col-lg-2 col-xl-1">
+              <Album album={album} />
             </div>
           );
         })}
