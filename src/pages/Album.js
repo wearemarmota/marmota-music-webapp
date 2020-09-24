@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import SongsService from "../shared/songs-service";
-
-import QueueContext from "../context/Queue";
+import withQueueContext from "../hoc/queue";
 
 class Album extends Component {
-  static contextType = QueueContext;
-
   constructor(props) {
     super(props);
 
@@ -28,7 +25,12 @@ class Album extends Component {
   }
 
   replaceQueueAndPlay = () => {
-    const { setSongs, setVisible, setCurrentIndex, setPlaying } = this.context;
+    const {
+      setSongs,
+      setVisible,
+      setCurrentIndex,
+      setPlaying,
+    } = this.props.queueContext;
     setSongs(this.state.songs).then(() => {
       setVisible(true);
       setCurrentIndex(0).then(() => {
@@ -38,7 +40,7 @@ class Album extends Component {
   };
 
   appendToQueue = () => {
-    const { songs, setSongs, setVisible } = this.context;
+    const { songs, setSongs, setVisible } = this.props.queueContext;
     setSongs([].concat(songs, this.state.songs));
     setVisible(true);
   };
@@ -82,4 +84,4 @@ class Album extends Component {
   }
 }
 
-export default withRouter(Album);
+export default withRouter(withQueueContext(Album));
