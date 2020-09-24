@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import SongsService from "../shared/songs-service";
 
-import QueueContext from "../QueueContext";
+import QueueContext from "../context/Queue";
 
 class Album extends Component {
   static contextType = QueueContext;

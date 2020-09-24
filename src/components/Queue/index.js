@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classNames from "classnames/bind";
 
-import QueueContext from "../../QueueContext";
+import QueueContext from "../../context/Queue";
 
 import "./index.scss";
 

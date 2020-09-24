@@ -1,6 +1,6 @@
 import React from "react";
 
-import QueueContext from "../QueueContext";
+import QueueContext from "../context/Queue";
 
 // Use this HOC is a great idea found at:
 // https://stackoverflow.com/a/54235540/1378408

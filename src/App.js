@@ -15,7 +15,7 @@ import Album from "./pages/Album";
 import Albums from "./pages/Albums";
 import Upload from "./pages/Upload";
 import NotFound from "./pages/NotFound";
-import { QueueProvider } from "./QueueContext";
+import { QueueProvider } from "./context/Queue";
 
 function App() {
   return (
