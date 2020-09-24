@@ -11,14 +11,28 @@ class QueueProvider extends Component {
   };
 
   setPlaying = (playing) => {
-    this.setState({
-      playing: playing,
+    return new Promise((resolve) => {
+      this.setState(
+        () => {
+          return { playing: playing };
+        },
+        () => {
+          resolve();
+        }
+      );
     });
   };
 
   setVisible = (visible) => {
-    this.setState({
-      visible: visible,
+    return new Promise((resolve, reject) => {
+      this.setState(
+        () => {
+          return { visible: visible };
+        },
+        () => {
+          resolve();
+        }
+      );
     });
   };
 
