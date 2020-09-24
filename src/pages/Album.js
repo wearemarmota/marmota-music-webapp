@@ -27,10 +27,15 @@ class Album extends Component {
     });
   }
 
-  addAllToQueue = () => {
-    const { setSongs, setVisible } = this.context;
-    setSongs(this.state.songs);
-    setVisible(true);
+  replaceQueueAndPlay = () => {
+    const { setSongs, setVisible, setCurrentIndex, setPlaying } = this.context;
+    setSongs(this.state.songs).then(() => {
+      setVisible(true);
+      setCurrentIndex(0).then(() => {
+        setPlaying(true);
+      });
+
+    });
   };
 
   appendToQueue = () => {
@@ -65,7 +70,7 @@ class Album extends Component {
               </tbody>
             </table>
 
-            <button onClick={this.addAllToQueue}>Reproducir</button>
+            <button onClick={this.replaceQueueAndPlay}>Reproducir</button>
             <button onClick={this.appendToQueue}>Agregar a la cola</button>
           </>
         )}
