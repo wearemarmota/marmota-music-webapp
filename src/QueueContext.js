@@ -16,9 +16,13 @@ class QueueProvider extends Component {
   };
 
   setSongs = (songs) => {
-    this.setState({
-      songs: songs,
-    });
+    return new Promise((resolve, reject) => {
+      this.setState({
+        songs: songs,
+      }, () => {
+        resolve();
+      });
+    })
   };
 
   setCurrentIndex = (index) => {
