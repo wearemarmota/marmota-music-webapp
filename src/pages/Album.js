@@ -32,7 +32,7 @@ class Album extends Component {
     setSongs(this.state.songs).then(() => {
       setVisible(true);
       setCurrentIndex(0).then(() => {
-        setPlaying(true);
+        setPlaying(false).then(setPlaying(true));
       });
     });
   };
