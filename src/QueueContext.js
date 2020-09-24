@@ -7,6 +7,13 @@ class QueueProvider extends Component {
     visible: false,
     songs: [],
     currentIndex: 0,
+    playing: false,
+  };
+
+  setPlaying = (playing) => {
+    this.setState({
+      playing: playing,
+    });
   };
 
   setVisible = (visible) => {
@@ -95,11 +102,13 @@ class QueueProvider extends Component {
   }
   
   render() {
-    const { visible, songs, currentIndex } = this.state;
+    const { playing, visible, songs, currentIndex } = this.state;
     const { children } = this.props;
     const {
+      setPlaying,
       setVisible,
       setSongs,
+      setCurrentIndex,
       getCurrentSong,
       hasNextSong,
       hasPreviousSong,
@@ -110,9 +119,11 @@ class QueueProvider extends Component {
     return (
       <QueueContext.Provider
         value={{
+          playing,
           visible,
           songs,
           currentIndex,
+          setPlaying,
           setVisible,
           setSongs,
           getCurrentSong,
