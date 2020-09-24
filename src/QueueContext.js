@@ -22,16 +22,7 @@ class QueueProvider extends Component {
   };
 
   setCurrentIndex = (index) => {
-    if (index > this.state.songs.length) {
-      console.error("setCurrentIndex with invalid value", {
-        index: index,
-        queueLength: this.state.songs.length,
-      });
-      return;
-    }
-    this.setState({
-      currentIndex: 0,
-    });
+    return this.moveTo(index);
   };
 
   getCurrentSong = () => {
@@ -50,25 +41,55 @@ class QueueProvider extends Component {
   };
 
   next = () => {
-    if (!this.hasNextSong()) {
-      console.error("Invalid next() call");
-      return;
-    }
-    this.setState((prevState) => {
-      return { currentIndex: prevState.currentIndex + 1 };
-    });
+    return this.movePositions(+1);
   };
 
   previous = () => {
-    if (!this.hasPreviousSong()) {
-      console.error("Invalid previous() call");
-      return;
-    }
-    this.setState((prevState) => {
-      return { currentIndex: prevState.currentIndex - 1 };
-    });
+    return this.movePositions(-1);
   };
 
+  moveTo = (position) => {
+    return new Promise((resolve, reject) => {
+
+      if(!Number.isInteger(position)){
+        reject("Invalid position value");
+        return;
+      }
+      
+      const { songs } = this.state;
+      const positionExists = typeof songs[parseInt(position)] !== "undefined";
+  
+      if (!positionExists) {
+        reject("Invalid movement");
+        return;
+      }
+      
+      this.setState({
+        currentIndex: parseInt(position),
+      }, () => {
+        resolve();
+      });
+    });
+  }
+
+  movePositions = (amount) => {
+    return new Promise((resolve, reject) => {
+
+      if(!Number.isInteger(amount)){
+        reject("Invalid amount value");
+        return;
+      }
+
+      const { currentIndex } = this.state;
+      
+      this.moveTo(currentIndex + parseInt(amount)).then(() => {
+        resolve();
+      }).catch((err) => {
+        reject(err);
+      })
+    });
+  }
+  
   render() {
     const { visible, songs, currentIndex } = this.state;
     const { children } = this.props;
