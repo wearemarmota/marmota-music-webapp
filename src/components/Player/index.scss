@@ -8,6 +8,7 @@
   height: 9px;
   box-shadow: 0 8px 21px 0 rgba(0, 0, 0, 0.1);
   background-color: #2b375f;
+  cursor: pointer;
 
   .progress{
     position: absolute;
@@ -15,6 +16,7 @@
     width: 100%;
     border-radius: 9px;
     background-image: linear-gradient(to left, #ff01f9, #4b038f);
+    pointer-events: none;
     .progress-shadow{
       position: absolute;
       height: 100%;

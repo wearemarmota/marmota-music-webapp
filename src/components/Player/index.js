@@ -77,13 +77,25 @@ class Player extends Component {
     this.props.queueContext.previous().then(() => {
       this.play();
     });
-  }
+  };
+
+  progressBarClick = (e) => {
+    if(!this.audioRef.current){
+      return;
+    }
+    const elementWidth = e.target.getBoundingClientRect().width;
+    const clickPositionX = e.pageX;
+    const clickPositionPercentage = clickPositionX * 100 / elementWidth;
+    const audioElement = this.audioRef.current;
+    const newCurrentTime = clickPositionPercentage * audioElement.duration / 100;
+    audioElement.currentTime = newCurrentTime;
+  };
 
   render() {
     const { queueContext } = this.props;
     return (
       <div className="player-wrapper">
-        <div class="progress-bar">
+        <div className="progress-bar" onClick={this.progressBarClick}>
           <div className="progress" style={{width: `${this.state.currentPercentage}%`}}>
             <div className="progress-shadow"></div>
           </div>
