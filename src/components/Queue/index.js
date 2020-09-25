@@ -32,6 +32,11 @@ function SongsList(props) {
             current: song.uuid === queue.getCurrentSong().uuid,
           })}
           key={index}
+          onClick={() => {
+            queue.setCurrentIndex(index).then(() => {
+              queue.setPlaying(false).then(queue.setPlaying(true));
+            });
+          }}
         >
           <img src="https://www.placehold.it/90x90" />
           <div className="info">
