@@ -11,7 +11,7 @@ class Player extends Component {
     return (
       <div id="queue" className={classNames({ visible: queue.visible })}>
         {queue.songs.length > 0 ? (
-          <SongsList songs={queue.songs} currentSong={queue.getCurrentSong()} />
+          <SongsList {...this.props} />
         ) : (
           <EmptyQueue />
         )}
@@ -21,15 +21,15 @@ class Player extends Component {
 }
 
 function SongsList(props) {
-  
-  const currentSongUUID = props.currentSong.uuid;
+
+  const { queueContext: queue } = props;
 
   return (
     <>
-      {props.songs.map((song, index) => (
+      {queue.songs.map((song, index) => (
         <div
           className={classNames("song-item", {
-            current: song.uuid === currentSongUUID,
+            current: song.uuid === queue.getCurrentSong().uuid,
           })}
           key={index}
         >
