@@ -22,7 +22,7 @@ class Header extends Component {
           <NavLink to="/albums">Álbumes</NavLink>
           <NavLink to="/upload">Subir</NavLink>
           <img
-            src="https://www.placehold.it/50x50"
+            src="http://lorempixel.com/50/50/business"
             className="avatar"
             width="50"
             height="50"

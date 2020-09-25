@@ -113,7 +113,7 @@ class Player extends Component {
           <div id="song">
             {queueContext.getCurrentSong() && (
               <>
-                <img src="https://www.placehold.it/90x90" className="cover" />
+                <img src="http://lorempixel.com/90/90/people" className="cover" />
                 <div>
                   <div className="title">
                     {queueContext.getCurrentSong().title}
