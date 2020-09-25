@@ -4,7 +4,7 @@ import withQueueContext from "../../hoc/queue";
 
 import "./index.scss";
 
-class Player extends Component {
+class Queue extends Component {
   render() {
     const { queueContext: queue } = this.props;
 
@@ -51,4 +51,4 @@ function EmptyQueue() {
   return <div className="empty">La cola está vacía</div>;
 }
 
-export default withQueueContext(Player);
+export default withQueueContext(Queue);
