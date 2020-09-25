@@ -38,6 +38,9 @@ class Player extends Component {
           currentTime: newCurrentTime,
           currentPercentage: currentPercentage,
         });
+        if(currentPercentage === 100){
+          this.next();
+        }
       }
     }, 100);
   }
