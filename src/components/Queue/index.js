@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import classNames from "classnames/bind";
-
-import QueueContext from "../../context/Queue";
+import withQueueContext from "../../hoc/queue";
 
 import "./index.scss";
 
 class Player extends Component {
-  static contextType = QueueContext;
-
   render() {
-    const queue = this.context;
+    const { queueContext: queue } = this.props;
 
     return (
       <div id="queue" className={classNames({ visible: queue.visible })}>
@@ -54,4 +51,4 @@ function EmptyQueue() {
   return <div className="empty">La cola está vacía</div>;
 }
 
-export default Player;
+export default withQueueContext(Player);
