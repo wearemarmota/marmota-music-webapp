@@ -46,15 +46,14 @@ class Player extends Component {
     clearInterval(this.currentTimeInterval);
   }
 
-  componentDidUpdate(prevProps){
+  componentDidUpdate(prevProps) {
     if (this.props.queueContext.playing !== prevProps.queueContext.playing) {
-      if(this.props.queueContext.playing){
+      if (this.props.queueContext.playing) {
         this.play();
-      }else{
+      } else {
         this.pause();
       }
     }
-  
   }
 
   play = () => {
@@ -101,16 +100,21 @@ class Player extends Component {
           </div>
         </div>
         <aside id="player">
-          { queueContext.getCurrentSong() &&
-            <audio ref={this.audioRef} src={queueContext.getCurrentSong().fileUri} />
-          }
+          {queueContext.getCurrentSong() && (
+            <audio
+              ref={this.audioRef}
+              src={queueContext.getCurrentSong().fileUri}
+            />
+          )}
 
           <div id="song">
             {queueContext.getCurrentSong() && (
               <>
                 <img src="https://www.placehold.it/90x90" className="cover" />
                 <div>
-                  <div className="title">{queueContext.getCurrentSong().title}</div>
+                  <div className="title">
+                    {queueContext.getCurrentSong().title}
+                  </div>
                   <div className="artist-and-album">
                     {queueContext.getCurrentSong().album.title} {" - "}
                     {queueContext.getCurrentSong().album.artist.name}
@@ -135,7 +139,10 @@ class Player extends Component {
               <IconPrevious />
             </button>
 
-            <button disabled={!queueContext.getCurrentSong()} onClick={ queueContext.playing ? this.pause : this.play }>
+            <button
+              disabled={!queueContext.getCurrentSong()}
+              onClick={queueContext.playing ? this.pause : this.play}
+            >
               {queueContext.playing ? <IconPause /> : <IconPlay />}
             </button>
 
