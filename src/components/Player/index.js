@@ -72,6 +72,8 @@ class Player extends Component {
   next = () => {
     this.props.queueContext.next().then(() => {
       this.play();
+    }).catch(() => {
+      this.pause();
     });
   };
 
