@@ -11,29 +11,18 @@
 
   .progress{
     position: absolute;
-    height: 9px;
+    height: 100%;
     width: 100%;
     border-radius: 9px;
     background-image: linear-gradient(to left, #ff01f9, #4b038f);
-    transition: all 4s;
     .progress-shadow{
       position: absolute;
-      height: 9px;
+      height: 100%;
       width: 100%;
-      border-radius: 9px;
       background-image: linear-gradient(to left, #ff01f9, #4b038f);
       transition: all .2s;
       filter: blur(10px)
     }
-  }
-  .progress-shadow{
-    position: absolute;
-    height: 9px;
-    width: 30%;
-    border-radius: 9px;
-    background-image: linear-gradient(to left, #ff01f9, #4b038f);
-    transition: all .2s;
-    filter: blur(10px)
   }
 }
 
