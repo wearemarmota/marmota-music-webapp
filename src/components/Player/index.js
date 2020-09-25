@@ -177,11 +177,11 @@ class Player extends Component {
 function CurrentTime(props){
   const { time } = props;
   let remaining = time;
-  const hours = Math.round(time/3600);
+  const hours = Math.floor(time/3600);
   remaining = remaining-hours*3600;
-  const minutes = Math.round(remaining/60);
+  const minutes = Math.floor(remaining/60);
   remaining = remaining-minutes*60;
-  const seconds = Math.round(remaining);
+  const seconds = Math.floor(remaining);
 
   const formattedHours = ("0" + hours).slice(-2);
   const formattedMinutes = ("0" + minutes).slice(-2);
