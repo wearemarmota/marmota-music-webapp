@@ -21,34 +21,39 @@ class Queue extends Component {
 }
 
 function SongsList(props) {
-
   const { queueContext: queue } = props;
 
   return (
     <>
       {queue.songs.map((song, index) => (
-        <div
-          className={classNames("song-item", {
-            current: song.uuid === queue.getCurrentSong().uuid,
-          })}
-          key={index}
-          onClick={() => {
-            queue.setCurrentIndex(index).then(() => {
-              queue.setPlaying(false).then(queue.setPlaying(true));
-            });
-          }}
-        >
-          <img src="https://www.placehold.it/90x90" />
-          <div className="info">
-            <div className="title">{song.title}</div>
-            <div className="artist">{song.album.artist.name}</div>
-          </div>
-          <div className="duration">
-            {new Date(song.duration * 1000).toISOString().substr(14, 5)}
-          </div>
-        </div>
+        <SongItem key={index} {...props} song={song} index={index} />
       ))}
     </>
+  );
+}
+
+function SongItem(props) {
+  const { song, index, queueContext: queue } = props;
+  return   (
+    <div
+      className={classNames("song-item", {
+        current: song.uuid === queue.getCurrentSong().uuid,
+      })}
+      onClick={() => {
+        queue.setCurrentIndex(index).then(() => {
+          queue.setPlaying(false).then(queue.setPlaying(true));
+        });
+      }}
+    >
+      <img src="https://www.placehold.it/90x90" />
+      <div className="info">
+        <div className="title">{song.title}</div>
+        <div className="artist">{song.album.artist.name}</div>
+      </div>
+      <div className="duration">
+        {new Date(song.duration * 1000).toISOString().substr(14, 5)}
+      </div>
+    </div>
   );
 }
 
