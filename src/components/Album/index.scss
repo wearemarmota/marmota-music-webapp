@@ -31,4 +31,10 @@ article.album {
     font-size: 14px;
     color: #cdcded;
   }
+  a{
+    text-decoration: none;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
 }
