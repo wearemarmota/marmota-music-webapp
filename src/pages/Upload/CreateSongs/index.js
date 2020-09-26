@@ -118,7 +118,7 @@ class CreateSongs extends Component {
     return (
       <aside className="create-songs">
         <h3>
-          Agregar canciones a {album.name} de {artist.name}
+          Agregar canciones a {album.title} de {artist.name}
         </h3>
         <p>
           <small>
