@@ -10,11 +10,17 @@ class Artist extends Component {
   }
 
   render() {
+    const { artist } = this.props;
     return (
       <article className="artist">
-        <Link to={`/artist/${this.props.artist.id}`}>
-          <span>{this.props.artist.name}</span>
+        <Link to={`/artist/${artist.id}`}>
+          <img src={`https://picsum.photos/seed/${artist.name}/500/500`} />
         </Link>
+        <div className="name">
+          <Link to={`/artist/${artist.id}`}>
+            {artist.name}
+          </Link>
+        </div>
       </article>
     );
   }
