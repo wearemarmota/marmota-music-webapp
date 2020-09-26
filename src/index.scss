@@ -20,6 +20,15 @@ body > div#root > main > .container {
   padding: 15px 25px;
 }
 
+h2{
+  font-size: 20px;
+  font-weight: 800;
+  color: #e4ecff;
+  text-transform: uppercase;
+  margin-block-start: 32px;
+  margin-block-end: 32px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

@@ -46,7 +46,7 @@ class Home extends Component {
         <div className="container" style={{marginTop: "-20vw"}}>
           {/* Some artists */}
 
-          <h2>Artistas</h2>
+          <h2>Artistas destacados</h2>
           {this.state.loadingArtists && <p>Cargando...</p>}
           {this.state.artists.length > 0 && (
             <ArtistsList artists={this.state.artists} />
@@ -56,7 +56,7 @@ class Home extends Component {
           )}
 
           {/* Some albums */}
-          <h2>Todos los álbums</h2>
+          <h2>Últimos álbums</h2>
           {this.state.loadingAlbums && <p>Cargando...</p>}
           {this.state.albums.length > 0 && (
             <AlbumsList albums={this.state.albums} />
@@ -64,6 +64,17 @@ class Home extends Component {
           {!this.state.loadingAlbums && this.state.albums.length <= 0 && (
             <p>No se han encontrado álbums</p>
           )}
+
+          {/* Random albums */}
+          <h2>Álbums aleatorios</h2>
+          {this.state.loadingAlbums && <p>Cargando...</p>}
+          {this.state.albums.length > 0 && (
+            <AlbumsList albums={this.state.albums} />
+          )}
+          {!this.state.loadingAlbums && this.state.albums.length <= 0 && (
+            <p>No se han encontrado álbums</p>
+          )}
+
         </div>
       </>
     );
