@@ -100,10 +100,12 @@ class CreateAlbum extends Component {
                 {this.state.previousAlbums.map((album, index) => {
                   return (
                     <div
-                      className="col-4 col-md-3 col-lg-2 col-xl-1"
+                      className="col-4 col-md-3 col-lg-2 col-xl-2"
                       key={index}
                     >
                       <Album
+                        showArtist={false}
+                        showGlow={false}
                         album={album}
                         onClick={() => {
                           this.setState({ album: album }, () => {
