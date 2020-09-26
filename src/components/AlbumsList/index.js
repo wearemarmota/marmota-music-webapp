@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import Album from "./Album";
+import Album from "../Album";
+
+import "./index.scss";
 
 class AlbumsList extends Component {
   render() {

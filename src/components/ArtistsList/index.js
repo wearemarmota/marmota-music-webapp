@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import Artist from "./Artist";
+import Artist from "../Artist";
+
+import "./index.scss";
 
 class ArtistsList extends Component {
   render() {
@@ -7,7 +9,7 @@ class ArtistsList extends Component {
       <div className="row">
         {this.props.artists.map((artist, index) => {
           return (
-            <div className="col-4 col-md-3 col-lg-2 col-xl-1" key={index}>
+            <div className="col-4 col-md-3 col-lg-2 col-xl-2" key={index}>
               <Artist artist={artist}></Artist>
             </div>
           );
