@@ -36,13 +36,25 @@ div#queue {
 
     &:hover{
       background-color: rgba(255, 255, 255, .2);
+      img{
+        transform: scale(1.05);
+      }
+    }
+    &:active{
+      background-color: rgba(255, 255, 255, .3);
+      img{
+        transform: scale(0.95);
+        box-shadow: 0 2px 2px rgba(0, 0, 0, .1);
+      }
     }
 
     img {
       width: 48px;
       height: 48px;
       margin-right: 16px;
-      border-radius: 2px;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+      transition: all .2s;
     }
     div.info {
       flex-grow: 1;
