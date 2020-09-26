@@ -115,7 +115,7 @@ class Player extends Component {
           <div id="song">
             {queueContext.getCurrentSong() && (
               <>
-                <img src="http://lorempixel.com/90/90/people" className="cover" />
+                <img src={`https://picsum.photos/seed/${queueContext.getCurrentSong().album.id}/90/90`} className="cover" />
                 <div>
                   <div className="title">
                     {queueContext.getCurrentSong().title}

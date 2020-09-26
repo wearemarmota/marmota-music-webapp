@@ -45,7 +45,7 @@ function SongItem(props) {
         });
       }}
     >
-      <img src="https://www.placehold.it/90x90" />
+      <img src={`https://picsum.photos/seed/${song.album.id}/90/90`} />
       <div className="info">
         <div className="title">{song.title}</div>
         <div className="artist">{song.album.artist.name}</div>
