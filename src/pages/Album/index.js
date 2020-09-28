@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import SongsService from "../shared/songs-service";
-import withQueueContext from "../hoc/queue";
+import SongsService from "../../shared/songs-service";
+import withQueueContext from "../../hoc/queue";
+
+import "./index.scss";
 
 class Album extends Component {
   constructor(props) {
@@ -39,14 +41,25 @@ class Album extends Component {
     });
   };
 
-  appendToQueue = () => {
+  appendAlbumToQueue = () => {
     const { songs, setSongs, setVisible } = this.props.queueContext;
     setSongs([].concat(songs, this.state.songs));
     setVisible(true);
   };
 
+  appendSongToQueue = (song) => {
+    const { songs, setSongs, setVisible } = this.props.queueContext;
+    setSongs([].concat(songs, [song]));
+    setVisible(true);
+  }
+
   render() {
     return (
+      <>
+      { this.state.songs[0] &&
+        <img src={`https://picsum.photos/seed/${this.state.songs[0].album.title}/1000/1000`} className="album-cover" alt="" />
+      }
+
       <div className="container">
         <p>El listado de canciones</p>
 
@@ -59,7 +72,11 @@ class Album extends Component {
                 {this.state.songs.map((song, index) => {
                   return (
                     <tr key={index}>
+                      <td>{song.position}</td>
                       <td>{song.title}</td>
+                      <td>
+                        <button onClick={() => {this.appendSongToQueue(song)}}>Añadir a la cola</button>
+                      </td>
                       <td>
                         {new Date(song.duration * 1000)
                           .toISOString()
@@ -72,7 +89,7 @@ class Album extends Component {
             </table>
 
             <button onClick={this.replaceQueueAndPlay}>Reproducir</button>
-            <button onClick={this.appendToQueue}>Agregar a la cola</button>
+            <button onClick={this.appendAlbumToQueue}>Agregar a la cola</button>
           </>
         )}
 
@@ -80,6 +97,7 @@ class Album extends Component {
           <p>No se han encontrado canciones</p>
         )}
       </div>
+      </>
     );
   }
 }
