@@ -11,6 +11,7 @@ import Player from "./components/Player";
 import Queue from "./components/Queue";
 import Home from "./pages/Home";
 import ArtistAlbums from "./pages/ArtistAlbums";
+import Artists from "./pages/Artists";
 import Album from "./pages/Album";
 import Albums from "./pages/Albums";
 import Upload from "./pages/Upload";
@@ -24,8 +25,9 @@ function App() {
         <Header />
         <main>
           <Switch>
-            <Redirect exact from="/" to="/artists" />
-            <Route exact path="/artists" component={Home} />
+            <Redirect exact from="/" to="/home" />
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/artists" component={Artists} />
             <Route exact path="/artist/:artistId" component={ArtistAlbums} />
             <Route exact path="/albums" component={Albums} />
             <Route exact path="/album/:albumId" component={Album} />

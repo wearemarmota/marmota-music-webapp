@@ -41,9 +41,20 @@ class Home extends Component {
         <img
           src="img/main-img.png"
           style={{ marginTop: "-80px", width: "100%" }}
+          alt=""
         />
 
         <div className="container" style={{marginTop: "-20vw"}}>
+          {/* Some albums */}
+          <h2>Últimos álbums</h2>
+          {this.state.loadingAlbums && <p>Cargando...</p>}
+          {this.state.albums.length > 0 && (
+            <AlbumsList albums={this.state.albums} />
+          )}
+          {!this.state.loadingAlbums && this.state.albums.length <= 0 && (
+            <p>No se han encontrado álbums</p>
+          )}
+
           {/* Some artists */}
 
           <h2>Artistas destacados</h2>
@@ -53,16 +64,6 @@ class Home extends Component {
           )}
           {!this.state.loadingArtists && this.state.artists.length <= 0 && (
             <p>No se han encontrado artistas</p>
-          )}
-
-          {/* Some albums */}
-          <h2>Últimos álbums</h2>
-          {this.state.loadingAlbums && <p>Cargando...</p>}
-          {this.state.albums.length > 0 && (
-            <AlbumsList albums={this.state.albums} />
-          )}
-          {!this.state.loadingAlbums && this.state.albums.length <= 0 && (
-            <p>No se han encontrado álbums</p>
           )}
 
           {/* Random albums */}
