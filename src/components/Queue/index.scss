@@ -14,8 +14,10 @@ div#queue {
   color: #0c0c0c;
   padding: 0;
   overflow-y: auto;
-  
+  pointer-events: none;
+
   &.visible {
+    pointer-events: auto;
     transform: scale(1);
     opacity: 1;
   }

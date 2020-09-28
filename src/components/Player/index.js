@@ -42,7 +42,7 @@ class Player extends Component {
           this.next();
         }
       }
-    }, 100);
+    }, 500);
   }
 
   componentWillUnmount() {
@@ -115,8 +115,8 @@ class Player extends Component {
           <div id="song">
             {queueContext.getCurrentSong() && (
               <>
-                <img src={`https://picsum.photos/seed/${queueContext.getCurrentSong().album.id}/90/90`} className="cover" />
-                <div>
+                <img src={`https://picsum.photos/seed/${queueContext.getCurrentSong().album.id}/90/90`} className="cover" alt="" />
+                <div className="song-data">
                   <div className="title">
                     {queueContext.getCurrentSong().title}
                   </div>

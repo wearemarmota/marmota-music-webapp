@@ -40,9 +40,12 @@ aside#player {
   height: 100px;
 
   div#song {
-    flex-basis: 40%;
+    width: 40%;
+    flex-grow: 0;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
+
     img.cover {
       width: 70px;
       height: 70px;
@@ -50,32 +53,51 @@ aside#player {
       margin-right: 20px;
       background-color: black;
     }
-    div.title {
-      font-size: 16px;
-      font-weight: bold;
-      color: white;
-    }
-    div.artist-and-album {
-      font-size: 14px;
-      color: #cdcded;
-    }
-    div.duration-and-proggress {
-      font-size: 12px;
-      color: #cdcded;
+
+    .song-data{
+      flex-grow: 1;
+      flex-shrink: 1;
+      max-width: 100%;
+      overflow: hidden;
+
+      div.title {
+        max-width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+        color: white;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      div.artist-and-album {
+        font-size: 14px;
+        color: #cdcded;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      div.duration-and-proggress {
+        font-size: 12px;
+        color: #cdcded;
+      }
     }
   }
 
   div#controls {
     display: flex;
+    width: 20%;
+    flex-grow: 0;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    flex-basis: 20%;
   }
 
   div#context {
     display: flex;
+    width: 40%;
+    flex-grow: 0;
+    flex-shrink: 0;
     justify-content: flex-end;
-    flex-basis: 40%;
   }
 
   button {

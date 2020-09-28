@@ -12,9 +12,9 @@ class Album extends Component {
       <article className="album">
         <div className="cover">
           <ClickReceiver {...this.props}>
-            <img src={`https://picsum.photos/seed/${album.id}/500/500`} className="cover" alt="cover" />
+            <img src={`https://picsum.photos/seed/${album.title}/500/500`} className="cover" alt="cover" />
             { this.props.showGlow &&
-              <img src={`https://picsum.photos/seed/${album.id}/500/500`} className="glow" alt="cover" />
+              <img src={`https://picsum.photos/seed/${album.title}/500/500`} className="glow" alt="cover" />
             }
           </ClickReceiver>
         </div>

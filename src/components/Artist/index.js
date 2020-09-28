@@ -14,10 +14,10 @@ class Artist extends Component {
     return (
       <article className="artist">
         <Link to={`/artist/${artist.id}`}>
-          <img src={`https://picsum.photos/seed/${artist.name}/500/500`} />
+          <img src={`https://picsum.photos/seed/${artist.name}/500/500`} alt={artist.name} />
         </Link>
         <div className="name">
-          <Link to={`/artist/${artist.id}`}>
+          <Link to={`/artist/${artist.id}`} title={artist.name}>
             {artist.name}
           </Link>
         </div>
