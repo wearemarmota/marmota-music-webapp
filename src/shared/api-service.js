@@ -8,6 +8,9 @@
  */
 
 import axios from "axios";
+import Logger from "./logger";
+
+const logger = new Logger("ApiService");
 
 /**
  * Create an Axios Client with defaults
@@ -15,7 +18,7 @@ import axios from "axios";
 const client = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URI,
   headers: {
-    "Accept": "application/json; charset=utf-8",
+    Accept: "application/json; charset=utf-8",
     "Content-Type": "application/json; charset=utf-8",
   },
 });
@@ -25,12 +28,12 @@ const client = axios.create({
  */
 const request = function (options) {
   const onSuccess = function (response) {
-    console.debug("Request Successful!", response);
+    logger.log("Request Successful!", response);
     return response.data.data;
   };
 
   const onError = function (error) {
-    console.error("Request Failed:", error.config);
+    logger.error("Request Failed:", error.config);
 
     if (error.response) {
       // Request was made but server responded with something
