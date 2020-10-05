@@ -1,6 +1,5 @@
 article.album {
-
-  div.cover{
+  div.cover {
     position: relative;
     img.cover{
       width: 100%;
@@ -13,12 +12,12 @@ article.album {
       left: 0;
       width: 100%;
       border-radius: 4px;
-      transform: scale(.8) translateY(10%);
+      transform: scale(0.8) translateY(10%);
       filter: blur(50px);
       z-index: -1;
     }
   }
-  h1.title{
+  h1.title {
     font-size: 16px;
     font-weight: bold;
     color: white;
@@ -27,13 +26,13 @@ article.album {
     text-overflow: ellipsis;
     overflow: hidden;
   }
-  div.artist{
+  div.artist {
     font-size: 14px;
     color: #cdcded;
   }
-  a{
+  a {
     text-decoration: none;
-    &:hover{
+    &:hover {
       text-decoration: underline;
     }
   }
