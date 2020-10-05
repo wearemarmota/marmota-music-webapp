@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import classNames from "classnames/bind";
 import withQueueContext from "../../hoc/queue";
 
+import Cover from "../Album/Cover";
+
 import "./index.scss";
 
 class Queue extends Component {
@@ -34,7 +36,7 @@ function SongsList(props) {
 
 function SongItem(props) {
   const { song, index, queueContext: queue } = props;
-  return   (
+  return (
     <div
       className={classNames("song-item", {
         current: song.uuid === queue.getCurrentSong().uuid,
@@ -45,7 +47,7 @@ function SongItem(props) {
         });
       }}
     >
-      <img src={`https://picsum.photos/seed/${song.album.id}/90/90`} alt="" />
+      <Cover title={song.album.title} covers={song.album.covers} size="100" />
       <div className="info">
         <div className="title">{song.title}</div>
         <div className="artist">{song.album.artist.name}</div>

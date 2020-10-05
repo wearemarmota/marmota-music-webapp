@@ -8,6 +8,7 @@ import {
   IconPause,
   IconQueue,
 } from "./icons";
+import Cover from "../Album/Cover";
 
 import "./index.scss";
 
@@ -115,7 +116,12 @@ class Player extends Component {
           <div id="song">
             {queueContext.getCurrentSong() && (
               <>
-                <img src={`https://picsum.photos/seed/${queueContext.getCurrentSong().album.id}/90/90`} className="cover" alt="" />
+                <Cover
+                  title={queueContext.getCurrentSong().album.title}
+                  covers={queueContext.getCurrentSong().album.covers}
+                  className="cover"
+                  size="100"
+                />
                 <div className="song-data">
                   <div className="title">
                     {queueContext.getCurrentSong().title}
