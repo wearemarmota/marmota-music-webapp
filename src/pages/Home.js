@@ -44,12 +44,12 @@ class Home extends Component {
           alt=""
         />
 
-        <div className="container" style={{marginTop: "-20vw"}}>
+        <div className="container" style={{ marginTop: "-20vw" }}>
           {/* Some albums */}
           <h2>Últimos álbums</h2>
           {this.state.loadingAlbums && <p>Cargando...</p>}
           {this.state.albums.length > 0 && (
-            <AlbumsList albums={this.state.albums} />
+            <AlbumsList albums={this.state.albums.slice(0, 6)} />
           )}
           {!this.state.loadingAlbums && this.state.albums.length <= 0 && (
             <p>No se han encontrado álbums</p>
@@ -60,7 +60,7 @@ class Home extends Component {
           <h2>Artistas destacados</h2>
           {this.state.loadingArtists && <p>Cargando...</p>}
           {this.state.artists.length > 0 && (
-            <ArtistsList artists={this.state.artists} />
+            <ArtistsList artists={this.state.artists.slice(0, 6)} />
           )}
           {!this.state.loadingArtists && this.state.artists.length <= 0 && (
             <p>No se han encontrado artistas</p>
@@ -70,12 +70,11 @@ class Home extends Component {
           <h2>Álbums aleatorios</h2>
           {this.state.loadingAlbums && <p>Cargando...</p>}
           {this.state.albums.length > 0 && (
-            <AlbumsList albums={this.state.albums} />
+            <AlbumsList albums={this.state.albums.slice(0, 6)} />
           )}
           {!this.state.loadingAlbums && this.state.albums.length <= 0 && (
             <p>No se han encontrado álbums</p>
           )}
-
         </div>
       </>
     );
