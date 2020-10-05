@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import ArtistAlbums from "./pages/ArtistAlbums";
 import Artists from "./pages/Artists";
 import Album from "./pages/Album";
+import AlbumEdit from "./pages/AlbumEdit";
 import Albums from "./pages/Albums";
 import Upload from "./pages/Upload";
 import NotFound from "./pages/NotFound";
@@ -31,6 +32,7 @@ function App() {
             <Route exact path="/artist/:artistId" component={ArtistAlbums} />
             <Route exact path="/albums" component={Albums} />
             <Route exact path="/album/:albumId" component={Album} />
+            <Route exact path="/album/:albumId/edit" component={AlbumEdit} />
             <Route exact path="/upload" component={Upload} />
             <Route component={NotFound} status={404} />
           </Switch>

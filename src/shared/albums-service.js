@@ -47,12 +47,31 @@ function create(title, artistId) {
   });
 }
 
+function updateCover(albumId, file) {
+  // Check: https://github.com/axios/axios/blob/master/examples/upload/index.html#L30-L32
+  // for upload proggress:
+
+  var bodyFormData = new FormData();
+  bodyFormData.append("cover", file);
+  bodyFormData.append("_method", "PATCH");
+
+  return request({
+    url: `/albums/${albumId}`,
+    method: "POST",
+    data: bodyFormData,
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  });
+}
+
 const AlbumsService = {
   list,
   listByArtist,
   find,
   findByArtist,
   create,
+  updateCover,
 };
 
 export default AlbumsService;
