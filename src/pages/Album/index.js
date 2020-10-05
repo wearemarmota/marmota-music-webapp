@@ -3,6 +3,8 @@ import { Link, withRouter } from "react-router-dom";
 import SongsService from "../../shared/songs-service";
 import withQueueContext from "../../hoc/queue";
 
+import Cover from "../../components/Album/Cover";
+
 import "./index.scss";
 
 class Album extends Component {
@@ -57,10 +59,11 @@ class Album extends Component {
     return (
       <>
         {this.state.songs[0] && (
-          <img
-            src={`https://picsum.photos/seed/${this.state.songs[0].album.title}/1000/1000`}
+          <Cover
+            covers={this.state.songs[0].album.covers}
             className="album-cover"
             alt=""
+            size="original"
           />
         )}
 
