@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import debounce from "lodash/debounce";
 import AlbumsService from "../../../shared/albums-service";
 
-import Album from "../../../components/Album";
+import Cover from "../../../components/Album/Cover";
 
 import "./index.scss";
 
@@ -100,19 +100,24 @@ class CreateAlbum extends Component {
                 {this.state.previousAlbums.map((album, index) => {
                   return (
                     <div
-                      className="col-4 col-md-3 col-lg-2 col-xl-2"
+                      className="col-4 col-md-3 col-lg-2 col-xl-2 mb-0"
                       key={index}
                     >
-                      <Album
-                        showArtist={false}
-                        showGlow={false}
-                        album={album}
+                      <button
+                        class="unstyled"
                         onClick={() => {
                           this.setState({ album: album }, () => {
                             this.continue();
                           });
                         }}
-                      />
+                      >
+                        <Cover
+                          className="cover"
+                          covers={album.covers}
+                          title={album.title}
+                          alt={album.title}
+                        />
+                      </button>
                     </div>
                   );
                 })}
