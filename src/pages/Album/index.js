@@ -70,12 +70,48 @@ class Album extends Component {
         )}
 
         <div className="container">
-          <p>El listado de canciones</p>
-
           {this.state.loading && <p>Cargando...</p>}
+
+          {!this.state.loading && this.state.songs.length <= 0 && (
+            <>
+              <h2>Uis...</h2>
+              <p>
+                Parece que este disco no tiene canciones.{" "}
+                <Link to="/upload">Súbelas</Link>
+              </p>
+            </>
+          )}
 
           {this.state.songs.length > 0 && (
             <>
+              <header className="album-header">
+                <Cover
+                  covers={this.state.album.covers}
+                  className="main-cover"
+                  alt={this.state.album.title + " cover"}
+                />
+                <div className="details">
+                  <h2>{this.state.album.title}</h2>
+                  <p>{this.state.album.artist.name}</p>
+
+                  <div>
+                    <button className="link" onClick={this.replaceQueueAndPlay}>
+                      Reproducir
+                    </button>
+                    <button className="link" onClick={this.appendAlbumToQueue}>
+                      Agregar a la cola
+                    </button>
+                  </div>
+                  <div>
+                    <Link to={`/album/${this.albumId}/edit`}>
+                      Editar el álbum
+                    </Link>
+                  </div>
+                </div>
+              </header>
+
+              <h2>Las canciones de {this.state.album.title}</h2>
+
               <table width="100%">
                 <tbody>
                   {this.state.songs.map((song, index) => {
@@ -102,17 +138,7 @@ class Album extends Component {
                   })}
                 </tbody>
               </table>
-
-              <button onClick={this.replaceQueueAndPlay}>Reproducir</button>
-              <button onClick={this.appendAlbumToQueue}>
-                Agregar a la cola
-              </button>
-              <Link to={`/album/${this.albumId}/edit`}>Editar el álbum</Link>
             </>
-          )}
-
-          {!this.state.loading && this.state.songs.length <= 0 && (
-            <p>No se han encontrado canciones</p>
           )}
         </div>
       </>
