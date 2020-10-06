@@ -14,6 +14,7 @@ class Album extends Component {
     this.albumId = this.props.match.params.albumId;
     this.state = {
       songs: [],
+      album: null,
       loading: false,
     };
   }
@@ -23,6 +24,7 @@ class Album extends Component {
     SongsService.listByAlbum(this.albumId).then((songs) => {
       this.setState({
         songs: songs,
+        album: (songs[0] && songs[0].album) || null,
         loading: false,
       });
     });
@@ -58,10 +60,10 @@ class Album extends Component {
   render() {
     return (
       <>
-        {this.state.songs[0] && (
+        {this.state.album && (
           <Cover
-            covers={this.state.songs[0].album.covers}
-            className="album-cover"
+            covers={this.state.album.covers}
+            className="background-cover"
             alt=""
             size="original"
           />

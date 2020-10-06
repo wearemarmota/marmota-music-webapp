@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter, NavLink } from "react-router-dom";
 import classNames from "classnames/bind";
 import throttle from "lodash/throttle";
+import DefaultAvatar from "./DefaultAvatar";
 
 import "./index.scss";
 
@@ -49,13 +50,7 @@ class Header extends Component {
           <NavLink to="/artists">Artistas</NavLink>
           <NavLink to="/albums">Álbumes</NavLink>
           <NavLink to="/upload">Subir</NavLink>
-          <img
-            src="https://picsum.photos/id/433/50/50"
-            className="avatar"
-            width="50"
-            height="50"
-            alt="Avatar"
-          />
+          <DefaultAvatar name="E" alt="Avatar" className="avatar" />
         </nav>
       </header>
     );

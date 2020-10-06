@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { withRouter, Link } from "react-router-dom";
 
+import DefaultImage from "./DefaultImage";
+
 import "./index.scss";
 
 class Artist extends Component {
@@ -14,7 +16,7 @@ class Artist extends Component {
     return (
       <article className="artist">
         <Link to={`/artist/${artist.id}`}>
-          <img src={`https://picsum.photos/seed/${artist.name}/500/500`} alt={artist.name} />
+          <DefaultImage name={artist.name} />
         </Link>
         <div className="name">
           <Link to={`/artist/${artist.id}`} title={artist.name}>
