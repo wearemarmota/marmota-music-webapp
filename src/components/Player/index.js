@@ -93,7 +93,18 @@ class Player extends Component {
     const clickPositionPercentage = clickPositionX * 100 / elementWidth;
     const audioElement = this.audioRef.current;
     const newCurrentTime = clickPositionPercentage * audioElement.duration / 100;
-    audioElement.currentTime = newCurrentTime;
+    this.setCurrentTime(newCurrentTime);
+  };
+
+  setCurrentTime = (currentTime) => {
+    if (!this.audioRef.current) {
+      return;
+    }
+    this.audioRef.current.currentTime = currentTime;
+  };
+
+  getCurrentTime = () => {
+    return this.audioRef.current.currentTime || null;
   };
 
   render() {
