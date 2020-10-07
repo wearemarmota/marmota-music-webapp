@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import { withRouter } from "react-router-dom";
-// import SongsService from "../../shared/songs-service";
 import AlbumsService from "../../shared/albums-service";
-// import withQueueContext from "../../hoc/queue";
 import Logger from "../../shared/logger";
 
 import "./index.scss";
@@ -14,20 +11,18 @@ class AlbumEdit extends Component {
 
     this.albumId = this.props.match.params.albumId;
     this.state = {
-      // songs: [],
-      // loading: false,
+      album: null,
     };
   }
 
   componentDidMount() {
-    // this.setState({ loading: true });
-    // SongsService.listByAlbum(this.albumId).then((songs) => {
-    //   this.setState({
-    //     songs: songs,
-    //     loading: false,
-    //   });
-    // });
     this.logger = new Logger("AlbumEdit");
+    AlbumsService.get(this.albumId).then((album) => {
+      this.logger.log(album);
+      this.setState({
+        album: album,
+      });
+    });
   }
 
   changeCover = (e) => {
@@ -51,6 +46,9 @@ class AlbumEdit extends Component {
   };
 
   render() {
+    if(!this.state.album){
+      return <div className="container"><p>Loading...</p></div>
+    }
     return (
       <div className="container">
         <h2>Editar el álbum</h2>
@@ -68,5 +66,4 @@ class AlbumEdit extends Component {
   }
 }
 
-// export default withRouter(withQueueContext(AlbumEdit));
 export default AlbumEdit;
