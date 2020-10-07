@@ -1,5 +1,12 @@
 import request from "./api-service";
 
+function get(albumId) {
+  return request({
+    url: `/albums/${albumId}`,
+    method: "GET",
+  });
+}
+
 function list() {
   return request({
     url: `/albums`,
@@ -65,13 +72,25 @@ function updateCover(albumId, file) {
   });
 }
 
+function update(albumId, title){
+  return request({
+    url: `/albums/${albumId}`,
+    method: "PATCH",
+    data: {
+      title: title,
+    },
+  });
+}
+
 const AlbumsService = {
+  get,
   list,
   listByArtist,
   find,
   findByArtist,
   create,
   updateCover,
+  update,
 };
 
 export default AlbumsService;
