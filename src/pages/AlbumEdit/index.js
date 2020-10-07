@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import debounce from "lodash/debounce";
+
 import AlbumsService from "../../shared/albums-service";
 import Logger from "../../shared/logger";
 
@@ -12,6 +14,7 @@ class AlbumEdit extends Component {
     this.albumId = this.props.match.params.albumId;
     this.state = {
       album: null,
+      albumTitle: "",
     };
   }
 
@@ -21,12 +24,13 @@ class AlbumEdit extends Component {
       this.logger.log(album);
       this.setState({
         album: album,
+        albumTitle: album.title,
       });
     });
   }
 
-  changeCover = (e) => {
-    this.logger.log("changeCover");
+  handleChangeCover = (e) => {
+    this.logger.log("handleChangeCover");
     const file = e.target.files[0] || null;
     if (!file) {
       this.logger.warn("Invalid file");
@@ -45,6 +49,22 @@ class AlbumEdit extends Component {
     e.preventDefault();
   };
 
+  handleTitleChange = (e) => {
+    this.logger.log("handleTitleChange");
+    this.setState({
+      albumTitle: e.target.value,
+    });
+    this.updateTitleDebounced();
+  }
+
+  updateTitle = () => {
+    AlbumsService.update(this.state.album.id, this.state.albumTitle).then((result) => {
+      this.logger.log(result);
+    });
+  }
+
+  updateTitleDebounced = debounce(this.updateTitle, 1000);
+
   render() {
     if(!this.state.album){
       return <div className="container"><p>Loading...</p></div>
@@ -53,12 +73,21 @@ class AlbumEdit extends Component {
       <div className="container">
         <h2>Editar el álbum</h2>
         <form>
-          <input
-            type="file"
-            name="cover"
-            accept="image/png, image/jpeg"
-            onChange={this.changeCover}
-          />
+          <div>
+            <input
+              type="file"
+              name="cover"
+              accept="image/png, image/jpeg"
+              onChange={this.handleChangeCover}
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              value={this.state.albumTitle}
+              onChange={this.handleTitleChange}
+            />
+          </div>
         </form>
         <Link to={`/album/${this.albumId}`}>Volver al álbum</Link>
       </div>
