@@ -28,7 +28,12 @@ const client = axios.create({
  */
 const request = function (options) {
   const onSuccess = function (response) {
-    logger.log("Request Successful!", response);
+    logger.log(
+      response.config.method.toUpperCase(),
+      response.config.url,
+      "request successful:",
+      response
+    );
     return response.data.data;
   };
 
