@@ -81,6 +81,20 @@ div#queue {
   }
 
   div.empty {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: rgba(0, 0, 0, 0.25);
+    svg{
+      width: 64px;
+      height: 64px;
+      margin-bottom: 16px;
+
+      path{
+        fill: rgba(0, 0, 0, 0.10);
+      }
+    }
   }
 }
