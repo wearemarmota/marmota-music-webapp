@@ -47,13 +47,24 @@ function SongItem(props) {
         });
       }}
     >
-      <Cover title={song.album.title} covers={song.album.covers} size="100" />
+      <Cover title={song.album.title} covers={song.album.covers} size="100" className="cover" />
       <div className="info">
         <div className="title">{song.title}</div>
         <div className="artist">{song.album.artist.name}</div>
       </div>
       <div className="duration">
         {new Date(song.duration * 1000).toISOString().substr(14, 5)}
+      </div>
+      <div class="overflow-menu">
+        <button className="unstyled" onClick={(e) => {
+            e.stopPropagation();
+            queue.songs.splice(index, 1);
+            queue.setSongs(queue.songs);
+        }}>
+          <svg viewBox="0 0 24 24">
+            <path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+          </svg>
+        </button>
       </div>
     </div>
   );
