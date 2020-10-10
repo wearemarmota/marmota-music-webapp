@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import debounce from "lodash/debounce";
 
 import AlbumsService from "../../shared/albums-service";
+import SongsService from "../../shared/songs-service";
 import Logger from "../../shared/logger";
 
 import "./index.scss";
@@ -70,6 +71,22 @@ class AlbumEdit extends Component {
 
   updateAlbumTitleDebounced = debounce(this.updateAlbumTitle, 1000);
 
+  remove = (index) => {
+    const song = this.state.album.songs[index];
+    
+    this.logger.log("removing...", song);
+
+    if(!window.confirm(`¿Seguro que quieres eliminar ${song.title}? Es irreversible`)){
+      this.logger.log("removing action not confirmed");
+      return;
+    }
+
+    SongsService.remove(song.id).then((response) => {
+      this.logger.log("removed", response);
+      this.loadAlbum();
+    });
+  }
+
   render() {
     if(!this.state.album){
       return <div className="container"><p>Loading...</p></div>
@@ -95,6 +112,30 @@ class AlbumEdit extends Component {
           </div>
         </form>
         <Link to={`/album/${this.albumId}`}>Volver al álbum</Link>
+
+        <h2>Las canciones de {this.state.album.title}</h2>
+
+        <table width="100%">
+          <tbody>
+            {this.state.album.songs.map((song, index) => {
+              return (
+                <tr key={index}>
+                  <td>{song.position}</td>
+                  <td><input type="text" value={song.title} /></td>
+                  <td>
+                    <button onClick={() => {this.remove(index)}}>Eliminar</button>
+                  </td>
+                  <td>
+                    {new Date(song.duration * 1000)
+                      .toISOString()
+                      .substr(14, 5)}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+
       </div>
     );
   }

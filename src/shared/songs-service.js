@@ -26,9 +26,17 @@ function create(title, albumId, file) {
   });
 }
 
+function remove(songId) {
+  return request({
+    url: `/songs/${songId}`,
+    method: "DELETE",
+  });
+}
+
 const SongsService = {
   listByAlbum,
   create,
+  remove,
 };
 
 export default SongsService;
