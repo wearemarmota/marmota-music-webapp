@@ -55,15 +55,16 @@ class AlbumEdit extends Component {
     e.preventDefault();
   };
 
-  handleTitleChange = (e) => {
-    this.logger.log("handleTitleChange");
+  handleAlbumTitleChange = (e) => {
+    this.logger.log("handleAlbumTitleChange");
     this.setState({
       albumTitle: e.target.value,
     });
-    this.updateTitleDebounced();
+    this.updateAlbumTitleDebounced();
   }
 
   updateAlbumTitle = () => {
+    this.logger.log("updateAlbumTitle");
     AlbumsService.update(this.state.album.id, this.state.albumTitle).then((result) => {
       this.logger.log(result);
     });
@@ -107,7 +108,7 @@ class AlbumEdit extends Component {
             <input
               type="text"
               value={this.state.albumTitle}
-              onChange={this.handleTitleChange}
+              onChange={this.handleAlbumTitleChange}
             />
           </div>
         </form>
