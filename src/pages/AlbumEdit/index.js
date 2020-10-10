@@ -7,6 +7,7 @@ import SongsService from "../../shared/songs-service";
 import Logger from "../../shared/logger";
 
 import "./index.scss";
+import Cover from "../../components/Album/Cover";
 
 class AlbumEdit extends Component {
   constructor(props) {
@@ -120,6 +121,7 @@ class AlbumEdit extends Component {
         <h2>Editar el álbum</h2>
         <form>
           <div>
+            <Cover covers={this.state.album.covers} />
             <input
               type="file"
               name="cover"
