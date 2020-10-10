@@ -161,6 +161,10 @@ class AlbumEdit extends Component {
           </tbody>
         </table>
 
+        <h2>Subir canciones a {this.state.album.title}</h2>
+
+        <Link to="/upload">Ir al cargador de canciones</Link>
+
       </div>
     );
   }
