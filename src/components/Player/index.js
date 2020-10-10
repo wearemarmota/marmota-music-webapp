@@ -41,7 +41,10 @@ class Player extends Component {
           currentTime: newCurrentTime,
           currentPercentage: currentPercentage,
         });
-        if(currentPercentage === 100){
+
+        if(currentPercentage > 99.99){
+          // Sometimes the currentPercentage remains in 99.99 periodic
+          // so, it nevers increases to 100.
           this.next();
         }
       }
