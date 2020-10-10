@@ -29,7 +29,6 @@ div#queue {
     max-width: 100%;
     align-items: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    transition: all 0.2s;
     cursor: pointer;
 
     &.current {
@@ -57,7 +56,6 @@ div#queue {
       margin-right: 16px;
       border-radius: 4px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      transition: all 0.2s;
     }
     div.info {
       flex-grow: 1;
