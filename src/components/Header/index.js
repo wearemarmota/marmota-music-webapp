@@ -38,12 +38,7 @@ class Header extends Component {
       <header id="main-header" className={classNames({scrolled: this.state.scrolled})}>
         <h1>
           <NavLink to="/">
-            <img
-              src="/img/logo.svg"
-              width="44"
-              height="32"
-              alt="Marmota Music"
-            />
+            <img src="/img/logo.svg" alt="Marmota Music" />
           </NavLink>
         </h1>
         <nav>
