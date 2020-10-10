@@ -82,79 +82,95 @@ class Album extends Component {
   render() {
 
     if(this.state.loading){
-      return <p>Cargando...</p>;
+      return <div className="container">
+        <p>Cargando...</p>
+      </div>;
     }
 
     if(!this.state.loading && !this.state.album){
-      return <p>Mmm...</p>;
+      return <div className="container">
+        <p>Mmm...</p>
+      </div>;
     }
 
     return (
-      <div className="container">
+      <React.Fragment>
+        <Cover
+          covers={this.state.album.covers}
+          className="background-cover"
+          alt={this.state.album.title + " cover"}
+        />
 
-        <header className="album-header">
-          <Cover
-            covers={this.state.album.covers}
-            className="main-cover"
-            alt={this.state.album.title + " cover"}
-          />
-          <div className="details">
-            <h2>{this.state.album.title}</h2>
-            <p>{this.state.album.artist.name}</p>
+        <div className="container">
 
-            <div>
-              <button className="link" onClick={this.replaceQueueAndPlay}>
-                Reproducir
-              </button>
-              <button className="link" onClick={this.appendAlbumToQueue}>
-                Agregar a la cola
-              </button>
+          <header className="album-header">
+            <Cover
+              covers={this.state.album.covers}
+              className="main-cover"
+              alt={this.state.album.title + " cover"}
+            />
+            <div className="details">
+              <h2>{this.state.album.title}</h2>
+              <p>{this.state.album.artist.name}</p>
+
+              <div>
+                <button className="link" onClick={this.replaceQueueAndPlay}>
+                  Reproducir
+                </button>
+                <button className="link" onClick={this.appendAlbumToQueue}>
+                  Agregar a la cola
+                </button>
+              </div>
+              <div>
+                <Link to={`/album/${this.albumId}/edit`}>
+                  Editar el álbum
+                </Link>
+              </div>
             </div>
-            <div>
-              <Link to={`/album/${this.albumId}/edit`}>
-                Editar el álbum
-              </Link>
-            </div>
-          </div>
-        </header>
+          </header>
 
-        <h2>Las canciones de {this.state.album.title}</h2>
+          <h2>Las canciones de {this.state.album.title}</h2>
 
-        { this.state.album.songs.length <= 0 && (
-          <>
-            <h2>Uis...</h2>
-            <p>
-              Parece que este disco no tiene canciones.{" "}
-              <Link to="/upload">Súbelas</Link>
-            </p>
-          </>
-        )}
+          { this.state.album.songs.length <= 0 && 
+            <EmptyAlbum />
+          }
 
-        { this.state.album.songs.length > 0 && (
-          <table width="100%">
-            <tbody>
-              {this.state.album.songs.map((song, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{song.position}</td>
-                    <td>{song.title}</td>
-                    <td>
-                      <button onClick={() => { this.appendSongToQueue(song); }}>
-                        Añadir a la cola
-                      </button>
-                    </td>
-                    <td>
-                        <Duration seconds={song.duration} />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
-      </div>
+          { this.state.album.songs.length > 0 && (
+            <table width="100%">
+              <tbody>
+                {this.state.album.songs.map((song, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{song.position}</td>
+                      <td>{song.title}</td>
+                      <td>
+                        <button onClick={() => { this.appendSongToQueue(song); }}>
+                          Añadir a la cola
+                        </button>
+                      </td>
+                      <td>
+                          <Duration seconds={song.duration} />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
+        </div>
+      </React.Fragment>
     );
   }
+}
+
+function EmptyAlbum(props){
+  return <React.Fragment>
+    <h2>Uis...</h2>
+    <p>
+      Parece que este disco no tiene canciones.{" "}
+      <Link to="/upload">Súbelas</Link>
+    </p>
+  </React.Fragment>;
 }
 
 export default withRouter(withQueueContext(Album));
