@@ -20,6 +20,11 @@ class AlbumEdit extends Component {
 
   componentDidMount() {
     this.logger = new Logger("AlbumEdit");
+    this.loadAlbum();
+  }
+
+  loadAlbum = () => {
+    this.logger.log("loadAlbum");
     AlbumsService.get(this.albumId).then((album) => {
       this.logger.log(album);
       this.setState({
@@ -57,13 +62,13 @@ class AlbumEdit extends Component {
     this.updateTitleDebounced();
   }
 
-  updateTitle = () => {
+  updateAlbumTitle = () => {
     AlbumsService.update(this.state.album.id, this.state.albumTitle).then((result) => {
       this.logger.log(result);
     });
   }
 
-  updateTitleDebounced = debounce(this.updateTitle, 1000);
+  updateAlbumTitleDebounced = debounce(this.updateAlbumTitle, 1000);
 
   render() {
     if(!this.state.album){
