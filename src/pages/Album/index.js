@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import SongsService from "../../shared/songs-service";
+import AlbumsService from "../../shared/albums-service";
 import withQueueContext from "../../hoc/queue";
 
 import Cover from "../../components/Album/Cover";
+import Duration from "../../components/Duration";
 
 import "./index.scss";
 
@@ -13,7 +14,6 @@ class Album extends Component {
 
     this.albumId = this.props.match.params.albumId;
     this.state = {
-      songs: [],
       album: null,
       loading: false,
     };
@@ -21,13 +21,12 @@ class Album extends Component {
 
   componentDidMount() {
     this.setState({ loading: true });
-    SongsService.listByAlbum(this.albumId).then((songs) => {
+    AlbumsService.get(this.albumId).then((album) => {
       this.setState({
-        songs: songs,
-        album: (songs[0] && songs[0].album) || null,
+        album: album,
         loading: false,
-      });
-    });
+      })
+    })
   }
 
   replaceQueueAndPlay = () => {
@@ -37,7 +36,16 @@ class Album extends Component {
       setCurrentIndex,
       setPlaying,
     } = this.props.queueContext;
-    setSongs(this.state.songs).then(() => {
+
+    // Build an array of songs, each one with the album info
+    // but removing the songs array of him.
+    let songsToAppend = this.state.album.songs;
+    songsToAppend.forEach(song => {
+      song.album = Object.assign({}, this.state.album);
+      delete song.album.songs;
+    });
+
+    setSongs(songsToAppend).then(() => {
       setVisible(true);
       setCurrentIndex(0).then(() => {
         setPlaying(false).then(setPlaying(true));
@@ -47,101 +55,104 @@ class Album extends Component {
 
   appendAlbumToQueue = () => {
     const { songs, setSongs, setVisible } = this.props.queueContext;
-    setSongs([].concat(songs, this.state.songs));
+    let songsToAppend = this.state.album.songs;
+
+    // Build an array of songs, each one with the album info
+    // but removing the songs array of him.
+    songsToAppend.forEach(song => {
+      song.album = Object.assign({}, this.state.album);
+      delete song.album.songs;
+    });
+
+    setSongs([].concat(songs, songsToAppend));
     setVisible(true);
   };
 
   appendSongToQueue = (song) => {
     const { songs, setSongs, setVisible } = this.props.queueContext;
+
+    // Include the album info to the song object (excluding songs list)
+    song.album = Object.assign({}, this.state.album);
+    delete song.album.songs;
+
     setSongs([].concat(songs, [song]));
     setVisible(true);
   };
 
   render() {
+
+    if(this.state.loading){
+      return <p>Cargando...</p>;
+    }
+
+    if(!this.state.loading && !this.state.album){
+      return <p>Mmm...</p>;
+    }
+
     return (
-      <>
-        {this.state.album && (
+      <div className="container">
+
+        <header className="album-header">
           <Cover
             covers={this.state.album.covers}
-            className="background-cover"
-            alt=""
-            size="original"
+            className="main-cover"
+            alt={this.state.album.title + " cover"}
           />
+          <div className="details">
+            <h2>{this.state.album.title}</h2>
+            <p>{this.state.album.artist.name}</p>
+
+            <div>
+              <button className="link" onClick={this.replaceQueueAndPlay}>
+                Reproducir
+              </button>
+              <button className="link" onClick={this.appendAlbumToQueue}>
+                Agregar a la cola
+              </button>
+            </div>
+            <div>
+              <Link to={`/album/${this.albumId}/edit`}>
+                Editar el álbum
+              </Link>
+            </div>
+          </div>
+        </header>
+
+        <h2>Las canciones de {this.state.album.title}</h2>
+
+        { this.state.album.songs.length <= 0 && (
+          <>
+            <h2>Uis...</h2>
+            <p>
+              Parece que este disco no tiene canciones.{" "}
+              <Link to="/upload">Súbelas</Link>
+            </p>
+          </>
         )}
 
-        <div className="container">
-          {this.state.loading && <p>Cargando...</p>}
-
-          {!this.state.loading && this.state.songs.length <= 0 && (
-            <>
-              <h2>Uis...</h2>
-              <p>
-                Parece que este disco no tiene canciones.{" "}
-                <Link to="/upload">Súbelas</Link>
-              </p>
-            </>
-          )}
-
-          {this.state.songs.length > 0 && (
-            <>
-              <header className="album-header">
-                <Cover
-                  covers={this.state.album.covers}
-                  className="main-cover"
-                  alt={this.state.album.title + " cover"}
-                />
-                <div className="details">
-                  <h2>{this.state.album.title}</h2>
-                  <p>{this.state.album.artist.name}</p>
-
-                  <div>
-                    <button className="link" onClick={this.replaceQueueAndPlay}>
-                      Reproducir
-                    </button>
-                    <button className="link" onClick={this.appendAlbumToQueue}>
-                      Agregar a la cola
-                    </button>
-                  </div>
-                  <div>
-                    <Link to={`/album/${this.albumId}/edit`}>
-                      Editar el álbum
-                    </Link>
-                  </div>
-                </div>
-              </header>
-
-              <h2>Las canciones de {this.state.album.title}</h2>
-
-              <table width="100%">
-                <tbody>
-                  {this.state.songs.map((song, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{song.position}</td>
-                        <td>{song.title}</td>
-                        <td>
-                          <button
-                            onClick={() => {
-                              this.appendSongToQueue(song);
-                            }}
-                          >
-                            Añadir a la cola
-                          </button>
-                        </td>
-                        <td>
-                          {new Date(song.duration * 1000)
-                            .toISOString()
-                            .substr(14, 5)}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </>
-          )}
-        </div>
-      </>
+        { this.state.album.songs.length > 0 && (
+          <table width="100%">
+            <tbody>
+              {this.state.album.songs.map((song, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{song.position}</td>
+                    <td>{song.title}</td>
+                    <td>
+                      <button onClick={() => { this.appendSongToQueue(song); }}>
+                        Añadir a la cola
+                      </button>
+                    </td>
+                    <td>
+                        <Duration seconds={song.duration} />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+      </div>
     );
   }
 }
