@@ -44,6 +44,70 @@ class Player extends Component {
         }
       }
     }, 500);
+
+    if ("mediaSession" in navigator) {
+      window.navigator.mediaSession.setActionHandler("play", () => {
+        this.play();
+      });
+      window.navigator.mediaSession.setActionHandler("pause", () => {
+        this.pause();
+      });
+      window.navigator.mediaSession.setActionHandler(
+        "seekbackward",
+        (details) => {
+          console.log("seekbackward", details);
+          if (this.getCurrentTime() > 10) {
+            this.setCurrentTime(this.getCurrentTime() - 10);
+          }
+        }
+      );
+      window.navigator.mediaSession.setActionHandler(
+        "seekforward",
+        (details) => {
+          console.log("seekforward", details);
+          this.setCurrentTime(this.getCurrentTime() + 10);
+          // if ((player.currentTime+10) < player.duration) {
+          //     player.currentTime = player.currentTime + 10;
+          // }
+        }
+      );
+      //     navigator.mediaSession.setActionHandler('previoustrack', function (details) {
+      //         console.log('previoustrack', details, songInfo.startPrevious);
+      //         if (songInfo.startPrevious) {
+      //             player.currentTime = songInfo.startPrevious;
+      //         }
+      //     });
+      //     navigator.mediaSession.setActionHandler('nexttrack', function (details) {
+      //         console.log('nexttrack', details, songInfo.duration);
+      //         player.currentTime = songInfo.start + songInfo.duration;
+      //     });
+      //     try {
+      //         navigator.mediaSession.setActionHandler('skipad', function() {
+      //             console.log('skipad', details);
+      //         });
+      //     } catch(error) {
+      //         // console.log(error);
+      //     }
+      //     try {
+      //         navigator.mediaSession.setActionHandler('stop', function (details) {
+      //             console.log('stop', details);
+      //             player.stop();
+      //             resetMediaSession();
+
+      //         });
+      //     } catch(error) {
+      //         // console.log(error);
+      //     }
+      // try {
+      window.navigator.mediaSession.setActionHandler("seekto", function (
+        details
+      ) {
+        console.log(details);
+      });
+      // } catch(error) {
+      //     console.log(error);
+      // }
+    }
   }
 
   componentWillUnmount() {
@@ -63,6 +127,27 @@ class Player extends Component {
   play = () => {
     this.audioRef.current.play();
     this.props.queueContext.setPlaying(true);
+
+    // More info about mediaSession
+    // https://ottball.github.io/media-session-api/sample-1.html
+    // and
+    // https://googlechrome.github.io/samples/media-session/audio.html
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.metadata = new window.MediaMetadata({
+        title: this.props.queueContext.getCurrentSong().title,
+        artist: this.props.queueContext.getCurrentSong().album.artist.name,
+        album: this.props.queueContext.getCurrentSong().album.title,
+        artwork: [
+          {
+            src: `https://picsum.photos/seed/${
+              this.props.queueContext.getCurrentSong().album.id
+            }/256/256`,
+            sizes: "256x256",
+            type: "image/png",
+          },
+        ],
+      });
+    }
   };
 
   pause = () => {
