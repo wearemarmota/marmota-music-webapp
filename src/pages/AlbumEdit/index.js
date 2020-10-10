@@ -63,6 +63,17 @@ class AlbumEdit extends Component {
     this.updateAlbumTitleDebounced();
   }
 
+  handleSongTitleChange = (e, index) => {
+    this.logger.log("handleSongTitleChange");
+    const newValue = e.target.value;
+    this.setState((prevState) => {
+      prevState.album.songs[index].title = newValue;
+      return prevState;
+    }, () => {
+      this.updateSongTitleDebounced(index);
+    })
+  }
+
   updateAlbumTitle = () => {
     this.logger.log("updateAlbumTitle");
     AlbumsService.update(this.state.album.id, this.state.albumTitle).then((result) => {
@@ -71,6 +82,18 @@ class AlbumEdit extends Component {
   }
 
   updateAlbumTitleDebounced = debounce(this.updateAlbumTitle, 1000);
+
+  updateSongTitle = (index) => {
+    this.logger.log("updateSongTitle");
+    const song = this.state.album.songs[index];
+    SongsService.update(song.id, song.title).then((result) => {
+      this.logger.log(result);
+    });
+  }
+
+  updateSongTitleDebounced = debounce((index) => {
+    this.updateSongTitle(index)
+  }, 1000);
 
   remove = (index) => {
     const song = this.state.album.songs[index];
@@ -122,7 +145,7 @@ class AlbumEdit extends Component {
               return (
                 <tr key={index}>
                   <td>{song.position}</td>
-                  <td><input type="text" value={song.title} /></td>
+                  <td><input type="text" value={song.title} onChange={(e) => {this.handleSongTitleChange(e, index)}}/></td>
                   <td>
                     <button onClick={() => {this.remove(index)}}>Eliminar</button>
                   </td>

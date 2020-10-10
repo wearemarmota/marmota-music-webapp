@@ -26,6 +26,15 @@ function create(title, albumId, file) {
   });
 }
 
+function update(songId, title){
+  return request({
+    url: `/songs/${songId}`,
+    method: "PATCH",
+    data: {
+      title: title,
+    },
+  })
+}
 function remove(songId) {
   return request({
     url: `/songs/${songId}`,
@@ -36,6 +45,7 @@ function remove(songId) {
 const SongsService = {
   listByAlbum,
   create,
+  update,
   remove,
 };
 
