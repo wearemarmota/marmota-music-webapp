@@ -8,7 +8,9 @@ import {
   IconPause,
   IconQueue,
 } from "./icons";
+
 import Cover from "../Album/Cover";
+import Duration from "../Duration";
 
 import "./index.scss";
 
@@ -142,10 +144,8 @@ class Player extends Component {
                     {queueContext.getCurrentSong().album.artist.name}
                   </div>
                   <div className="duration-and-proggress">
-                    <CurrentTime time={this.state.currentTime} /> {" - "}
-                    {new Date(queueContext.getCurrentSong().duration * 1000)
-                      .toISOString()
-                      .substr(14, 5)}
+                    <Duration seconds={this.state.currentTime} /> {" - "}
+                    <Duration seconds={queueContext.getCurrentSong().duration} />
                   </div>
                 </div>
               </>
@@ -191,27 +191,6 @@ class Player extends Component {
       </div>
     );
   }
-}
-
-function CurrentTime(props){
-  const { time } = props;
-  let remaining = time;
-  const hours = Math.floor(time/3600);
-  remaining = remaining-hours*3600;
-  const minutes = Math.floor(remaining/60);
-  remaining = remaining-minutes*60;
-  const seconds = Math.floor(remaining);
-
-  const formattedHours = ("0" + hours).slice(-2);
-  const formattedMinutes = ("0" + minutes).slice(-2);
-  const formattedSeconds = ("0" + seconds).slice(-2);
-  return(
-    <>
-      {formattedHours !== "00" && formattedHours + ":"}
-      {formattedMinutes}:
-      {formattedSeconds}
-    </>
-  );
 }
 
 export default withQueueContext(Player);

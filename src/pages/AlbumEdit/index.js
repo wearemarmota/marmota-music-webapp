@@ -8,6 +8,7 @@ import Logger from "../../shared/logger";
 
 import "./index.scss";
 import Cover from "../../components/Album/Cover";
+import Duration from "../../components/Duration";
 
 class AlbumEdit extends Component {
   constructor(props) {
@@ -152,9 +153,7 @@ class AlbumEdit extends Component {
                     <button onClick={() => {this.remove(index)}}>Eliminar</button>
                   </td>
                   <td>
-                    {new Date(song.duration * 1000)
-                      .toISOString()
-                      .substr(14, 5)}
+                    <Duration seconds={song.duration} />
                   </td>
                 </tr>
               );

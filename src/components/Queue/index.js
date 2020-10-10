@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 import withQueueContext from "../../hoc/queue";
 
 import Cover from "../Album/Cover";
+import Duration from "../Duration";
 
 import "./index.scss";
 
@@ -53,7 +54,7 @@ function SongItem(props) {
         <div className="artist">{song.album.artist.name}</div>
       </div>
       <div className="duration">
-        {new Date(song.duration * 1000).toISOString().substr(14, 5)}
+        <Duration seconds={song.duration} />
       </div>
       <div class="overflow-menu">
         <button className="unstyled" onClick={(e) => {
