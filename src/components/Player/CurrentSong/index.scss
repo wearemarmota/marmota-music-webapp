@@ -1,0 +1,48 @@
+aside#player div#song {
+  width: 40%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+
+  img.cover,
+  svg.cover {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    margin-right: 20px;
+    background-color: black;
+  }
+
+  .song-data {
+    flex-grow: 1;
+    flex-shrink: 1;
+    max-width: 100%;
+    overflow: hidden;
+    
+    @media (max-width: 641px){
+      display: none;
+    }
+
+    div.title {
+      max-width: 100%;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    div.artist-and-album {
+      font-size: 14px;
+      color: #cdcded;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    div.duration-and-proggress {
+      font-size: 12px;
+      color: #cdcded;
+    }
+  }
+}

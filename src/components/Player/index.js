@@ -1,16 +1,11 @@
 import React, { Component } from "react";
 import withQueueContext from "../../hoc/queue";
+import Logger from "../../shared/logger";
 
-import {
-  IconNext,
-  IconPrevious,
-  IconPlay,
-  IconPause,
-  IconQueue,
-} from "./icons";
-
-import Cover from "../Album/Cover";
-import Duration from "../Duration";
+import SeekBar from "./SeekBar";
+import CurrentSong from "./CurrentSong";
+import Controls from "./Controls";
+import Context from "./Context";
 
 import "./index.scss";
 
@@ -26,29 +21,32 @@ class Player extends Component {
   }
 
   componentDidMount() {
-    this.currentTimeInterval = setInterval(() => {
-      if (!this.audioRef.current) {
-        return;
+    this.currentTimeInterval = setInterval(this.timeInterval, 500);
+    this.logger = new Logger("Player");
+  }
+
+  timeInterval = () => {
+    if (!this.audioRef.current) {
+      return;
+    }
+
+    const oldCurrentTime = this.state.currentTime;
+    const newCurrentTime = this.audioRef.current.currentTime;
+    const audioDuration = this.audioRef.current.duration;
+    const currentPercentage = (newCurrentTime * 100) / audioDuration;
+
+    if (oldCurrentTime !== newCurrentTime) {
+      this.setState({
+        currentTime: newCurrentTime,
+        currentPercentage: currentPercentage,
+      });
+
+      if(currentPercentage > 99.99){
+        // Sometimes the currentPercentage remains in 99.99 periodic
+        // so, it nevers increases to 100.
+        this.next();
       }
-
-      const oldCurrentTime = this.state.currentTime;
-      const newCurrentTime = this.audioRef.current.currentTime;
-      const audioDuration = this.audioRef.current.duration;
-      const currentPercentage = (newCurrentTime * 100) / audioDuration;
-
-      if (oldCurrentTime !== newCurrentTime) {
-        this.setState({
-          currentTime: newCurrentTime,
-          currentPercentage: currentPercentage,
-        });
-
-        if(currentPercentage > 99.99){
-          // Sometimes the currentPercentage remains in 99.99 periodic
-          // so, it nevers increases to 100.
-          this.next();
-        }
-      }
-    }, 500);
+    }
   }
 
   componentWillUnmount() {
@@ -99,12 +97,19 @@ class Player extends Component {
     const audioElement = this.audioRef.current;
     const newCurrentTime = clickPositionPercentage * audioElement.duration / 100;
     this.setCurrentTime(newCurrentTime);
+    this.timeInterval();
   };
 
   setCurrentTime = (currentTime) => {
     if (!this.audioRef.current) {
+      this.logger.warn("setCurrentTime", "audio element doesn't exist");
       return;
     }
+    if (isNaN(currentTime)) {
+      this.logger.warn("setCurrentTime", "currentTime is not a number");
+      return;
+    }
+    this.logger.log("setCurrentTime", currentTime);
     this.audioRef.current.currentTime = currentTime;
   };
 
@@ -116,80 +121,29 @@ class Player extends Component {
     const { queueContext } = this.props;
     return (
       <div className="player-wrapper">
-        <div className="progress-bar" onClick={this.progressBarClick}>
-          <div className="progress" style={{width: `${this.state.currentPercentage}%`}}>
-            <div className="progress-shadow"></div>
-          </div>
-        </div>
+        <SeekBar onClick={this.progressBarClick} currentPercentage={this.state.currentPercentage} />
         <aside id="player">
-          {queueContext.getCurrentSong() && (
-            <audio
-              ref={this.audioRef}
-              src={queueContext.getCurrentSong().fileUri}
-            />
-          )}
 
-          <div id="song">
-            {queueContext.getCurrentSong() && (
-              <>
-                <Cover
-                  title={queueContext.getCurrentSong().album.title}
-                  covers={queueContext.getCurrentSong().album.covers}
-                  className="cover"
-                  size="100"
-                />
-                <div className="song-data">
-                  <div className="title">
-                    {queueContext.getCurrentSong().title}
-                  </div>
-                  <div className="artist-and-album">
-                    {queueContext.getCurrentSong().album.title} {" - "}
-                    {queueContext.getCurrentSong().album.artist.name}
-                  </div>
-                  <div className="duration-and-proggress">
-                    <Duration seconds={this.state.currentTime} /> {" - "}
-                    <Duration seconds={queueContext.getCurrentSong().duration} />
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
+          <audio
+            ref={this.audioRef}
+            src={queueContext.getCurrentSong() && queueContext.getCurrentSong().fileUri}
+          />
 
-          <div id="controls">
-            <button
-              className="previous"
-              onClick={this.previous}
-              disabled={!queueContext.hasPreviousSong()}
-            >
-              <IconPrevious />
-            </button>
-
-            <button
-              disabled={!queueContext.getCurrentSong()}
-              onClick={queueContext.playing ? this.pause : this.play}
-            >
-              {queueContext.playing ? <IconPause /> : <IconPlay />}
-            </button>
-
-            <button
-              className="next"
-              onClick={this.next}
-              disabled={!queueContext.hasNextSong()}
-            >
-              <IconNext />
-            </button>
-          </div>
-
-          <div id="context">
-            <button
-              className="queue"
-              onClick={() => {
-                queueContext.setVisible(!queueContext.visible);
-              }}
-            >
-              <IconQueue />
-            </button>
-          </div>
+          <CurrentSong song={queueContext.getCurrentSong()} seconds={this.state.currentTime} />
+          <Controls
+            isPlaying={queueContext.playing}
+            currentSong={queueContext.getCurrentSong()}
+            hasPreviousSong={queueContext.hasPreviousSong()}
+            hasNextSong={queueContext.hasNextSong()}
+            previous={this.previous}
+            next={this.next}
+            play={this.play}
+            pause={this.pause}
+          />
+          <Context
+            isQueueVisible={queueContext.visible}
+            setQueueVisibility={queueContext.setVisible}
+          />
         </aside>
       </div>
     );

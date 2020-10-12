@@ -1,0 +1,8 @@
+aside#player div#controls {
+  display: flex;
+  width: 20%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}

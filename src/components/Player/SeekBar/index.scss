@@ -1,0 +1,26 @@
+.seekbar {
+  position: relative;
+  height: 9px;
+  box-shadow: 0 8px 21px 0 rgba(0, 0, 0, 0.1);
+  background-color: #2b375f;
+  cursor: pointer;
+
+  .progress {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 9px;
+    background-image: linear-gradient(to left, #ff0182, #4b038f);
+    pointer-events: none;
+    transition: width 0.2s;
+    
+    .progress-shadow {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-image: linear-gradient(to left, #ff0182, #4b038f);
+      transition: all 0.2s;
+      filter: blur(10px);
+    }
+  }
+}
