@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 export default function Duration(props){
   return <>{new Date(props.seconds * 1000)
