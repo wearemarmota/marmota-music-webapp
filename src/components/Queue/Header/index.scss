@@ -1,0 +1,26 @@
+header.queue-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 15px 20px 30px 20px;
+
+  h2{
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  button{
+    svg{
+      width: 24px;
+      height: 24px;
+      display: block;
+      path{
+        fill: #c8c8e7;
+      }
+    }
+  }
+}

@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import classNames from "classnames/bind";
 import withQueueContext from "../../hoc/queue";
 
-import Cover from "../Album/Cover";
+import Cover from "../AlbumItem/Cover";
 import Duration from "../Duration";
+import Header from "./Header";
 
 import "./index.scss";
 
@@ -28,6 +29,7 @@ function SongsList(props) {
 
   return (
     <>
+      <Header title="A continuación" closeAction={ () => queue.setVisible(false) } />
       {queue.songs.map((song, index) => (
         <SongItem key={index} {...props} song={song} index={index} />
       ))}
@@ -51,12 +53,9 @@ function SongItem(props) {
       <Cover title={song.album.title} covers={song.album.covers} size="100" className="cover" />
       <div className="info">
         <div className="title">{song.title}</div>
-        <div className="artist">{song.album.artist.name}</div>
+        <div className="artist-and-duration">{song.album.artist.name} &middot; <Duration seconds={song.duration} /></div>
       </div>
-      <div className="duration">
-        <Duration seconds={song.duration} />
-      </div>
-      <div class="overflow-menu">
+      <div className="overflow-menu">
         <button className="unstyled" onClick={(e) => {
             e.stopPropagation();
             queue.songs.splice(index, 1);
