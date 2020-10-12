@@ -5,7 +5,7 @@ import DefaultImage from "./DefaultImage";
 
 import "./index.scss";
 
-class Artist extends Component {
+class ArtistItem extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -28,4 +28,4 @@ class Artist extends Component {
   }
 }
 
-export default withRouter(Artist);
+export default withRouter(ArtistItem);

@@ -7,7 +7,7 @@ import SongsService from "../../shared/songs-service";
 import Logger from "../../shared/logger";
 
 import "./index.scss";
-import Cover from "../../components/Album/Cover";
+import Cover from "../../components/AlbumItem/Cover";
 import Duration from "../../components/Duration";
 
 class AlbumEdit extends Component {

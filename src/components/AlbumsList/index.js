@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Album from "../Album";
+import AlbumItem from "../AlbumItem";
 
 import "./index.scss";
 
@@ -10,7 +10,7 @@ class AlbumsList extends Component {
         {this.props.albums.map((album, index) => {
           return (
             <div key={index} className="col-4 col-md-3 col-lg-2 col-xl-2">
-              <Album album={album} />
+              <AlbumItem album={album} />
             </div>
           );
         })}

@@ -5,7 +5,7 @@ import Cover from "./Cover";
 
 import "./index.scss";
 
-class Album extends Component {
+class AlbumItem extends Component {
   render() {
     const ClickReceiver =
       this.props.onClick !== undefined ? AlbumButton : AlbumLink;
@@ -60,4 +60,4 @@ function AlbumButton(props) {
   );
 }
 
-export default withRouter(Album);
+export default withRouter(AlbumItem);

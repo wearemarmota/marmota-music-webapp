@@ -3,12 +3,12 @@ import { Link, withRouter } from "react-router-dom";
 import AlbumsService from "../../shared/albums-service";
 import withQueueContext from "../../hoc/queue";
 
-import Cover from "../../components/Album/Cover";
+import Cover from "../../components/AlbumItem/Cover";
 import Duration from "../../components/Duration";
 
 import "./index.scss";
 
-class Album extends Component {
+class AlbumDetail extends Component {
   constructor(props) {
     super(props);
 
@@ -173,4 +173,4 @@ function EmptyAlbum(props){
   </React.Fragment>;
 }
 
-export default withRouter(withQueueContext(Album));
+export default withRouter(withQueueContext(AlbumDetail));

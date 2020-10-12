@@ -1,5 +1,5 @@
 import React from "react";
-import Cover from "../../Album/Cover";
+import Cover from "../../AlbumItem/Cover";
 import Duration from "../../Duration";
 
 import "./index.scss";

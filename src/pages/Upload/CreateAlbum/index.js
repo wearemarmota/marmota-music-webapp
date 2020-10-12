@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import debounce from "lodash/debounce";
 import AlbumsService from "../../../shared/albums-service";
 
-import Cover from "../../../components/Album/Cover";
+import Cover from "../../../components/AlbumItem/Cover";
 
 import "./index.scss";
 
