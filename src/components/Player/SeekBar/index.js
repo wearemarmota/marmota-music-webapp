@@ -28,7 +28,6 @@ class SeekBar extends Component {
     this.onClickThrottled(event);
   }
 
-  // onClickThrottled = throttle(this.props.onClick, 200);
   onClickThrottled = throttle((event) => {
     this.props.onClick(event)
   }, 200);
