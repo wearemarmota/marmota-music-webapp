@@ -8,7 +8,7 @@ div#queue {
   width: clamp(200px, 50%, 560px);
   border-radius: 10px;
   transition: all 0.2s ease-in-out;
-  transform: scale(0.95);
+  transform: scale(0.95) translateY(10px) translateX(10px);
   opacity: 0;
   color: white;
   padding: 15px;
@@ -30,7 +30,6 @@ div#queue {
     position: relative;
     border-bottom: 1px solid rgba(200, 200, 231, 0.3);
     cursor: pointer;
-    // transition: all .2s;
 
     &.current {
       div.title{
@@ -46,6 +45,9 @@ div#queue {
     }
     &:active {
       background-color: #151f43;
+      border-radius: 4px;
+      border-bottom: 1px solid transparent;
+      box-shadow: 0 0 0 4px #151f43;
     }
 
     &:last-child {
@@ -106,15 +108,11 @@ div#queue {
     align-items: center;
     justify-content: center;
     height: 100%;
-    color: rgba(0, 0, 0, 0.25);
+    color: rgba(205, 205, 237, 0.4);
     svg{
       width: 64px;
       height: 64px;
       margin-bottom: 16px;
-
-      path{
-        fill: rgba(0, 0, 0, 0.10);
-      }
     }
   }
 }

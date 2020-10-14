@@ -45,6 +45,8 @@ class Header extends Component {
           <NavLink to="/artists">Artistas</NavLink>
           <NavLink to="/albums">Álbumes</NavLink>
           <NavLink to="/upload">Subir</NavLink>
+        </nav>
+        <nav>
           <DefaultAvatar name="E" alt="Avatar" className="avatar" />
         </nav>
       </header>
