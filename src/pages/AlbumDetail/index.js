@@ -89,13 +89,13 @@ class AlbumDetail extends Component {
   render() {
 
     if(this.state.loading){
-      return <div className="container">
+      return <div className="container small">
         <p>Cargando...</p>
       </div>;
     }
 
     if(!this.state.loading && !this.state.album){
-      return <div className="container">
+      return <div className="container small">
         <p>Mmm...</p>
       </div>;
     }
@@ -108,7 +108,7 @@ class AlbumDetail extends Component {
           alt={this.state.album.title + " cover"}
         />
 
-        <div className="container">
+        <div className="container small">
 
           <Header
             album={this.state.album}
@@ -127,7 +127,7 @@ class AlbumDetail extends Component {
               currentSong={this.props.queueContext.getCurrentSong()}
             />
           )}
-          
+
         </div>
       </React.Fragment>
     );

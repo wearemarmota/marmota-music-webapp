@@ -20,6 +20,10 @@ body {
 body > div#root > main > .container {
   max-width: 1440px;
   padding: 15px 25px;
+
+  &.small{
+    max-width: 1200px;
+  }
 }
 
 h2{
