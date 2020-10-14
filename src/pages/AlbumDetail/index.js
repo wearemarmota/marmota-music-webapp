@@ -113,7 +113,7 @@ class AlbumDetail extends Component {
           <Header
             album={this.state.album}
             play={this.replaceQueueAndPlay}
-            append={this.appendAlbumToQueue}
+            appendAlbumToQueue={this.appendAlbumToQueue}
           />
 
           { this.state.album.songs.length <= 0 && 
