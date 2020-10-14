@@ -1,0 +1,113 @@
+table.songs-list {
+  width: 100%;
+  border-spacing: 0;
+
+  thead {
+    font-size: 12px;
+    text-transform: uppercase;
+    text-align: left;
+    th{
+      padding: 2px 15px;
+    }
+  }
+
+  button.like{
+    padding: 5px;
+    svg{
+      display: block;
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  tbody {
+    font-size: 14px;
+    tr{
+      transition: all .1s;
+      td {
+        padding: 19px 15px;
+        border-bottom: 1px solid #2b375f;
+
+        &.column-like {
+          padding: 19px 0 19px 10px;
+          width: 34px;
+          text-align: center;
+        }
+        &.column-position-and-status {
+          padding: 19px 0;
+          width: 24px;
+          text-align: center;
+      
+          div.icon-speaker{
+            display: none;
+            padding: 2px;
+            margin: 0 auto;
+            svg{
+              display: block;
+              width: 20px;
+              height: 20px;
+            }
+          }
+        
+          button.icon-play{
+            display: none;
+            padding: 2px;
+            margin: 0 auto;
+            svg{
+              display: block;
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+        &.column-title {
+          font-weight: bold;
+        }
+        &.column-actions {
+          button {
+            padding: 2px;
+            border: 1px solid transparent;
+            border-radius: 2px;
+            color: #c8c8e7;
+            &:hover {
+              border-color: #c8c8e7;
+            }
+            svg {
+              display: block;
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+      }
+      &:last-child td {
+        border-bottom: none;
+      }
+      &.playing {
+        td.column-title {
+          color: #ff0182;
+        }
+        td.column-position-and-status {
+          div.position {
+            display: none;
+          }
+          div.icon-speaker {
+            display: block;
+            width: 24px;
+          }
+        }
+      }
+      &:hover {
+        background-color: #2b375f;
+        &:not(.playing){
+          div.position {
+            display: none;
+          }
+          button.icon-play {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}

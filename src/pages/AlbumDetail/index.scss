@@ -9,33 +9,3 @@
   top: 0;
   filter: blur(45px);
 }
-
-header.album-header {
-  display: flex;
-  align-items: center;
-  .main-cover {
-    width: 300px;
-    margin-right: 32px;
-  }
-  div.details {
-    h2 {
-      margin-top: 0;
-      margin-bottom: 1rem;
-    }
-    button,
-    a {
-      background-color: white;
-      font-weight: bold;
-      margin: 1rem;
-      font-size: 14px;
-      text-decoration: none;
-      color: midnightblue;
-      padding: 10px 15px;
-      border-radius: 20px;
-
-      &:nth-child(1) {
-        margin-left: 0;
-      }
-    }
-  }
-}

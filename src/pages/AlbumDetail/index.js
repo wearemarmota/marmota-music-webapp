@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import sortBy from "lodash/sortBy";
 import AlbumsService from "../../shared/albums-service";
 import withQueueContext from "../../hoc/queue";
 
 import Cover from "../../components/AlbumItem/Cover";
-import Duration from "../../components/Duration";
+import Header from "./Header";
 
 import "./index.scss";
+import List from "./List";
+import EmptyAlbum from "./EmptyAlbum";
 
 class AlbumDetail extends Component {
   constructor(props) {
@@ -29,6 +32,10 @@ class AlbumDetail extends Component {
     })
   }
 
+  // Sort the songs list by his position on the album
+  // (in case that api doesn't return it in correct order)
+  orderedSongs = () => sortBy(this.state.album.songs, [function(o){ return o.position; }]);
+
   replaceQueueAndPlay = () => {
     const {
       setSongs,
@@ -39,7 +46,7 @@ class AlbumDetail extends Component {
 
     // Build an array of songs, each one with the album info
     // but removing the songs array of him.
-    let songsToAppend = this.state.album.songs;
+    let songsToAppend = this.orderedSongs();
     songsToAppend.forEach(song => {
       song.album = Object.assign({}, this.state.album);
       delete song.album.songs;
@@ -55,7 +62,7 @@ class AlbumDetail extends Component {
 
   appendAlbumToQueue = () => {
     const { songs, setSongs, setVisible } = this.props.queueContext;
-    let songsToAppend = this.state.album.songs;
+    let songsToAppend = this.orderedSongs();
 
     // Build an array of songs, each one with the album info
     // but removing the songs array of him.
@@ -92,7 +99,7 @@ class AlbumDetail extends Component {
         <p>Mmm...</p>
       </div>;
     }
-
+    
     return (
       <React.Fragment>
         <Cover
@@ -103,74 +110,28 @@ class AlbumDetail extends Component {
 
         <div className="container">
 
-          <header className="album-header">
-            <Cover
-              covers={this.state.album.covers}
-              className="main-cover"
-              alt={this.state.album.title + " cover"}
-            />
-            <div className="details">
-              <h2>{this.state.album.title}</h2>
-              <p>{this.state.album.artist.name}</p>
-
-              <div>
-                <button className="link" onClick={this.replaceQueueAndPlay}>
-                  Reproducir
-                </button>
-                <button className="link" onClick={this.appendAlbumToQueue}>
-                  Agregar a la cola
-                </button>
-              </div>
-              <div>
-                <Link to={`/album/${this.albumId}/edit`}>
-                  Editar el álbum
-                </Link>
-              </div>
-            </div>
-          </header>
-
-          <h2>Las canciones de {this.state.album.title}</h2>
+          <Header
+            album={this.state.album}
+            play={this.replaceQueueAndPlay}
+            append={this.appendAlbumToQueue}
+          />
 
           { this.state.album.songs.length <= 0 && 
             <EmptyAlbum />
           }
 
           { this.state.album.songs.length > 0 && (
-            <table width="100%">
-              <tbody>
-                {this.state.album.songs.map((song, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{song.position}</td>
-                      <td>{song.title}</td>
-                      <td>
-                        <button onClick={() => { this.appendSongToQueue(song); }}>
-                          Añadir a la cola
-                        </button>
-                      </td>
-                      <td>
-                          <Duration seconds={song.duration} />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <List
+              album={this.state.album}
+              songs={this.orderedSongs()}
+              currentSong={this.props.queueContext.getCurrentSong()}
+            />
           )}
+          
         </div>
       </React.Fragment>
     );
   }
-}
-
-function EmptyAlbum(props){
-  return <React.Fragment>
-    <h2>Uis...</h2>
-    <p>
-      Parece que este disco no tiene canciones.{" "}
-      <Link to="/upload">Súbelas</Link>
-    </p>
-  </React.Fragment>;
 }
 
 export default withRouter(withQueueContext(AlbumDetail));
