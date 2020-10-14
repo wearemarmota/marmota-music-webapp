@@ -125,6 +125,7 @@ class AlbumDetail extends Component {
               album={this.state.album}
               songs={this.orderedSongs()}
               currentSong={this.props.queueContext.getCurrentSong()}
+              appendSongToQueue={this.appendSongToQueue}
             />
           )}
 

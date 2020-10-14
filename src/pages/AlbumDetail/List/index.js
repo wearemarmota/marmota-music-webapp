@@ -14,7 +14,7 @@ import "./index.scss";
 
 export default function List(props) {
 
-  const { album, songs, currentSong } = props;
+  const { album, songs, currentSong, appendSongToQueue } = props;
 
   return (
     <table className="songs-list">
@@ -31,7 +31,9 @@ export default function List(props) {
       <tbody>
         { songs.map((song, index) => {
           return (
-            <tr key={index} className={classNames({playing: currentSong && currentSong.id === song.id})}>
+            <tr key={index} className={classNames({
+              playing: currentSong && currentSong.id === song.id
+            })}>
               <td className="column-like">
                 <button className="unstyled like">
                   <IconHeartOutline />
@@ -44,11 +46,11 @@ export default function List(props) {
               </td>
               <td className="column-title">{song.title}</td>
               <td>{album.artist.name}</td>
-              <td>
+              <td className="column-duration">
                 <Duration seconds={song.duration} />
               </td>
               <td className="column-actions">
-                <button className="unstyled" onClick={() => { this.appendSongToQueue(song); }}>
+                <button className="unstyled" onClick={() => appendSongToQueue(song)}>
                   <IconMenu />
                 </button>
               </td>

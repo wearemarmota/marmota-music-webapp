@@ -63,7 +63,11 @@ table.songs-list {
         &.column-title {
           font-weight: bold;
         }
+        &.column-duration {
+          width: 90px;
+        }
         &.column-actions {
+          width: 36px;
           button {
             padding: 2px;
             border: 1px solid transparent;
