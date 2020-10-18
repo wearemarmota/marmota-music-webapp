@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import Cover from "../../../components/AlbumItem/Cover";
+import Dropdown, { DropdownDivider, DropdownItem } from "../../../components/Dropdown";
 
 import "./index.scss";
 
@@ -22,13 +23,22 @@ export default function Header(props) {
         <div className="actions">
           <button className="primary with-min-width" onClick={play} disabled={album.songs.length === 0}>Reproducir</button>
           <button className="with-min-width" onClick={appendAlbumToQueue} disabled={album.songs.length === 0}>Agregar a la cola</button>
-          <Link to={`/album/${album.id}/edit`}>
-            <svg viewBox="0 0 24 24">
-              <path fill="currentColor" d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" />
-            </svg>
-          </Link>
+          <Dropdown handler={OverflowHandler}>
+            <DropdownItem><Link to={`/album/${album.id}/edit`}>Editar álbum</Link></DropdownItem>
+            <DropdownItem>Descargar álbum</DropdownItem>
+            <DropdownDivider />
+            <DropdownItem>Añadir a una playlist</DropdownItem>
+            <DropdownDivider />
+            <DropdownItem>Compartir</DropdownItem>
+          </Dropdown>
         </div>
       </div>
     </header>
   );
 }
+
+const OverflowHandler = <button>
+  <svg viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" />
+  </svg>
+</button>;

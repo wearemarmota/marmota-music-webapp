@@ -43,8 +43,7 @@ header.album-details-header {
 
   .actions {
     display: flex;
-    a,
-    button {
+    > button {
       display: inline-block;
       color: inherit;
       border: none;
