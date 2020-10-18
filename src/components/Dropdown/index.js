@@ -8,7 +8,7 @@ class Dropdown extends Component {
   constructor(props){
     super(props);
     this.state = {
-      isVisible: props.visible || false,
+      isVisible: false,
       positionX: 0,
       positionY: 0,
     }
@@ -100,9 +100,10 @@ class Dropdown extends Component {
     return (
       <React.Fragment>
         <DropdownHandler
-          ref={this.handlerRef}
-          handler={this.props.handler}
+          ref={ this.handlerRef }
+          handler={ this.props.handler }
           onClick={ this.toggleVisibility }
+          active={ this.state.isVisible }
         />
         <ul
           ref={this.dropdownRef}
@@ -118,8 +119,23 @@ class Dropdown extends Component {
 
 class DropdownHandler extends Component {
   render(){
-    return React.cloneElement(this.props.handler, {
-      ...this.props,
+
+    // Read props values:
+    const {
+      active: isActive,
+      handler,
+      ...props
+    } = this.props;
+
+    // Creating a new component as from handler:
+    return React.cloneElement(handler, {
+      // With all his props (except handler and active)
+      ...props,
+      // Copying his classNames and adding (maybe) others
+      className: classNames(handler.props.className, {
+        active: isActive
+      }),
+      // And including the reference
       ref: (dom) => {
         this.dom = dom;
       },
