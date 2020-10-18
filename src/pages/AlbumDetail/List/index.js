@@ -2,6 +2,7 @@ import React from "react";
 import classNames from "classnames/bind";
 
 import Duration from "../../../components/Duration";
+import Dropdown, { DropdownItem } from "../../../components/Dropdown";
 
 import {
   IconSpeaker,
@@ -50,9 +51,12 @@ export default function List(props) {
                 <Duration seconds={song.duration} />
               </td>
               <td className="column-actions">
-                <button className="unstyled" onClick={() => appendSongToQueue(song)}>
-                  <IconMenu />
-                </button>
+                <Dropdown handler={OverflowHandler} offset={{bottom: 90}}>
+                  <DropdownItem>
+                    <button className="unstyled" onClick={() => appendSongToQueue(song)}>Agregar a la cola</button>
+                  </DropdownItem>
+                  <DropdownItem>Descargar</DropdownItem>
+                </Dropdown>
               </td>
             </tr>
           );
@@ -61,3 +65,7 @@ export default function List(props) {
     </table>
   );
 }
+
+const OverflowHandler = <button className="unstyled">
+  <IconMenu />
+</button>;
