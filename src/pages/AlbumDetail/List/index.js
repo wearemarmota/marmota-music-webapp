@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 
 export default function List(props) {
 
-  const { album, songs, currentSong, appendSongToQueue } = props;
+  const { album, songs, currentSong, appendSongToQueue, playSong } = props;
 
   return (
     <table className="songs-list">
@@ -33,7 +33,7 @@ export default function List(props) {
       <tbody>
         { songs.map((song, index) => {
           return (
-            <tr key={index} className={classNames({
+            <tr onDoubleClick={e => playSong(index)} key={index} className={classNames({
               playing: currentSong && currentSong.id === song.id
             })}>
               <td className="column-like">
@@ -44,7 +44,7 @@ export default function List(props) {
               <td className="column-position-and-status">
                 <div className="position">{song.position}</div>
                 <div className="icon-speaker"><IconSpeaker /></div>
-                <button className="unstyled icon-play"><IconPlay /></button>
+                <button className="unstyled icon-play" onClick={e => playSong(index)}><IconPlay /></button>
               </td>
               <td className="column-title">{song.title}</td>
               <td><Link to={`/artist/${album.artist.id}`}>{album.artist.name}</Link></td>

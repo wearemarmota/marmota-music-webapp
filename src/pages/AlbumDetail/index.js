@@ -36,7 +36,7 @@ class AlbumDetail extends Component {
   // (in case that api doesn't return it in correct order)
   orderedSongs = () => sortBy(this.state.album.songs, [function(o){ return o.position; }]);
 
-  replaceQueueAndPlay = () => {
+  replaceQueueAndPlay = (index = 0) => {
     const {
       setSongs,
       setVisible,
@@ -54,7 +54,7 @@ class AlbumDetail extends Component {
 
     setSongs(songsToAppend).then(() => {
       setVisible(true);
-      setCurrentIndex(0).then(() => {
+      setCurrentIndex(index).then(() => {
         setPlaying(false).then(setPlaying(true));
       });
     });
@@ -85,6 +85,8 @@ class AlbumDetail extends Component {
     setSongs([].concat(songs, [song]));
     setVisible(true);
   };
+
+  playSong = index => this.replaceQueueAndPlay(index);
 
   render() {
 
@@ -126,6 +128,7 @@ class AlbumDetail extends Component {
               songs={this.orderedSongs()}
               currentSong={this.props.queueContext.getCurrentSong()}
               appendSongToQueue={this.appendSongToQueue}
+              playSong={this.playSong}
             />
           )}
 
