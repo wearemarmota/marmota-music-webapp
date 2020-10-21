@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import Cover from "../../../components/AlbumItem/Cover";
-import Dropdown, { DropdownDivider, DropdownItem } from "../../../components/Dropdown";
+import Dropdown, { DropdownDivider, DropdownLink, DropdownTextDisabled } from "../../../components/Dropdown";
 
 import "./index.scss";
 
@@ -24,12 +24,12 @@ export default function Header(props) {
           <button className="primary with-min-width" onClick={play} disabled={album.songs.length === 0}>Reproducir</button>
           <button className="with-min-width" onClick={appendAlbumToQueue} disabled={album.songs.length === 0}>Agregar a la cola</button>
           <Dropdown handler={OverflowHandler}>
-            <DropdownItem><Link to={`/album/${album.id}/edit`}>Editar álbum</Link></DropdownItem>
-            <DropdownItem>Descargar álbum</DropdownItem>
+            <DropdownLink to={`/album/${album.id}/edit`}>Editar álbum</DropdownLink>
+            <DropdownTextDisabled>Descargar álbum</DropdownTextDisabled>
             <DropdownDivider />
-            <DropdownItem>Añadir a una playlist</DropdownItem>
+            <DropdownTextDisabled>Añadir a una playlist</DropdownTextDisabled>
             <DropdownDivider />
-            <DropdownItem>Compartir</DropdownItem>
+            <DropdownTextDisabled>Compartir</DropdownTextDisabled>
           </Dropdown>
         </div>
       </div>

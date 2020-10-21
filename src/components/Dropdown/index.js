@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
 
 import "./index.scss";
@@ -143,8 +144,20 @@ class DropdownHandler extends Component {
   }
 }
 
-const DropdownItem = props => {
-  return <li {...props}>{props.children}</li>
+const DropdownText = props => {
+  return <li>{props.children}</li>
+};
+
+const DropdownLink = props => {
+  return <li><Link {...props}>{props.children}</Link></li>
+};
+
+const DropdownButton = props => {
+  return <li><button {...props}>{props.children}</button></li>
+};
+
+const DropdownTextDisabled = props => {
+  return <li className="disabled">{props.children}</li>
 };
 
 const DropdownDivider = props => {
@@ -160,4 +173,10 @@ const getOffset = element => {
 }
 
 export default Dropdown;
-export { DropdownItem, DropdownDivider };
+export {
+  DropdownText,
+  DropdownTextDisabled,
+  DropdownLink,
+  DropdownButton,
+  DropdownDivider,
+};

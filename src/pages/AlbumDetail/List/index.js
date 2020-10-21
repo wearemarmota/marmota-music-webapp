@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames/bind";
 
 import Duration from "../../../components/Duration";
-import Dropdown, { DropdownItem } from "../../../components/Dropdown";
+import Dropdown, { DropdownButton, DropdownTextDisabled } from "../../../components/Dropdown";
 
 import {
   IconSpeaker,
@@ -12,6 +12,7 @@ import {
 } from "../icons";
 
 import "./index.scss";
+import { Link } from "react-router-dom";
 
 export default function List(props) {
 
@@ -52,10 +53,10 @@ export default function List(props) {
               </td>
               <td className="column-actions">
                 <Dropdown handler={OverflowHandler} offset={{bottom: 90}}>
-                  <DropdownItem>
-                    <button className="unstyled" onClick={() => appendSongToQueue(song)}>Agregar a la cola</button>
-                  </DropdownItem>
-                  <DropdownItem>Descargar</DropdownItem>
+                  <DropdownButton className="unstyled" onClick={() => appendSongToQueue(song)}>
+                    Agregar a la cola
+                  </DropdownButton>
+                  <DropdownTextDisabled>Descargar</DropdownTextDisabled>
                 </Dropdown>
               </td>
             </tr>
