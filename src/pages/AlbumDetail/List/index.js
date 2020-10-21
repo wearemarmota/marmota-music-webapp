@@ -47,7 +47,7 @@ export default function List(props) {
                 <button className="unstyled icon-play"><IconPlay /></button>
               </td>
               <td className="column-title">{song.title}</td>
-              <td>{album.artist.name}</td>
+              <td><Link to={`/artist/${album.artist.id}`}>{album.artist.name}</Link></td>
               <td className="column-duration">
                 <Duration seconds={song.duration} />
               </td>
