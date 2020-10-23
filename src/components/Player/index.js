@@ -65,8 +65,12 @@ class Player extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.queueContext.playing !== prevProps.queueContext.playing) {
-      if (this.props.queueContext.playing) {
+
+    const { queueContext: prevQueueContext } = prevProps;
+    const { queueContext } = this.props;
+
+    if (queueContext.playing !== prevQueueContext.playing) {
+      if (queueContext.playing) {
         this.play();
       } else {
         this.pause();
