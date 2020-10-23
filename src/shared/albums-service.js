@@ -7,10 +7,11 @@ function get(albumId) {
   });
 }
 
-function list() {
+function list(options) {
   return request({
     url: `/albums`,
     method: "GET",
+    params: options,
   });
 }
 

@@ -27,7 +27,10 @@ class Home extends Component {
       });
     });
 
-    AlbumsService.list().then((albums) => {
+    AlbumsService.list({
+      sortBy: 'created_at',
+      orderBy: 'desc',
+    }).then((albums) => {
       this.setState({
         albums: albums,
         loadingAlbums: false,
