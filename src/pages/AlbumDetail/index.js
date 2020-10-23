@@ -39,7 +39,6 @@ class AlbumDetail extends Component {
   replaceQueueAndPlay = (index = 0) => {
     const {
       setSongs,
-      setVisible,
       setCurrentIndex,
       setPlaying,
     } = this.props.queueContext;
@@ -53,7 +52,6 @@ class AlbumDetail extends Component {
     });
 
     setSongs(songsToAppend).then(() => {
-      setVisible(true);
       setCurrentIndex(index).then(() => {
         setPlaying(false).then(setPlaying(true));
       });
@@ -61,7 +59,7 @@ class AlbumDetail extends Component {
   };
 
   appendAlbumToQueue = () => {
-    const { songs, setSongs, setVisible } = this.props.queueContext;
+    const { songs, setSongs } = this.props.queueContext;
     let songsToAppend = this.orderedSongs();
 
     // Build an array of songs, each one with the album info
@@ -72,18 +70,16 @@ class AlbumDetail extends Component {
     });
 
     setSongs([].concat(songs, songsToAppend));
-    setVisible(true);
   };
 
   appendSongToQueue = (song) => {
-    const { songs, setSongs, setVisible } = this.props.queueContext;
+    const { songs, setSongs } = this.props.queueContext;
 
     // Include the album info to the song object (excluding songs list)
     song.album = Object.assign({}, this.state.album);
     delete song.album.songs;
 
     setSongs([].concat(songs, [song]));
-    setVisible(true);
   };
 
   playSong = index => this.replaceQueueAndPlay(index);
