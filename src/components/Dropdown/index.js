@@ -60,7 +60,7 @@ class Dropdown extends Component {
   setPosition = () => {
 
     const spaceWithDropdown = this.props.gap || 5;
-    const offsetBottom = this.props.offset && this.props.offset.bottom || 0;
+    const offsetBottom = (this.props.offset && this.props.offset.bottom) || 0;
 
     // Viewport size and scroll:
     const {
