@@ -23,6 +23,17 @@ class Player extends Component {
   componentDidMount() {
     this.currentTimeInterval = setInterval(this.timeInterval, 500);
     this.logger = new Logger("Player");
+
+    if ('mediaSession' in navigator) {    
+      navigator.mediaSession.setActionHandler('play', this.play);
+      navigator.mediaSession.setActionHandler('pause', this.pause);
+      navigator.mediaSession.setActionHandler('stop', this.stop);
+      navigator.mediaSession.setActionHandler('seekbackward', e => this.setCurrentTime(this.getCurrentTime() - 5));
+      navigator.mediaSession.setActionHandler('seekforward', e => this.setCurrentTime(this.getCurrentTime() + 5));
+      navigator.mediaSession.setActionHandler('seekto', this.setCurrentTime);
+      navigator.mediaSession.setActionHandler('previoustrack', this.previous);
+      navigator.mediaSession.setActionHandler('nexttrack', this.next);
+    }
   }
 
   timeInterval = () => {
@@ -66,7 +77,24 @@ class Player extends Component {
   play = () => {
     this.audioRef.current.play();
     this.props.queueContext.setPlaying(true);
+    if ('mediaSession' in navigator) {
+      this.logger.log(this.props.queueContext.getCurrentSong());
+      navigator.mediaSession.metadata = new window.MediaMetadata({
+        title: this.props.queueContext.getCurrentSong().title,
+        artist: this.props.queueContext.getCurrentSong().album.artist.name,
+        album: this.props.queueContext.getCurrentSong().album.title,
+        artwork: [
+          { src: this.props.queueContext.getCurrentSong().album.covers[500],   sizes: '500x500',   type: 'image/jpg' },
+        ]
+      });
+    }
   };
+
+  stop = () => {
+    this.audioRef.current.pause();
+    this.setCurrentTime(0);
+    this.props.queueContext.setPlaying(false);
+  }
 
   pause = () => {
     this.audioRef.current.pause();
@@ -111,6 +139,7 @@ class Player extends Component {
     }
     this.logger.log("setCurrentTime", currentTime);
     this.audioRef.current.currentTime = currentTime;
+    this.timeInterval();
   };
 
   getCurrentTime = () => {
