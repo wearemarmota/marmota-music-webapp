@@ -114,7 +114,7 @@ class AlbumDetail extends Component {
 
           <Header
             album={this.state.album}
-            play={this.replaceQueueAndPlay}
+            play={e => this.replaceQueueAndPlay(0)}
             appendAlbumToQueue={this.appendAlbumToQueue}
           />
 
