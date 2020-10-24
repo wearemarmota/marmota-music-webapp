@@ -24,7 +24,7 @@ class Player extends Component {
     this.currentTimeInterval = setInterval(this.timeInterval, 500);
     this.logger = new Logger("Player");
 
-    if ('mediaSession' in navigator) {    
+    if ('mediaSession' in navigator) {
       navigator.mediaSession.setActionHandler('play', this.play);
       navigator.mediaSession.setActionHandler('pause', this.pause);
       navigator.mediaSession.setActionHandler('stop', this.stop);
@@ -82,15 +82,37 @@ class Player extends Component {
     this.audioRef.current.play();
     this.props.queueContext.setPlaying(true);
     if ('mediaSession' in navigator) {
-      this.logger.log(this.props.queueContext.getCurrentSong());
-      navigator.mediaSession.metadata = new window.MediaMetadata({
+
+      const albumCovers = this.props.queueContext.getCurrentSong().album.covers;
+
+      let metadata = {
         title: this.props.queueContext.getCurrentSong().title,
         artist: this.props.queueContext.getCurrentSong().album.artist.name,
         album: this.props.queueContext.getCurrentSong().album.title,
-        artwork: [
-          { src: this.props.queueContext.getCurrentSong().album.covers[500],   sizes: '500x500',   type: 'image/jpg' },
-        ]
-      });
+        artwork: [],
+      };
+
+      if(albumCovers.hasOwnProperty(100)){
+        metadata.artwork.push({
+          src: albumCovers[100],
+          sizes: '100x100',
+          type: 'image/jpg'
+        });
+      }
+
+      if(albumCovers.hasOwnProperty(500)){
+        metadata.artwork.push({
+          src: albumCovers[500],
+          sizes: '500x500',
+          type: 'image/jpg'
+        });
+      }
+
+      if(metadata.artwork.length === 0){
+        delete metadata.artwork;
+      }
+      
+      navigator.mediaSession.metadata = new window.MediaMetadata(metadata);
     }
   };
 
