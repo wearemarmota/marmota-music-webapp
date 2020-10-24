@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import AlbumsService from "./../shared/albums-service";
 
 import AlbumsList from "../components/AlbumsList";
+import AlbumsListPhantom from "../components/AlbumsList/Phantom";
 
 class Albums extends Component {
   constructor(props) {
@@ -25,14 +26,16 @@ class Albums extends Component {
   }
 
   render() {
+    const {
+      loading,
+      albums,
+    } = this.state;
     return (
       <div className="container">
         <h2>Todos los álbums</h2>
-        {this.state.loading && <p>Cargando...</p>}
-        {this.state.albums.length > 0 && (
-          <AlbumsList albums={this.state.albums} />
-        )}
-        {!this.state.loading && this.state.albums.length <= 0 && (
+        { loading && <AlbumsListPhantom amount={18} /> }
+        { albums.length > 0 && <AlbumsList albums={albums} /> }
+        { !loading && albums.length <= 0 && (
           <p>No se han encontrado álbums</p>
         )}
       </div>

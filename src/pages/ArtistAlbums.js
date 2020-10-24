@@ -5,6 +5,7 @@ import AlbumsService from "./../shared/albums-service";
 import ArtistsService from "./../shared/artists-service";
 
 import AlbumsList from "../components/AlbumsList";
+import AlbumsListPhantom from "../components/AlbumsList/Phantom";
 
 class Albums extends Component {
   constructor(props) {
@@ -13,40 +14,51 @@ class Albums extends Component {
     this.artistId = this.props.match.params.artistId;
     this.state = {
       albums: [],
-      loading: false,
+      loadingAlbums: false,
+      loadingArtist: false,
       artist: null,
     };
   }
 
   componentDidMount() {
-    this.setState({ loading: true });
+
+    this.setState({
+      loadingAlbums: true,
+      loadingArtist: true,
+    });
 
     AlbumsService.listByArtist(this.artistId).then((albums) => {
       this.setState({
         albums: albums,
-        loading: false,
+        loadingAlbums: false,
       });
     });
 
     ArtistsService.get(this.artistId).then((artist) => {
       this.setState({
         artist: artist,
+        loadingArtist: false,
       });
     });
   }
 
   render() {
+
+    const {
+      loadingAlbums,
+      loadingArtist,
+      artist,
+      albums
+    } = this.state;
+
+    console.log(loadingAlbums, loadingArtist, this.state);
     return (
       <div className="container">
-      {this.state.loading && <p>Cargando...</p>}
-
-        {this.state.artist && <h2>Albums de {this.state.artist.name}</h2>}
-
-        {this.state.albums.length > 0 && (
-          <AlbumsList albums={this.state.albums} />
-        )}
-
-        {!this.state.loading && this.state.albums.length <= 0 && (
+        { loadingArtist && <h2>Cargando...</h2> }
+        { artist && <h2>Albums de {artist.name}</h2> }
+        { loadingAlbums && <AlbumsListPhantom amount={6} /> }
+        { albums.length > 0 && <AlbumsList albums={albums} /> }
+        { !loadingAlbums && albums.length <= 0 && (
           <p>No se han encontrado álbums</p>
         )}
       </div>
