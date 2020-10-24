@@ -23,6 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "build:prod": "env-cmd -f .env.prod npm run build",
+    "build-and-deploy": "npm run build:prod && firebase deploy",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
