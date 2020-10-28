@@ -17,7 +17,11 @@ class Albums extends Component {
 
   componentDidMount() {
     this.setState({ loading: true });
-    AlbumsService.list().then((albums) => {
+    AlbumsService.list({
+      limit: 999,
+      sortBy: 'title',
+      orderBy: 'asc',
+    }).then((albums) => {
       this.setState({
         albums: albums,
         loading: false,
