@@ -51,7 +51,6 @@ class Albums extends Component {
       albums
     } = this.state;
 
-    console.log(loadingAlbums, loadingArtist, this.state);
     return (
       <div className="container">
         { loadingArtist && <h2>Cargando...</h2> }

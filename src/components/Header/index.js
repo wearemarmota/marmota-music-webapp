@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter, NavLink } from "react-router-dom";
 import classNames from "classnames/bind";
 import throttle from "lodash/throttle";
+import Dropdown from "../Dropdown";
 import DefaultAvatar from "./DefaultAvatar";
 
 import "./index.scss";
@@ -42,12 +43,17 @@ class Header extends Component {
           </NavLink>
         </h1>
         <nav>
-          <NavLink to="/artists">Artistas</NavLink>
-          <NavLink to="/albums">Álbumes</NavLink>
-          <NavLink to="/upload">Subir</NavLink>
-        </nav>
-        <nav>
-          <DefaultAvatar name="E" alt="Avatar" className="avatar" />
+          <Dropdown>
+            <Dropdown.Handler>
+              <DefaultAvatar className="avatar" name="E" />
+            </Dropdown.Handler>
+            <Dropdown.List>
+              <Dropdown.Item hideOnClick><NavLink to="/artists">Todos los artistas</NavLink></Dropdown.Item>
+              <Dropdown.Item hideOnClick><NavLink to="/albums">Todos los álbumes</NavLink></Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item hideOnClick><NavLink to="/upload">Agregar contenido</NavLink></Dropdown.Item>
+            </Dropdown.List>
+          </Dropdown>
         </nav>
       </header>
     );

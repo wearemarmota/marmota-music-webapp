@@ -6,8 +6,8 @@ header#main-header {
   align-items: center;
   padding: 10px 30px;
   justify-content: space-between;
-  z-index: 1;
   transition: all .5s;
+  z-index: 2;
   background-color: rgba(18, 29, 59, 0.6);
 
   a {
