@@ -26,7 +26,7 @@ class Header extends Component {
 
   handleDocumentScroll = () => {
     const { scrollTop: currentScrollTop } = document.documentElement || document.body;
-    const scrolled = currentScrollTop > 10;
+    const scrolled = currentScrollTop > 20;
     if(scrolled !== this.state.scrolled){
       this.setState({ scrolled: scrolled });
     }
