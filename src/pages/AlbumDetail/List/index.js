@@ -25,8 +25,8 @@ export default function List(props) {
           <th></th>
           <th></th>
           <th>Título</th>
-          <th>Artista</th>
-          <th>Duración</th>
+          <th className="d-none d-md-table-cell">Artista</th>
+          <th className="d-none d-md-table-cell">Duración</th>
           <th></th>
         </tr>
       </thead>
@@ -47,8 +47,8 @@ export default function List(props) {
                 <button className="unstyled icon-play" onClick={e => playSong(index)}><IconPlay /></button>
               </td>
               <td className="column-title">{song.title}</td>
-              <td><Link to={`/artist/${album.artist.id}`}>{album.artist.name}</Link></td>
-              <td className="column-duration">
+              <td className="column-artist d-none d-md-table-cell"><Link to={`/artist/${album.artist.id}`}>{album.artist.name}</Link></td>
+              <td className="column-duration d-none d-md-table-cell">
                 <Duration seconds={song.duration} />
               </td>
               <td className="column-actions">
