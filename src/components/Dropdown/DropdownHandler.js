@@ -21,7 +21,7 @@ const DropdownHandler = props => {
 
   const updatePosition = useCallback(event => {
     if(!visible) return;
-    const { top, left } = getOffset(handlerRef.current, fixed);
+    const { top, left } = getOffset(handlerRef.current);
     setPositionHandler([top, left]);
   }, [visible, handlerRef]);
   

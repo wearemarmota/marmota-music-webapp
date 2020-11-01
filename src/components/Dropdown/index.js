@@ -23,8 +23,6 @@ const Dropdown = props => {
   const handlerRef = useRef(null);
   const listRef = useRef(null);
   
-  const fixed = props.fixed || false;
-
   return(
     <DropdownContext.Provider value={{
       visible,
