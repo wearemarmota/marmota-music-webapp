@@ -17,7 +17,6 @@ div#queue {
   transform: scale(0.95) translateY(10px) translateX(10px);
   opacity: 0;
   color: white;
-  padding: 15px;
   overflow-y: auto;
   pointer-events: none;
   display: flex;
@@ -44,100 +43,111 @@ div#queue {
   div.queue-content{
     flex-grow: 1;
     flex-shrink: 1;
-  }
 
-  div.song-item {
-    display: flex;
-    padding: 20px 15px;
-    font-size: 14px;
-    max-width: 100%;
-    align-items: center;
-    position: relative;
-    border-bottom: 1px solid rgba(200, 200, 231, 0.3);
-    cursor: pointer;
+    div.song-item {
+      display: flex;
+      flex-wrap: nowrap;
+      padding: 18px 30px;
+      font-size: 14px;
+      max-width: 100%;
+      align-items: center;
+      position: relative;
+      cursor: pointer;
 
-    &.current {
-      div.title{
-        color: #ff0182;
+      &:after{
+        content:"";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: block;
+        height: 1px;
+        flex-shrink: 0;
+        background-color: #4a4d73;
       }
-    }
-
-    &:hover {
-      background-color: #202d4d;
-      border-radius: 4px;
-      border-bottom: 1px solid transparent;
-      box-shadow: 0 0 0 4px #202d4d;
-    }
-    &:active {
-      background-color: #151f43;
-      border-radius: 4px;
-      border-bottom: 1px solid transparent;
-      box-shadow: 0 0 0 4px #151f43;
-    }
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    img.cover,
-    svg.cover {
-      width: 60px;
-      height: 60px;
-      margin-right: 20px;
-      border-radius: 4px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-    div.info {
-      flex-grow: 1;
-      flex-shrink: 1;
-      // min-width seems to solve a weird bug:
-      // see https://css-tricks.com/flexbox-truncated-text/
-      min-width: 0;
-
-      div.title {
-        font-size: 16px;
-        line-height: 1.5;
-        font-weight: 800;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      div.artist-and-duration {
-        font-size: 14px;
-        line-height: 1.5;
-        color: #cdcded;
-      }
-    }
-
-    div.overflow-menu {
-      button {
-        padding: 8px;
-        margin-left: 16px;
-        border-radius: 3px;
-        
-        &:hover {
-          background-color: white;
-        }
-        svg {
-          display: block;
-          width: 24px;
-          height: 24px;
+  
+      &.current {
+        div.title{
+          color: #ff0182;
         }
       }
+  
+      &:hover {
+        background-color: #202d4d;
+      }
+      &:active {
+        background-color: #151f43;
+      }
+  
+      &:last-child:after{
+        content: none;
+      }
+  
+      img.cover,
+      svg.cover {
+        width: 45px;
+        height: 45px;
+        margin-right: 20px;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+      div.info {
+        flex-grow: 1;
+        flex-shrink: 1;
+        // min-width seems to solve a weird bug:
+        // see https://css-tricks.com/flexbox-truncated-text/
+        min-width: 0;
+  
+        div.title {
+          font-size: 16px;
+          line-height: 1.5;
+          font-weight: 800;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        div.artist-and-duration {
+          font-size: 14px;
+          line-height: 1.5;
+          color: #cdcded;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+  
+      div.overflow-menu {
+        button {
+          padding: 8px;
+          margin-left: 16px;
+          border-radius: 3px;
+          
+          &:hover {
+            background-color:  rgba(0, 0, 0, 0.2);
+          }
+          svg {
+            display: block;
+            width: 24px;
+            height: 24px;
+            color: #cdcded;
+          }
+        }
+      }
     }
-  }
 
-  div.empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    color: rgba(205, 205, 237, 0.4);
-    svg{
-      width: 64px;
-      height: 64px;
-      margin-bottom: 16px;
+    div.empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: rgba(205, 205, 237, 0.4);
+      svg{
+        width: 64px;
+        height: 64px;
+        margin-bottom: 16px;
+      }
     }
+  
   }
 }
