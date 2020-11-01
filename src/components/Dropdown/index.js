@@ -38,7 +38,6 @@ const Dropdown = props => {
       setPositionList,
       handlerRef,
       listRef,
-      fixed,
     }}>
       <div className="dropdown">
         {props.children}

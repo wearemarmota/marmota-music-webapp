@@ -10,7 +10,6 @@ const DropdownHandler = props => {
     setSizeHandler,
     setPositionHandler,
     handlerRef,
-    fixed,
   } = useContext(DropdownContext);
 
   const updateSize = useCallback(event => {
