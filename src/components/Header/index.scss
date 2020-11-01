@@ -41,5 +41,11 @@ header#main-header {
       height: 40px;
       border-radius: 20px;
     }
+
+    .dropdown{
+      a.active{
+        color: #ff0182;
+      }
+    }
   }
 }

@@ -52,6 +52,9 @@ class Header extends Component {
               <Dropdown.Item hideOnClick><NavLink to="/albums">Todos los álbumes</NavLink></Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item hideOnClick><NavLink to="/upload">Agregar contenido</NavLink></Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item disabled>Ajustes</Dropdown.Item>
+              <Dropdown.Item disabled>Cerrar sesión</Dropdown.Item>
             </Dropdown.List>
           </Dropdown>
         </nav>
