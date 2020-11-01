@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useCallback } from "react";
+import React, { useContext, useEffect, useCallback, useMemo } from "react";
 import throttle from "lodash/throttle";
 
 import { DropdownContext } from "./";
@@ -16,15 +16,17 @@ const DropdownHandler = props => {
     const height = handlerRef.current.offsetHeight;
     const width = handlerRef.current.offsetWidth;
     setSizeHandler([width, height]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handlerRef]);
 
   const updatePosition = useCallback(event => {
     if(!visible) return;
     const { top, left } = getOffset(handlerRef.current);
     setPositionHandler([top, left]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible, handlerRef]);
   
-  const throttledUpdatePosition = useCallback(throttle(updatePosition, 200), [visible]);
+  const throttledUpdatePosition = useMemo(() => throttle(updatePosition, 200), [updatePosition]);
 
   useEffect(() => {
     updateSize();
