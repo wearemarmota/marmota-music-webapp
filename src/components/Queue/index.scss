@@ -1,3 +1,7 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
 div#queue {
   position: fixed;
   bottom: 120px;
@@ -7,18 +11,39 @@ div#queue {
   backdrop-filter: blur(20px) saturate(1);
   width: clamp(200px, 50%, 560px);
   border-radius: 10px;
-  transition: all 0.2s ease-in-out;
+  transition-property: transform, opacity;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
   transform: scale(0.95) translateY(10px) translateX(10px);
   opacity: 0;
   color: white;
   padding: 15px;
   overflow-y: auto;
   pointer-events: none;
+  display: flex;
+  flex-direction: column;
+
+  @include media-breakpoint-down("sm") {
+    width: 100vw;
+    top: 0px;
+    right: 0;
+    left: 0;
+    border-radius: 0;
+    bottom: 89px;
+    transform: scale(1) translateY(-1%) translateX(0);
+    z-index: 2;
+  }
+
 
   &.visible {
     pointer-events: auto;
     transform: scale(1);
     opacity: 1;
+  }
+
+  div.queue-content{
+    flex-grow: 1;
+    flex-shrink: 1;
   }
 
   div.song-item {

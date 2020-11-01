@@ -14,11 +14,14 @@ class Queue extends Component {
 
     return (
       <div id="queue" className={classNames({ visible: queue.visible })}>
-        {queue.songs.length > 0 ? (
-          <SongsList {...this.props} />
-        ) : (
+        <Header title="A continuación" closeAction={ () => queue.setVisible(false) } />
+        <div class="queue-content">
+        {
+          (queue.songs.length > 0) ?
+          <SongsList {...this.props} /> :
           <EmptyQueue />
-        )}
+        }
+        </div>
       </div>
     );
   }
@@ -26,14 +29,10 @@ class Queue extends Component {
 
 function SongsList(props) {
   const { queueContext: queue } = props;
-
   return (
-    <>
-      <Header title="A continuación" closeAction={ () => queue.setVisible(false) } />
-      {queue.songs.map((song, index) => (
-        <SongItem key={index} {...props} song={song} index={index} />
-      ))}
-    </>
+    queue.songs.map((song, index) => (
+      <SongItem key={index} {...props} song={song} index={index} />
+    ))
   );
 }
 
