@@ -9,13 +9,12 @@ header.album-details-header {
     align-items: center;
   }
   
-
-  img.main-cover,
-  svg.main-cover {
+  div.main-cover{
     margin-right: 38px;
     border-radius: 4px;
     width: 256px;
     height: 256px;
+    background-color: #151f43;
 
     @media (max-width: 640px) {
       width: 60%;

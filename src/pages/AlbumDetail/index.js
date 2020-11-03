@@ -88,7 +88,7 @@ class AlbumDetail extends Component {
 
     if(this.state.loading){
       return <div className="container small">
-        <p>Cargando...</p>
+        <Header isPhantom />
       </div>;
     }
 

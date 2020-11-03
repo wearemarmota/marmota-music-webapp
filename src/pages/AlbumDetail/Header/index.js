@@ -8,14 +8,20 @@ import "./index.scss";
 
 export default function Header(props) {
 
-  const { album, play, appendAlbumToQueue } = props;
+  const { isPhantom, album, play, appendAlbumToQueue } = props;
 
   const albumDurationSeconds = album.songs.reduce((n, {duration}) => n + duration, 0);
   const albumDurationMinutes = Math.round(albumDurationSeconds/60);
 
   return (
     <header className="album-details-header">
-      <Cover covers={album.covers} className="main-cover" alt={album.title + " cover"} />
+      <div className="main-cover">
+        {
+          isPhantom ?
+          <Cover.Phantom className="main-cover" color="#151f43" /> :
+          <Cover covers={album.covers} className="main-cover" alt={album.title + " cover"} />
+        }
+      </div>
       <div className="album-info-and-actions">
         <h1>{album.title}</h1>
         <div className="author">De <Link to={`/artist/${album.artist.id}`}>{album.artist.name}</Link></div>
@@ -44,4 +50,19 @@ export default function Header(props) {
       </div>
     </header>
   );
+}
+
+Header.defaultProps = {
+  isPhantom: false,
+  album: {
+    title: "Cargando...",
+    songs: [],
+    covers: {},
+    artist: {
+      id: 0,
+      name: "Cargando...",
+    }
+  },
+  play: () => {},
+  appendAlbumToQueue: () => {},
 }
