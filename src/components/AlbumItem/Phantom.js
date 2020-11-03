@@ -1,4 +1,5 @@
 import React from "react";
+import Cover from "./Cover";
 
 const Phantom = props => {
 
@@ -6,9 +7,7 @@ const Phantom = props => {
 
   return <article className="album phantom">
     <div className="cover">
-      <svg className="cover-component" width="364" height="364" viewBox="0 0 364 364" xmlns="http://www.w3.org/2000/svg">
-        <rect height="364" width="364" y="0" x="0" fill="#081c4e" />
-      </svg>
+      <Cover.Phantom />
     </div>
     { showTitle && (
       <h1 className="title">

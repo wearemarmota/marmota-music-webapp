@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import classNames from "classnames/bind";
 import DefaultCover from "./DefaultCover";
+import PhantomCover from "./PhantomCover";
 
 import "./index.scss";
 
-export default function Cover(props) {
+function Cover(props) {
   const { covers, className, alt, title, size } = props;
   const [loaded, setLoaded] = useState(false);
 
@@ -13,8 +14,10 @@ export default function Cover(props) {
       src={covers[size]}
       className={classNames("cover-component", className, {loaded: loaded})}
       alt={alt}
-      width={size}
-      height={size}
+      width={`${size}px`}
+      height={`${size}px`}
+      // Using this "fake" timeout to always ensure a change
+      // with the "loaded" class.
       onLoad={e => setTimeout(() => setLoaded(true), 1)}
       loading="lazy"
     />;
@@ -26,3 +29,7 @@ export default function Cover(props) {
 Cover.defaultProps = {
   size: 500,
 }
+
+Cover.Default = DefaultCover;
+Cover.Phantom = PhantomCover;
+export default Cover;
