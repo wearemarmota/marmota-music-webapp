@@ -16,7 +16,11 @@ class Artists extends Component {
   componentDidMount() {
     this.setState({ loading: true });
 
-    ArtistsService.list().then((artists) => {
+    ArtistsService.list({
+      limit: 999,
+      sortBy: 'name',
+      orderBy: 'asc',
+    }).then((artists) => {
       this.setState({
         artists: artists,
         loading: false,

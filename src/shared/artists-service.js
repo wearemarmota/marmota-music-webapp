@@ -1,9 +1,10 @@
 import request from "./api-service";
 
-function list() {
+function list(options) {
   return request({
     url: `/artists`,
     method: "GET",
+    params: options,
   });
 }
 
