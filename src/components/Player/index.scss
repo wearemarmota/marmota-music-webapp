@@ -1,3 +1,7 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
 // This wrapper contains the SeekBar and the Player itself.
 .player-wrapper {
   position: fixed;
@@ -16,4 +20,38 @@ aside#player {
   right: 0;
   box-shadow: 0 8px 21px 0 rgba(0, 0, 0, 0.1);
   height: 80px;
+
+  @include media-breakpoint-down("sm") {
+    padding: 10px;
+    div#song{
+      order: 2;
+      width: auto;
+      flex-grow: 1;
+      flex-shrink: 1;
+      // min-width seems to solve a weird bug:
+      // see https://css-tricks.com/flexbox-truncated-text/
+      min-width: 0;
+      img.cover,
+      svg.cover{
+        display: none;
+      }
+    }
+    div#controls{
+      order: 1;
+      width: auto;
+      flex-grow: 0;
+      flex-shrink: 0;
+      margin-right: 10px;
+      button.player-control.previous,
+      button.player-control.next,{
+        display: none;
+      }
+   }
+    div#context{
+      order: 3;
+      width: auto;
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+  }
 }

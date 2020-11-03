@@ -20,9 +20,6 @@ aside#player div#song {
     max-width: 100%;
     overflow: hidden;
     
-    @media (max-width: 641px){
-      display: none;
-    }
 
     div.title {
       max-width: 100%;
