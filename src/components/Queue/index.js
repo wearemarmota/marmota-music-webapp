@@ -15,7 +15,7 @@ class Queue extends Component {
     return (
       <div id="queue" className={classNames({ visible: queue.visible })}>
         <Header title="A continuación" closeAction={ () => queue.setVisible(false) } />
-        <div class="queue-content">
+        <div className="queue-content">
         {
           (queue.songs.length > 0) ?
           <SongsList {...this.props} /> :
