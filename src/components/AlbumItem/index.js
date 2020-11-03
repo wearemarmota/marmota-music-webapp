@@ -19,11 +19,10 @@ class AlbumItem extends Component {
             <Cover
               covers={album.covers}
               title={album.title}
-              className="cover"
-              alt="cover"
+              alt={`${album.title} cover`}
             />
             {this.props.showGlow && (
-              <Cover covers={album.covers} className="glow" alt="cover" />
+              <Cover covers={album.covers} className="cover-component-glow" alt="cover" />
             )}
           </ClickReceiver>
         </div>

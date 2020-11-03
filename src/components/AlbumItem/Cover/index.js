@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import classNames from "classnames/bind";
 import DefaultCover from "./DefaultCover";
 
+import "./index.scss";
+
 export default function Cover(props) {
   const { covers, className, alt, title, size } = props;
   const [loaded, setLoaded] = useState(false);
@@ -9,7 +11,7 @@ export default function Cover(props) {
   if (covers.hasOwnProperty(size)) {
     return <img
       src={covers[size]}
-      className={classNames(className, {loaded: loaded})}
+      className={classNames("cover-component", className, {loaded: loaded})}
       alt={alt}
       width={size}
       height={size}
@@ -18,7 +20,7 @@ export default function Cover(props) {
     />;
   }
   
-  return <DefaultCover className={className} alt={alt} title={title} />;
+  return <DefaultCover className={classNames("cover-component", className)} alt={alt} title={title} />;
 }
 
 Cover.defaultProps = {
