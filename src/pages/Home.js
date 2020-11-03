@@ -12,14 +12,20 @@ class Home extends Component {
     super(props);
     this.state = {
       artists: [],
-      albums: [],
+      lastAlbums: [],
+      randomAlbums: [],
       loadingArtists: false,
-      loadingAlbums: false,
+      loadingLastAlbums: false,
+      loadingRandomAlbums: false,
     };
   }
 
   componentDidMount() {
-    this.setState({ loadingArtists: true, loadingAlbums: true });
+    this.setState({
+      loadingArtists: true,
+      loadingLastAlbums: true,
+      loadingRandomAlbums: true
+    });
 
     ArtistsService.list().then((artists) => {
       this.setState({
@@ -29,12 +35,23 @@ class Home extends Component {
     });
 
     AlbumsService.list({
+      limit: 6,
       sortBy: 'created_at',
       orderBy: 'desc',
     }).then((albums) => {
       this.setState({
-        albums: albums,
-        loadingAlbums: false,
+        lastAlbums: albums,
+        loadingLastAlbums: false,
+      });
+    });
+
+    AlbumsService.list({
+      limit: 6,
+      shuffle: 1,
+    }).then((albums) => {
+      this.setState({
+        randomAlbums: albums,
+        loadingRandomAlbums: false,
       });
     });
   }
@@ -53,12 +70,12 @@ class Home extends Component {
         <div className="container" style={{ marginTop: "-20vw" }}>
           {/* Some albums */}
           <h2>Últimos álbums</h2>
-          {this.state.loadingAlbums && <AlbumsListPhantom amount={6} /> }
-          {this.state.albums.length > 0 && (
-            <AlbumsList albums={this.state.albums.slice(0, 6)} />
+          {this.state.loadingLastAlbums && <AlbumsListPhantom amount={6} /> }
+          {this.state.lastAlbums.length > 0 && (
+            <AlbumsList albums={this.state.lastAlbums.slice(0, 6)} />
           )}
           
-          {!this.state.loadingAlbums && this.state.albums.length <= 0 && (
+          {!this.state.loadingLastAlbums && this.state.lastAlbums.length <= 0 && (
             <p>No se han encontrado álbums</p>
           )}
 
@@ -75,11 +92,11 @@ class Home extends Component {
 
           {/* Random albums */}
           <h2>Álbums aleatorios</h2>
-          {this.state.loadingAlbums && <p>Cargando...</p>}
-          {this.state.albums.length > 0 && (
-            <AlbumsList albums={this.state.albums.slice(0, 6)} />
+          {this.state.loadingRandomAlbums && <p>Cargando...</p>}
+          {this.state.randomAlbums.length > 0 && (
+            <AlbumsList albums={this.state.randomAlbums.slice(0, 6)} />
           )}
-          {!this.state.loadingAlbums && this.state.albums.length <= 0 && (
+          {!this.state.loadingRandomAlbums && this.state.randomAlbums.length <= 0 && (
             <p>No se han encontrado álbums</p>
           )}
         </div>
