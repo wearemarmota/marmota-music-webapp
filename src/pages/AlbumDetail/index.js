@@ -122,7 +122,7 @@ class AlbumDetail extends Component {
             <List
               album={this.state.album}
               songs={this.orderedSongs()}
-              currentSong={this.props.queueContext.getCurrentSong()}
+              currentSong={this.props.queueContext.currentSong}
               appendSongToQueue={this.appendSongToQueue}
               playSong={this.playSong}
             />

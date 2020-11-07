@@ -83,12 +83,12 @@ class Player extends Component {
     this.props.queueContext.setPlaying(true);
     if ('mediaSession' in navigator) {
 
-      const albumCovers = this.props.queueContext.getCurrentSong().album.covers;
+      const albumCovers = this.props.queueContext.currentSong.album.covers;
 
       let metadata = {
-        title: this.props.queueContext.getCurrentSong().title,
-        artist: this.props.queueContext.getCurrentSong().album.artist.name,
-        album: this.props.queueContext.getCurrentSong().album.title,
+        title: this.props.queueContext.currentSong.title,
+        artist: this.props.queueContext.currentSong.album.artist.name,
+        album: this.props.queueContext.currentSong.album.title,
         artwork: [],
       };
 
@@ -181,13 +181,13 @@ class Player extends Component {
 
           <audio
             ref={this.audioRef}
-            src={queueContext.getCurrentSong() && queueContext.getCurrentSong().fileUri}
+            src={queueContext.currentSong && queueContext.currentSong.fileUri}
           />
 
-          <CurrentSong song={queueContext.getCurrentSong()} seconds={this.state.currentTime} />
+          <CurrentSong song={queueContext.currentSong} seconds={this.state.currentTime} />
           <Controls
             isPlaying={queueContext.playing}
-            currentSong={queueContext.getCurrentSong()}
+            currentSong={queueContext.currentSong}
             hasPreviousSong={queueContext.hasPreviousSong()}
             hasNextSong={queueContext.hasNextSong()}
             previous={this.previous}

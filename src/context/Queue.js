@@ -118,6 +118,8 @@ class QueueProvider extends Component {
   render() {
     const { playing, visible, songs, currentIndex } = this.state;
     const { children } = this.props;
+    const currentSong = this.getCurrentSong();
+
     const {
       setPlaying,
       setVisible,
@@ -142,6 +144,7 @@ class QueueProvider extends Component {
           setSongs,
           setCurrentIndex,
           getCurrentSong,
+          currentSong,
           hasNextSong,
           hasPreviousSong,
           next,

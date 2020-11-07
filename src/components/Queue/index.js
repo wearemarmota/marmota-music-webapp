@@ -38,11 +38,11 @@ function SongsList(props) {
 
 function SongItem(props) {
   const { song, index, queueContext: queue } = props;
+  const isCurrentSong = song.uuid === (queue.currentSong && queue.currentSong.uuid);
+
   return (
     <div
-      className={classNames("song-item", {
-        current: song.uuid === queue.getCurrentSong().uuid,
-      })}
+      className={classNames("song-item", { current: isCurrentSong })}
       onClick={() => {
         queue.setCurrentIndex(index).then(() => {
           queue.setPlaying(false).then(queue.setPlaying(true));
