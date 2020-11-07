@@ -11,7 +11,6 @@ import "./index.scss";
 class Queue extends Component {
   render() {
     const { queueContext: queue } = this.props;
-
     return (
       <div id="queue" className={classNames({ visible: queue.visible })}>
         <Header title="A continuación" closeAction={ () => queue.setVisible(false) } />
@@ -40,6 +39,35 @@ function SongItem(props) {
   const { song, index, queueContext: queue } = props;
   const isCurrentSong = song.uuid === (queue.currentSong && queue.currentSong.uuid);
 
+  const removeSongFromQueue = e => {
+    e.stopPropagation();
+    
+    if(index < queue.currentIndex){
+      
+      // If removing a previous song:
+      queue.songs.splice(index, 1);
+      queue.setSongs(queue.songs).then(queue.previous());
+      
+    }else if(index === queue.currentIndex){
+
+      // If removing the current song:
+      queue.songs.splice(index, 1);
+      queue.setSongs(queue.songs).then(() => {
+        if(queue.songs.length > 0){
+          queue.setPlaying(false).then(queue.setPlaying(true));
+        }else{
+          queue.setPlaying(false);
+        }
+      });
+
+    }else if(index > queue.currentIndex){
+
+      // If removing later song
+      queue.songs.splice(index, 1);
+      queue.setSongs(queue.songs);
+    }
+  }
+
   return (
     <div
       className={classNames("song-item", { current: isCurrentSong })}
@@ -55,11 +83,7 @@ function SongItem(props) {
         <div className="artist-and-duration">{song.album.artist.name} &middot; <Duration seconds={song.duration} /></div>
       </div>
       <div className="overflow-menu">
-        <button className="unstyled" onClick={(e) => {
-            e.stopPropagation();
-            queue.songs.splice(index, 1);
-            queue.setSongs(queue.songs);
-        }}>
+        <button className="unstyled" onClick={removeSongFromQueue}>
           <svg viewBox="0 0 24 24">
             <path fill="currentColor" d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" />
           </svg>

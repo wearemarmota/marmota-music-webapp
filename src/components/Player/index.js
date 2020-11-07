@@ -76,6 +76,12 @@ class Player extends Component {
         this.pause();
       }
     }
+
+    if (queueContext.currentSong !== prevQueueContext.currentSong){
+      if(queueContext.currentSong === null){
+        this.setCurrentTime(0);
+      }
+    }
   }
 
   play = () => {
