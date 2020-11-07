@@ -14,8 +14,8 @@ function Cover(props) {
       src={covers[size]}
       className={classNames("cover-component", className, {loaded: loaded})}
       alt={alt}
-      width={`${size}px`}
-      height={`${size}px`}
+      width={size}
+      height={size}
       // Using this "fake" timeout to always ensure a change
       // with the "loaded" class.
       onLoad={e => setTimeout(() => setLoaded(true), 1)}
