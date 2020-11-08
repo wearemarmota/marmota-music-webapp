@@ -30,7 +30,7 @@ class Player extends Component {
       navigator.mediaSession.setActionHandler('stop', this.stop);
       navigator.mediaSession.setActionHandler('seekbackward', e => this.setCurrentTime(this.getCurrentTime() - 5));
       navigator.mediaSession.setActionHandler('seekforward', e => this.setCurrentTime(this.getCurrentTime() + 5));
-      // navigator.mediaSession.setActionHandler('seekto', this.setCurrentTime);
+      navigator.mediaSession.setActionHandler('seekto', e => this.setCurrentTime(e.seekTime || 0));
       navigator.mediaSession.setActionHandler('previoustrack', this.previous);
       navigator.mediaSession.setActionHandler('nexttrack', this.next);
     }
