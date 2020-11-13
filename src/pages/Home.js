@@ -60,7 +60,7 @@ class Home extends Component {
     return (
       <>
         <img
-          src="img/main-img.png"
+          src="img/main-img.webp"
           style={{ marginTop: "-80px", width: "100%", height: "auto" }}
           alt=""
           width="1440px"
