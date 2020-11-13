@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 
-import AlbumsService from "./../shared/albums-service";
-import ArtistsService from "./../shared/artists-service";
+import AlbumsService from "../../shared/albums-service";
+import ArtistsService from "../../shared/artists-service";
 
-import AlbumsList from "../components/AlbumsList";
-import AlbumsListPhantom from "../components/AlbumsList/Phantom";
+import AlbumsList from "../../components/AlbumsList";
+import AlbumsListPhantom from "../../components/AlbumsList/Phantom";
 
-class Albums extends Component {
+class Artist extends Component {
   constructor(props) {
     super(props);
 
@@ -65,4 +65,4 @@ class Albums extends Component {
   }
 }
 
-export default withRouter(Albums);
+export default withRouter(Artist);
