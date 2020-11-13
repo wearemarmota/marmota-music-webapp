@@ -25,23 +25,23 @@ export default function Controls(props) {
   
   return (
     <div id="controls">
-      <Button className="previous" onClick={previous} disabled={!hasPreviousSong}>
+      <Button className="previous" onClick={previous} disabled={!hasPreviousSong} aria-label="Previous">
         <IconPrevious />
       </Button>
 
       { isPlaying &&
-        <Button disabled={!currentSong} onClick={pause} className="play">
+        <Button disabled={!currentSong} onClick={pause} className="pause" aria-label="Pause">
           <IconPause />
         </Button>
       }
 
       { !isPlaying &&
-        <Button disabled={!currentSong} onClick={play} className="pause">
+        <Button disabled={!currentSong} onClick={play} className="play" aria-label="Play">
           <IconPlay />
         </Button>
       }
 
-      <Button className="next" onClick={next} disabled={!hasNextSong}>
+      <Button className="next" onClick={next} disabled={!hasNextSong} aria-label="Next">
         <IconNext />
       </Button>
     </div>

@@ -13,7 +13,7 @@ export default function Context(props) {
 
   return (
     <div id="context">
-      <Button className="queue" onClick={() => { setQueueVisibility(!isQueueVisible); }}>
+      <Button className="queue" onClick={() => { setQueueVisibility(!isQueueVisible); }} aria-label={`Show queue`}>
         <IconQueue />
       </Button>
     </div>

@@ -7,7 +7,7 @@ export default function Header(props) {
     <header className="queue-header">
       <h2>{props.title}</h2>
       { props.closeAction &&
-        <button className="unstyled" onClick={props.closeAction}>
+        <button className="unstyled" onClick={props.closeAction} aria-label={`Close queue`}>
           <IconClose />
         </button>
       }

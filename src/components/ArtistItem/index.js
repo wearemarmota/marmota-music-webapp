@@ -10,7 +10,7 @@ const ArtistItem = props => {
   return(
     <article className="artist">
       <Link to={`/artist/${artist.id}`}>
-        <ArtistImage images={artist.images} name={artist.name} />
+        <ArtistImage images={artist.images} name={artist.name} alt={`${artist.name} avatar`} />
       </Link>
       <div className="name">
         <Link to={`/artist/${artist.id}`} title={artist.name}>
