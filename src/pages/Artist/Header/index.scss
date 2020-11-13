@@ -1,0 +1,14 @@
+header.artist-header{
+  background-color: rgba(0, 0, 0, .5);
+  .row > *{
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
+  img.artist-image,
+  svg.artist-image{
+    border-radius: 100%;
+    overflow: hidden;
+    width: 100%;
+    height: auto;
+  }
+}

@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import AlbumsService from "../../shared/albums-service";
 import ArtistsService from "../../shared/artists-service";
 
+import Header from "./Header";
 import AlbumsList from "../../components/AlbumsList";
 import AlbumsListPhantom from "../../components/AlbumsList/Phantom";
 
@@ -52,15 +53,17 @@ class Artist extends Component {
     } = this.state;
 
     return (
+      <>
+      { artist && <Header artist={this.state.artist} albumsCount={albums.length} /> }
       <div className="container">
         { loadingArtist && <h2>Cargando...</h2> }
-        { artist && <h2>Albums de {artist.name}</h2> }
         { loadingAlbums && <AlbumsListPhantom amount={6} /> }
         { albums.length > 0 && <AlbumsList albums={albums} /> }
         { !loadingAlbums && albums.length <= 0 && (
           <p>No se han encontrado álbums</p>
         )}
       </div>
+      </>
     );
   }
 }
