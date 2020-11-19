@@ -1,6 +1,9 @@
 import React from "react";
 import sortBy from "lodash/sortBy";
+import withQueueContext from "../../../hoc/queue";
+
 import ArtistImage from "../../../components/ArtistItem/Image"
+import Button from "../../../components/Button";
 
 import "./index.scss";
 
@@ -11,6 +14,33 @@ const Header = props => {
     return accumulator + album.songs.length;
   }, 0);
 
+  const replaceQueueAndPlay = e => {
+    const {
+      setSongs,
+      setCurrentIndex,
+      setPlaying,
+    } = props.queueContext;
+
+    const songsToAppend = albums.reduce((accumulator, album) => {
+      const songsInOrder = sortBy(album.songs, [function(o){ return o.position; }]);
+      const songs = songsInOrder.reduce((accumulator, song) => {
+        song.album = Object.assign({}, album);
+        delete song.album.songs;
+        accumulator.push(song);
+        return accumulator;
+      }, []);
+      accumulator.push(...songs);
+      return accumulator;
+    }, [])
+
+    setSongs(songsToAppend).then(() => {
+      setCurrentIndex(0).then(() => {
+        setPlaying(false).then(setPlaying(true));
+      });
+    });
+  }
+
+
   return(
     <header className="artist-header">
       <div className="container">
@@ -20,8 +50,8 @@ const Header = props => {
           </div>
           <div className="col-12 col-md-10">
             <h2>{artist.name}</h2>
-            <p><button onClick={e => alert("aún no...")}>Dale play a todo</button></p>
             <p>{albums.length} álbums ({songsCount} canciones) disponibles</p>
+            <p><Button primary minWidth onClick={replaceQueueAndPlay}>Reproducir todo</Button></p>
           </div>
         </div>
       </div>
@@ -29,4 +59,4 @@ const Header = props => {
   );
 }
 
-export default Header;
+export default withQueueContext(Header);
