@@ -7,7 +7,7 @@ function get(albumId) {
   });
 }
 
-function list(options) {
+function list(options = {}) {
   return request({
     url: `/albums`,
     method: "GET",
@@ -15,10 +15,11 @@ function list(options) {
   });
 }
 
-function listByArtist(artist) {
+function listByArtist(artist, options = {}) {
   return request({
     url: `/artists/${artist}/albums`,
     method: "GET",
+    params: options,
   });
 }
 

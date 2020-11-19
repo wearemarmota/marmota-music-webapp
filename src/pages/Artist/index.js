@@ -28,7 +28,7 @@ class Artist extends Component {
       loadingArtist: true,
     });
 
-    AlbumsService.listByArtist(this.artistId).then((albums) => {
+    AlbumsService.listByArtist(this.artistId, {withSongs: 1}).then((albums) => {
       this.setState({
         albums: albums,
         loadingAlbums: false,
@@ -54,7 +54,7 @@ class Artist extends Component {
 
     return (
       <>
-      { artist && <Header artist={this.state.artist} albumsCount={albums.length} /> }
+      { artist && <Header artist={this.state.artist} albums={albums} /> }
       <div className="container">
         { loadingArtist && <h2>Cargando...</h2> }
         { loadingAlbums && <AlbumsListPhantom amount={6} /> }
