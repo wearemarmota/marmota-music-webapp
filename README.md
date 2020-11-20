@@ -21,8 +21,10 @@ To build the project with a different .env file, you can repeat the previous ste
 
  ### Screenshots
 
- ![Home screenshot][home]
+ ![Home screenshot 1][home1]
+ ![Home screenshot 2][home2]
  ![Album detail screenshot][album]
 
- [home]: screenshots/home.png "Home screenshot"
+ [home1]: screenshots/home-1.png "Home screenshot 1"
+ [home2]: screenshots/home-2.png "Home screenshot 2"
  [album]: screenshots/album.png "Album detail screenshot"
