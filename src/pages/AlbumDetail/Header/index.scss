@@ -1,59 +1,58 @@
-header.album-details-header {
-  display: flex;
+header.album-details-header{
+  display: grid;
+  column-gap: 38px;
+  row-gap: 30px;
+  grid-template-areas:
+    "cover info"
+    "cover actions";
+  grid-template-columns: 256px auto;
+  grid-template-rows: auto 40px;
   margin: 50px 0;
-  flex-direction: row;
-  align-items: flex-end;
-
-  @media (max-width: 640px) {
-    flex-direction: column;
-    align-items: center;
-  }
+  justify-items: start;
+  align-items: end;
   
-  div.main-cover{
-    margin-right: 38px;
-    border-radius: 4px;
-    width: 256px;
-    height: 256px;
-    background-color: #151f43;
-
-    @media (max-width: 640px) {
-      width: 60%;
-      max-width: 256px;
-      height: auto;
-      margin-bottom: 20px;
-      margin-right: 0;
-    }
+  @media (max-width: 640px) {
+    grid-template-areas:
+      "cover info"
+      "cover info"
+      "actions actions";
+    grid-template-columns: 120px auto;
+    grid-template-rows: auto auto 35px;
+    column-gap: 16px;
+    margin: 15px 0 40px 0;
   }
 
-  div.album-info-and-actions {
+  div.main-cover{
+    grid-area: cover;
+  }
+  div.album-info{
+    grid-area: info;
+    overflow: hidden;
+    max-width: 100%;
+    white-space: nowrap;
 
-    @media (max-width: 640px) {
-      align-items: center;
-      display: flex;
-      flex-direction: column;
-      text-align: center;
-      padding: 0 25px
-    }
-
-    h1 {
+    h1{
       font-size: 35px;
       font-weight: 800;
       color: #e4ecff;
       margin: 0 0 12px 0;
       padding: 0;
-
+      overflow: hidden;
+      text-overflow: ellipsis;
+  
       @media (max-width: 640px) {
         font-size: 25px;
       }
-  
     }
-  
+
     .author {
       font-size: 16px;
       font-weight: bold;
       color: #c8c8e7;
       margin-bottom: 4px;
- 
+      overflow: hidden;
+      text-overflow: ellipsis;
+  
       @media (max-width: 640px) {
         font-size: 14px;
       }
@@ -61,35 +60,44 @@ header.album-details-header {
       a{
         color: white;
         text-decoration: none;
-  
+
         &:hover{
           text-decoration: underline;
         }
       }
     }
-  
+
     .context {
       font-size: 18px;
       color: #cdcded;
-      margin-bottom: 25px;
-
+      overflow: hidden;
+      text-overflow: ellipsis;
+  
       @media (max-width: 640px) {
         font-size: 14px;
       }
-
     }
-  
-    .actions {
-      display: grid;
-      column-gap: 16px;
-      row-gap: 16px;
-      grid-template-areas: "main secondary overflow";
-  
-      @media (max-width: 640px) {
-        grid-template-areas:
-          "main main"
-          "secondary overflow";
-      }
+  }
+
+  div.actions{
+    grid-area: actions;
+    display: flex;
+    column-gap: 16px;
+    white-space: nowrap;
+    align-items: flex-end;
+    max-width: 100%;
+    overflow: hidden;
+
+    > :nth-child(2){
+      min-width: 0;
+      flex-shrink: 1;
+      flex-grow: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    > :nth-child(3){
+      flex-shrink: 0;
+      flex-grow: 0;
     }
   }
 }
