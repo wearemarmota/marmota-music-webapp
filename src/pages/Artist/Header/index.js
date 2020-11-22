@@ -3,7 +3,7 @@ import sortBy from "lodash/sortBy";
 import withQueueContext from "../../../hoc/queue";
 
 import ArtistImage from "../../../components/ArtistItem/Image"
-import Button from "../../../components/Button";
+import Button from "../../../atoms/Button";
 
 import "./index.scss";
 
@@ -50,8 +50,8 @@ const Header = props => {
           </div>
           <div className="col-12 col-md-10">
             <h2>{artist.name}</h2>
-            <p>{albums.length} álbums ({songsCount} canciones) disponibles</p>
-            <p><Button primary minWidth onClick={replaceQueueAndPlay}>Reproducir todo</Button></p>
+            <p>{albums.length} álbums disponibles</p>
+            <p><Button primary minWidth onClick={replaceQueueAndPlay}>Reproducir {songsCount} temas</Button></p>
           </div>
         </div>
       </div>
