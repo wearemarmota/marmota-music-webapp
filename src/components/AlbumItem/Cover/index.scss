@@ -2,7 +2,7 @@ img.cover-component,
 svg.cover-component {
   display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
   border-radius: 4px;
   opacity: 0;
   transition: opacity .3s;
@@ -17,7 +17,7 @@ svg.cover-component-glow {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: auto;
   border-radius: 4px;
   transform: scale(0.8) translateY(5%);
   filter: blur(50px);
