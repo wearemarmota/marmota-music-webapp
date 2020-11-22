@@ -1,0 +1,16 @@
+.atom-input{
+  display: block;
+  border-radius: 1px;
+  background-color: #2b375f;
+  padding: 8px 16px;
+  width: 100%;
+  font-size: 14px;
+  font-weight: bold;
+  color: #c8c8e7;
+  border: none;
+
+  &:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
