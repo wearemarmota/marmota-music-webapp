@@ -20,7 +20,7 @@ export default function Header(props) {
         {
           isPhantom ?
           <Cover.Phantom className="main-cover" color="#151f43" /> :
-          <Cover covers={album.covers} className="main-cover" alt={album.title + " cover"} />
+          <Cover title={album.title} covers={album.covers} className="main-cover" alt={album.title + " cover"} />
         }
       </div>
       <div className="album-info">
