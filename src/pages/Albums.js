@@ -38,7 +38,7 @@ class Albums extends Component {
       <div className="container">
         <h2>Todos los álbums</h2>
         { loading && <AlbumsListPhantom amount={18} /> }
-        { albums.length > 0 && <AlbumsList albums={albums} /> }
+        { albums.length > 0 && <AlbumsList albums={albums} showAlbumsGlow={false} /> }
         { !loading && albums.length <= 0 && (
           <p>No se han encontrado álbums</p>
         )}

@@ -10,7 +10,7 @@ class AlbumsList extends Component {
         {this.props.albums.map((album, index) => {
           return (
             <div key={index} className="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
-              <AlbumItem album={album} />
+              <AlbumItem album={album} showGlow={this.props.showAlbumsGlow} />
             </div>
           );
         })}
@@ -21,6 +21,7 @@ class AlbumsList extends Component {
 
 AlbumsList.defaultProps = {
   albums: [],
+  showAlbumsGlow: true,
 };
 
 export default AlbumsList;
