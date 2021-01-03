@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import classNames from "classnames/bind";
+import classNames from "classnames";
 import DefaultCover from "./DefaultCover";
 import PhantomCover from "./PhantomCover";
-
+import Logger from "../../../shared/logger";
 import "./index.scss";
 
-function Cover(props) {
+const logger = new Logger("Cover");
+
+const Cover = props => {
   const { covers, className, alt, title, size } = props;
   const [loaded, setLoaded] = useState(false);
+
+  logger.log("received covers", covers);
 
   if (covers.hasOwnProperty(size)) {
     return <img
@@ -23,7 +27,7 @@ function Cover(props) {
     />;
   }
   
-  return <DefaultCover className={classNames("cover-component", className)} alt={alt} title={title} />;
+  return <DefaultCover className={classNames("cover-component loaded", className)} alt={alt} title={title} />;
 }
 
 Cover.defaultProps = {
