@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import sortBy from "lodash/sortBy";
 import debounce from "lodash/debounce";
 
@@ -10,9 +9,7 @@ import Upload from "./Upload";
 
 import "./index.scss";
 import Cover from "../../components/AlbumItem/Cover";
-import Duration from "../../components/Duration";
 import InputText from "../../atoms/InputText";
-import Button from "../../atoms/Button";
 import FormGroup from "../../atoms/FormGroup";
 
 class AlbumEdit extends Component {
@@ -132,10 +129,14 @@ class AlbumEdit extends Component {
           <div className="row">
             <div className="col-5 col-sm-4">
               <label name="cover">
-                <svg viewBox="0 0 24 24">
+                <svg viewBox="0 0 24 24" className="upload-icon">
                   <path fill="currentColor" d="M12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22M12,7L7,12H10V16H14V12H17L12,7Z" />
                 </svg>
-                <Cover covers={this.state.album.covers} />
+                <Cover 
+                  title={this.state.album.title}
+                  covers={this.state.album.covers}
+                  alt={this.state.album.title + " cover"}
+                />
                 <input
                   ref={this.refInputCover}
                   type="file"
