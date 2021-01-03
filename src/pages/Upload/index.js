@@ -18,7 +18,7 @@ class Upload extends Component {
     return (
       <div className="container">
         <h2>Subir música</h2>
-        <h3>Paso {this.state.step} de 3</h3>
+        <h3>Paso {this.state.step} de 2</h3>
 
         <CreateArtist
           currentStep={this.state.step}
