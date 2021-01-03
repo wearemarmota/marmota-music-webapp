@@ -28,6 +28,7 @@ const InputText = props => {
 
 InputText.defaultProps = {
   type: "text",
+  value: "",
 }
 
 export default InputText;
