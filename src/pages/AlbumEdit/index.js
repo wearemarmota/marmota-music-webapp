@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import sortBy from "lodash/sortBy";
 import debounce from "lodash/debounce";
 
 import AlbumsService from "../../shared/albums-service";
@@ -118,6 +119,8 @@ class AlbumEdit extends Component {
     });
   }
 
+  orderedSongs = songs => sortBy(songs, [function(o){ return o.position; }]);
+
   render() {
     if(!this.state.album){
       return <div className="container smaller"><p>Loading...</p></div>
@@ -174,7 +177,8 @@ class AlbumEdit extends Component {
         <h2>Editar canciones</h2>
 
         <div className="songs-list">
-          {this.state.album.songs.map((song, index) => {
+
+          {this.orderedSongs(this.state.album.songs).map((song, index) => {
             return (
               <React.Fragment key={index}>
                 <div className="drag-handler">
