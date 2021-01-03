@@ -46,7 +46,7 @@ const Header = props => {
       <div className="container">
         <div className="row">
           <div className="col-12 col-md-2">
-            <ArtistImage images={artist.images} />
+            <ArtistImage images={artist.images} name={artist.name} />
           </div>
           <div className="col-12 col-md-10">
             <h2>{artist.name}</h2>

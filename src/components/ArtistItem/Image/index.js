@@ -21,7 +21,7 @@ const Image = props => {
     />;
   }
   
-  return <DefaultImage name={name} className={classNames(className)} alt={name} />;
+  return <DefaultImage name={name} className={classNames("artist-image", className)} alt={name} />;
 }
 
 const DefaultImage = props => {
