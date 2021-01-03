@@ -7,7 +7,7 @@ function listByAlbum(album) {
   });
 }
 
-function create(title, albumId, file) {
+function create(title, albumId, file, onUploadProgress = null) {
   // Check: https://github.com/axios/axios/blob/master/examples/upload/index.html#L30-L32
   // for upload proggress:
 
@@ -23,6 +23,7 @@ function create(title, albumId, file) {
     headers: {
       "content-type": "multipart/form-data",
     },
+    onUploadProgress: onUploadProgress,
   });
 }
 
