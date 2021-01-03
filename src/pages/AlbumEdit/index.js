@@ -5,6 +5,7 @@ import debounce from "lodash/debounce";
 import AlbumsService from "../../shared/albums-service";
 import SongsService from "../../shared/songs-service";
 import Logger from "../../shared/logger";
+import Upload from "./Upload";
 
 import "./index.scss";
 import Cover from "../../components/AlbumItem/Cover";
@@ -201,6 +202,12 @@ class AlbumEdit extends Component {
             );
           })}
         </div>
+
+        <h2>Agregar canciones</h2>
+        <Upload
+          albumId={this.albumId}
+          onUpload={this.loadAlbum}
+        />
 
       </div>
     );
