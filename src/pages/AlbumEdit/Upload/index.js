@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 import Dropzone from "./Dropzone";
 import Button from "../../../atoms/Button";
-import SongItem from "./SongItem";
+import SongItem from "./SongItemClass";
 
 const Upload = props => {
 
@@ -15,9 +15,10 @@ const Upload = props => {
   const onDrop = files => {
     clear();
     setFiles(files);
-    setOverallTotal(files.reduce((total, currentValue, currentIndex, arr) => {
-      return total + currentValue.size;
-    }, 0));
+    // setOverallTotal(files.reduce((total, currentValue, currentIndex, arr) => {
+    //   return total + 100;
+    // }, 0));
+    setOverallTotal(files.length);
   }
 
   const clear = e => {
@@ -33,18 +34,27 @@ const Upload = props => {
   }
 
   useEffect(() => {
+    console.log({overallLoaded, overallTotal});
     if(overallLoaded === overallTotal){
       setUploading(false);
       onUpload();
       clear();
+      console.log('overallLoaded = overallTotal')
     }
   }, [overallLoaded]);
 
-  const onSongUploadProgress = (loaded) => {
+  // const onSongUploadProgress = (loaded) => {
+  //   setOverallLoaded((overallLoaded) => {
+  //     return overallLoaded + loaded;
+  //   });
+  // }
+
+  const onSongUploadProgress = useCallback((loaded) => {
+    console.log('onSongUploadProgress', loaded);
     setOverallLoaded((overallLoaded) => {
       return overallLoaded + loaded;
     });
-  }
+  });
 
   return (
     <>
@@ -54,7 +64,15 @@ const Upload = props => {
       { files.length > 0 &&
         <form onSubmit={submit}>
           <p>Overall progress: <progress max={overallTotal} value={overallLoaded} /></p>
-          { files.map((file, index) => <SongItem key={index} albumId={albumId} file={file} shouldUpload={uploading} onProgress={onSongUploadProgress} />) }
+          { files.map((file, index) =>
+            <SongItem
+              key={index}
+              albumId={albumId}
+              file={file}
+              shouldUpload={uploading}
+              onProgress={onSongUploadProgress}
+            />)
+          }
           <Button primary type="submit" disabled={uploading}>Subir</Button>{" "}
           <Button type="button" onClick={clear} disabled={uploading}>Cancelar</Button>
         </form>
