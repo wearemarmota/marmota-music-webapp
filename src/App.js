@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Header from "./components/Header";
 import Player from "./components/Player";
@@ -16,6 +17,7 @@ import AlbumDetail from "./pages/AlbumDetail";
 import AlbumEdit from "./pages/AlbumEdit";
 import Albums from "./pages/Albums";
 import Upload from "./pages/Upload";
+import APISettings from "./pages/APISettings";
 import NotFound from "./pages/NotFound";
 import { QueueProvider } from "./context/Queue";
 
@@ -27,13 +29,14 @@ function App() {
         <main>
           <Switch>
             <Redirect exact from="/" to="/home" />
-            <Route exact path="/home" component={Home} />
-            <Route exact path="/artists" component={Artists} />
-            <Route exact path="/artist/:artistId" component={Artist} />
-            <Route exact path="/albums" component={Albums} />
-            <Route exact path="/album/:albumId" component={AlbumDetail} />
-            <Route exact path="/album/:albumId/edit" component={AlbumEdit} />
-            <Route exact path="/upload" component={Upload} />
+            <ProtectedRoute exact path="/home" component={Home} />
+            <ProtectedRoute exact path="/artists" component={Artists} />
+            <ProtectedRoute exact path="/artist/:artistId" component={Artist} />
+            <ProtectedRoute exact path="/albums" component={Albums} />
+            <ProtectedRoute exact path="/album/:albumId" component={AlbumDetail} />
+            <ProtectedRoute exact path="/album/:albumId/edit" component={AlbumEdit} />
+            <ProtectedRoute exact path="/upload" component={Upload} />
+            <Route exact path="/api-settings" component={APISettings} />
             <Route component={NotFound} status={404} />
           </Switch>
         </main>

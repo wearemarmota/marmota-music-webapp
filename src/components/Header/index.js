@@ -54,6 +54,7 @@ class Header extends Component {
               <Dropdown.Item hideOnClick><NavLink to="/upload">Agregar contenido</NavLink></Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item disabled>Ajustes</Dropdown.Item>
+              <Dropdown.Item hideOnClick><NavLink to="/api-settings">Ajustes API</NavLink></Dropdown.Item>
               <Dropdown.Item disabled>Cerrar sesión</Dropdown.Item>
             </Dropdown.List>
           </Dropdown>

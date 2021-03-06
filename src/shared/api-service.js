@@ -16,7 +16,7 @@ const logger = new Logger("ApiService");
  * Create an Axios Client with defaults
  */
 const client = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URI,
+  baseURL: window.localStorage.getItem("api_uri"),
   headers: {
     Accept: "application/json; charset=utf-8",
     "Content-Type": "application/json; charset=utf-8",
