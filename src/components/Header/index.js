@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import throttle from "lodash/throttle";
 import Dropdown from "../Dropdown";
 import DefaultAvatar from "./DefaultAvatar";
+import Search from "./Search";
 
 import "./index.scss";
 
@@ -42,6 +43,7 @@ class Header extends Component {
             <img src="/img/logo.svg" alt="Marmota Music" />
           </NavLink>
         </h1>
+        <Search />
         <nav>
           <Dropdown>
             <Dropdown.Handler>

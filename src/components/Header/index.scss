@@ -9,7 +9,8 @@ header#main-header {
   z-index: 2;
   transition: all .2s;
   background-color: rgba(18, 29, 59, 0.6);
-
+  column-gap: 20px;
+  
   &.scrolled{
     background-color: #151f43;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
@@ -27,6 +28,7 @@ header#main-header {
       height: 26px;
     }
   }
+
 
   nav {
     font-weight: bold;

@@ -1,0 +1,104 @@
+@mixin placeholder-color($color) {
+  &::-webkit-input-placeholder { /* WebKit browsers */
+      color: $color;
+  }
+  &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color: $color;
+  }
+  &::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color: $color;
+  }
+  &:-ms-input-placeholder { /* Internet Explorer 10+ */
+      color: $color;
+  }
+}
+
+form.search-form{
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  svg{
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: block;
+    width: 20px;
+    height: 20px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  input[type=text]{
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 20px 10px 40px;
+    border-radius: 4px;
+    color: #adadc4;
+    @include placeholder-color(#adadc4);
+    transition: all .2s;
+    text-overflow: ellipsis;
+
+    &:hover{
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    &:focus,
+    &:not([value=""]){
+      background-color: rgba(255, 255, 255, 0.2);
+      outline: none;
+      color: white;
+      @include placeholder-color(#adadc4);
+      backdrop-filter: blur(10px);
+    }
+  }
+
+}
+
+div.search-results{
+  position: absolute;
+  left: 50%;
+  top: 60px;
+  max-height: calc(100vh - 60px - 89px - 20px);
+  width: 400px;
+  max-width: 90vw;
+  overflow-y: auto;
+  transform: translateX(-50%);
+  color: white;
+  background-color: rgba(62, 69, 93, 0.8);
+  backdrop-filter: blur(20px) saturate(1);
+  border-radius: 10px;
+  margin: 10px 0;
+
+  ul.results{
+    list-style: none;
+    margin: 0;
+    padding: 20px 20px;
+
+    li.result-header{
+      font-size: 12px;
+      font-weight: bolder;
+      text-transform: uppercase;
+      margin: 15px 0;
+    }
+
+    li.result{
+      font-size: 14px;
+      margin: 5px 0;
+      a:hover{
+        text-decoration: underline !important;
+      }
+    }
+
+    li:first-child{
+      margin-top: 0px;
+    }
+    li:last-child{
+      margin-bottom: 0px;
+    }
+
+  } 
+}
