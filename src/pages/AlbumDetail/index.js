@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import sortBy from "lodash/sortBy";
+import get from "lodash/get";
 import AlbumsService from "../../shared/albums-service";
 import withQueueContext from "../../hoc/queue";
 
@@ -14,8 +15,7 @@ import EmptyAlbum from "./EmptyAlbum";
 class AlbumDetail extends Component {
   constructor(props) {
     super(props);
-
-    this.albumId = this.props.match.params.albumId;
+    this.albumId = get(this.props, "match.params.albumId", null);
     this.state = {
       album: null,
       loading: false,
@@ -23,13 +23,26 @@ class AlbumDetail extends Component {
   }
 
   componentDidMount() {
+    this.loadData();
+  }
+
+  componentDidUpdate(prevProps){
+    const oldAlbumId = get(prevProps, "match.params.albumId", null);
+    const newAlbumId = get(this.props, "match.params.albumId", null);
+    if(oldAlbumId !== newAlbumId){
+      this.albumId = newAlbumId;
+      this.loadData();
+    }
+  }
+
+  loadData = () => {
     this.setState({ loading: true });
     AlbumsService.get(this.albumId).then((album) => {
       this.setState({
         album: album,
         loading: false,
       })
-    })
+    });
   }
 
   // Sort the songs list by his position on the album

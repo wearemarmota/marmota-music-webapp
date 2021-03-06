@@ -13,7 +13,7 @@ class Artist extends Component {
   constructor(props) {
     super(props);
 
-    this.artistId = this.props.match.params.artistId;
+    this.artistId = get(this.props, "match.params.artistId", null);
     this.state = {
       albums: [],
       loadingAlbums: false,
@@ -28,7 +28,7 @@ class Artist extends Component {
 
   componentDidUpdate(prevProps){
     const oldArtistId = get(prevProps, "match.params.artistId", null);
-    const newArtistId = get(this.props, "match.params.artistId", null)
+    const newArtistId = get(this.props, "match.params.artistId", null);
     if(oldArtistId !== newArtistId){
       this.artistId = newArtistId;
       this.loadData();
