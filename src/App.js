@@ -18,6 +18,7 @@ import AlbumDetail from "./pages/AlbumDetail";
 import AlbumEdit from "./pages/AlbumEdit";
 import Albums from "./pages/Albums";
 import Upload from "./pages/Upload";
+import SearchResults from "./pages/SearchResults";
 import APISettings from "./pages/APISettings";
 import NotFound from "./pages/NotFound";
 import { QueueProvider } from "./context/Queue";
@@ -38,6 +39,7 @@ function App() {
             <ProtectedRoute exact path="/album/:albumId" component={AlbumDetail} />
             <ProtectedRoute exact path="/album/:albumId/edit" component={AlbumEdit} />
             <ProtectedRoute exact path="/upload" component={Upload} />
+            <ProtectedRoute exact path="/search/:term?" component={SearchResults} />
             <Route exact path="/api-settings" component={APISettings} />
             <Route component={NotFound} status={404} />
           </Switch>
