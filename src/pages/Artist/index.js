@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import get from "lodash/get";
 
 import AlbumsService from "../../shared/albums-service";
 import ArtistsService from "../../shared/artists-service";
@@ -22,10 +23,24 @@ class Artist extends Component {
   }
 
   componentDidMount() {
+    this.loadData();
+  }
 
+  componentDidUpdate(prevProps){
+    const oldArtistId = get(prevProps, "match.params.artistId", null);
+    const newArtistId = get(this.props, "match.params.artistId", null)
+    if(oldArtistId !== newArtistId){
+      this.artistId = newArtistId;
+      this.loadData();
+    }
+  }
+
+  loadData = () => {
     this.setState({
+      albums: [],
       loadingAlbums: true,
       loadingArtist: true,
+      artist: null,
     });
 
     AlbumsService.listByArtist(this.artistId, {withSongs: 1}).then((albums) => {
