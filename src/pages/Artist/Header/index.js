@@ -1,9 +1,11 @@
 import React from "react";
 import sortBy from "lodash/sortBy";
 import withQueueContext from "../../../hoc/queue";
+import { Link } from "react-router-dom";
 
 import ArtistImage from "../../../components/ArtistItem/Image"
 import Button from "../../../atoms/Button";
+import Dropdown from "../../../components/Dropdown";
 
 import "./index.scss";
 
@@ -44,14 +46,26 @@ const Header = props => {
   return(
     <header className="artist-header">
       <div className="container">
-        <div className="row">
-          <div className="col-12 col-md-2">
-            <ArtistImage images={artist.images} name={artist.name} />
-          </div>
-          <div className="col-12 col-md-10">
-            <h2>{artist.name}</h2>
-            <p>{albums.length} álbums disponibles</p>
-            <p><Button primary minWidth onClick={replaceQueueAndPlay}>Reproducir {songsCount} temas</Button></p>
+        <ArtistImage images={artist.images} name={artist.name} />
+        <div className="data">
+          <h2 className="mt-0">{artist.name}</h2>
+          <p>{albums.length} álbums disponibles</p>
+          <div className="actions">
+            <Button primary minWidth onClick={replaceQueueAndPlay}>Reproducir {songsCount} temas</Button>
+              <Dropdown>
+                <Dropdown.Handler>
+                  <Button>
+                    <svg viewBox="0 0 24 24">
+                      <path fill="currentColor" d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" />
+                    </svg>
+                  </Button>
+                </Dropdown.Handler>
+                <Dropdown.List>
+                  <Dropdown.Item hideOnClick><Link to={`/artist/${artist.id}/edit`}>Editar artista</Link></Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item disabled>Compartir</Dropdown.Item>
+                </Dropdown.List>
+              </Dropdown>
           </div>
         </div>
       </div>

@@ -1,14 +1,31 @@
 header.artist-header{
-  background-color: rgba(0, 0, 0, .5);
-  .row > *{
-    margin-top: 32px;
-    margin-bottom: 32px;
-  }
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.5), transparent);
+  padding: 32px 15px;
+
   img.artist-image,
   svg.artist-image{
     border-radius: 100%;
     overflow: hidden;
     width: 100%;
     height: auto;
+    max-width: 256px;
+
+    @media (max-width: 640px) {
+      max-width: 120px;
+    }
+  
+  }
+
+  > .container{
+    display: flex;
+    column-gap: 16px;
+    align-items: center;
+    .data{
+
+      .actions{
+        display: flex;
+        column-gap: 16px;
+      }
+    }
   }
 }

@@ -1,8 +1,18 @@
 img.artist-image{
   opacity: 0;
   transition: opacity .3s;
-
+  max-width: 100%;
+  height: auto;
+  border-radius: 100%;
+  
   &.loaded{
     opacity: 1;
   }
+}
+
+svg.artist-image{
+  max-width: 100%;
+  border-radius: 999px;
+  overflow: hidden;
+  height: auto;
 }

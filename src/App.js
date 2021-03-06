@@ -12,6 +12,7 @@ import Player from "./components/Player";
 import Queue from "./components/Queue";
 import Home from "./pages/Home";
 import Artist from "./pages/Artist";
+import ArtistEdit from "./pages/ArtistEdit";
 import Artists from "./pages/Artists";
 import AlbumDetail from "./pages/AlbumDetail";
 import AlbumEdit from "./pages/AlbumEdit";
@@ -32,6 +33,7 @@ function App() {
             <ProtectedRoute exact path="/home" component={Home} />
             <ProtectedRoute exact path="/artists" component={Artists} />
             <ProtectedRoute exact path="/artist/:artistId" component={Artist} />
+            <ProtectedRoute exact path="/artist/:artistId/edit" component={ArtistEdit} />
             <ProtectedRoute exact path="/albums" component={Albums} />
             <ProtectedRoute exact path="/album/:albumId" component={AlbumDetail} />
             <ProtectedRoute exact path="/album/:albumId/edit" component={AlbumEdit} />
