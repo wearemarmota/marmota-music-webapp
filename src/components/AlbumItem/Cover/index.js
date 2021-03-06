@@ -11,8 +11,6 @@ const Cover = props => {
   const { covers, className, alt, title, size } = props;
   const [loaded, setLoaded] = useState(false);
 
-  logger.log("received covers", covers);
-
   if (covers.hasOwnProperty(size)) {
     return <img
       src={covers[size]}

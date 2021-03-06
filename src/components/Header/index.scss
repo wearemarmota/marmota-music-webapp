@@ -45,6 +45,9 @@ header#main-header {
     }
 
     .dropdown{
+      .dropdown-handler{
+        display: block;
+      }
       a.active{
         color: #ff0182;
       }
