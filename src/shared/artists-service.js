@@ -36,11 +36,42 @@ function create(name) {
   });
 }
 
+function update(artistId, name){
+  return request({
+    url: `/artists/${artistId}`,
+    method: "PATCH",
+    data: {
+      name: name,
+    },
+  });
+}
+
+
+function updateAvatar(artistId, file) {
+  // Check: https://github.com/axios/axios/blob/master/examples/upload/index.html#L30-L32
+  // for upload proggress:
+
+  var bodyFormData = new FormData();
+  bodyFormData.append("image", file);
+  bodyFormData.append("_method", "PATCH");
+
+  return request({
+    url: `/artists/${artistId}`,
+    method: "POST",
+    data: bodyFormData,
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  });
+}
+
 const ArtistsService = {
   list,
   get,
   find,
   create,
+  update,
+  updateAvatar,
 };
 
 export default ArtistsService;
