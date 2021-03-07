@@ -1,14 +1,18 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { useHistory } from "react-router-dom";
-import throttle from "lodash/throttle";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import debounce from "lodash/debounce";
+
+import { setSearchTerm } from "../../../redux/actions/search";
 
 import "./index.scss";
 
 const Search = props => {
 
   const history = useHistory();
-  const [term, setTerm] = useState("");
   const didMount = useRef(false); // Idea from: https://www.robinwieruch.de/react-useeffect-only-on-update
+  const { term, setSearchTerm } = props;
 
   useEffect(() => {
     if (!didMount.current) {
@@ -18,16 +22,16 @@ const Search = props => {
     redirect(term);
   }, [term])
 
-  const redirect = useCallback(throttle(term => {
+  const redirect = useCallback(debounce(term => {
     history.push(`/search/${btoa(term)}`);
-  }, 1000), []);
+  }, 500), []);
 
   return(
     <form className="search-form" onSubmit={e => e.preventDefault()}>
       <input
         type="text"
         value={term}
-        onChange={ e => setTerm(e.target.value) }
+        onChange={ e => setSearchTerm(e.target.value) }
         placeholder="Busca por autor, álbum, canción..."
       />
       <svg viewBox="0 0 24 24">
@@ -37,4 +41,15 @@ const Search = props => {
   )
 }
 
-export default Search;
+const mapStateToProps = state => {
+  const { searchTerm: term } = state.search;
+  return { term };
+}
+
+const mapDispatchToProps = {
+  setSearchTerm,
+}
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+)(Search);

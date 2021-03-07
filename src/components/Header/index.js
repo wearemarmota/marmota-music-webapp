@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { withRouter, NavLink } from "react-router-dom";
+import { compose } from "redux";
+import { connect } from "react-redux";
 import classNames from "classnames/bind";
 import throttle from "lodash/throttle";
 import Dropdown from "../Dropdown";
 import DefaultAvatar from "./DefaultAvatar";
 import Search from "./Search";
+import { setSearchTerm } from "../../redux/actions/search";
 
 import "./index.scss";
 
@@ -36,10 +39,11 @@ class Header extends Component {
   handleDocumentScrollThrottled = throttle(this.handleDocumentScroll, 250);
 
   render() {
+    const { setSearchTerm } = this.props;
     return (
       <header id="main-header" className={classNames({scrolled: this.state.scrolled})}>
         <h1>
-          <NavLink to="/">
+          <NavLink to="/" onClick={e => setSearchTerm("")}>
             <img src="/img/logo.svg" alt="Marmota Music" />
           </NavLink>
         </h1>
@@ -66,4 +70,11 @@ class Header extends Component {
   }
 }
 
-export default withRouter(Header);
+const mapDispatchToProps = {
+  setSearchTerm,
+}
+
+export default compose(
+  connect(null, mapDispatchToProps),
+  withRouter
+)(Header);
