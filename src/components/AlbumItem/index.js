@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { withRouter, Link } from "react-router-dom";
+import { compose } from "redux";
+import { connect } from "react-redux";
 import sortBy from "lodash/sortBy";
 import AlbumsService from "../../shared/albums-service";
 import withQueueContext from "../../hoc/queue";
+import { setSearchTerm } from "../../redux/actions/search";
 
 import Cover from "./Cover";
 
@@ -51,16 +54,16 @@ class AlbumItem extends Component {
     });
   }
 
+  clearSearchTerm = () => this.props.setSearchTerm("");
+
   render() {
-    const ClickReceiver =
-      this.props.onClick !== undefined ? AlbumButton : AlbumLink;
     const album = this.props.album;
     const artist = album.artist;
 
     return (
       <article className="album">
         <div className="cover">
-          <ClickReceiver {...this.props}>
+          <Link to={`/album/${this.props.album.id}`} onClick={this.clearSearchTerm}>
             <Cover
               covers={album.covers}
               title={album.title}
@@ -69,7 +72,7 @@ class AlbumItem extends Component {
             {this.props.showGlow && (
               <Cover covers={album.covers} className="cover-component-glow" alt="cover" />
             )}
-          </ClickReceiver>
+          </Link>
           <button className="play unstyled" onClick={this.playAlbum} aria-label={`Play ${album.title} album`}>
             <svg viewBox="0 0 24 24">
               <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
@@ -78,12 +81,12 @@ class AlbumItem extends Component {
         </div>
         {this.props.showTitle && (
           <h1 className="title">
-            <Link to={`/album/${album.id}`}>{album.title}</Link>
+            <Link to={`/album/${album.id}`} onClick={this.clearSearchTerm}>{album.title}</Link>
           </h1>
         )}
         {this.props.showArtist && (
           <div className="artist">
-            <Link to={`/artist/${artist.id}`}>{artist.name}</Link>
+            <Link to={`/artist/${artist.id}`} onClick={this.clearSearchTerm}>{artist.name}</Link>
           </div>
         )}
       </article>
@@ -97,16 +100,12 @@ class AlbumItem extends Component {
   };
 }
 
-function AlbumLink(props) {
-  return <Link to={`/album/${props.album.id}`}>{props.children}</Link>;
+const mapDispatchToProps = {
+  setSearchTerm,
 }
 
-function AlbumButton(props) {
-  return (
-    <button className="unstyled" onClick={props.onClick}>
-      {props.children}
-    </button>
-  );
-}
-
-export default withRouter(withQueueContext(AlbumItem));
+export default compose(
+  connect(null, mapDispatchToProps),
+  withRouter,
+  withQueueContext,
+)(AlbumItem);

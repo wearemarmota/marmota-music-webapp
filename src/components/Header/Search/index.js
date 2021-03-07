@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import debounce from "lodash/debounce";
+import startsWith from "lodash/startsWith";
 
 import { setSearchTerm } from "../../../redux/actions/search";
 
@@ -23,7 +24,12 @@ const Search = props => {
   }, [term])
 
   const redirect = useCallback(debounce(term => {
-    history.push(`/search/${btoa(term)}`);
+    if(term.length > 0){
+      history.push(`/search/${btoa(term)}`);
+    }else if(startsWith(history.location.pathname, "/search")){
+      // Redirect to home, but only if we're at search
+      history.push(`/`);
+    }
   }, 500), []);
 
   return(
