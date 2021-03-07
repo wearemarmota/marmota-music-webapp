@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import classNames from "classnames";
 import DefaultCover from "./DefaultCover";
 import PhantomCover from "./PhantomCover";
-import Logger from "../../../shared/logger";
 import "./index.scss";
-
-const logger = new Logger("Cover");
 
 const Cover = props => {
   const { covers, className, alt, title, size } = props;
@@ -18,9 +15,7 @@ const Cover = props => {
       alt={alt}
       width={size}
       height={size}
-      // Using this "fake" timeout to always ensure a change
-      // with the "loaded" class.
-      onLoad={e => setTimeout(() => setLoaded(true), 1)}
+      onLoad={e => setLoaded(true)}
       loading="lazy"
     />;
   }
