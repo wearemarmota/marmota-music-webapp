@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import { ToastContainer, Flip } from 'react-toastify';
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import Header from "./components/Header";
@@ -23,11 +24,24 @@ import APISettings from "./pages/APISettings";
 import NotFound from "./pages/NotFound";
 import { QueueProvider } from "./context/Queue";
 
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   return (
     <QueueProvider>
       <Router>
         <Header />
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          transition={Flip}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <main>
           <Switch>
             <Redirect exact from="/" to="/home" />

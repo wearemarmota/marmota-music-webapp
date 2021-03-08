@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { toast } from "react-toastify";
 
 const QueueContext = React.createContext();
 
@@ -41,6 +42,7 @@ class QueueProvider extends Component {
       this.setState({
         songs: songs,
       }, () => {
+        toast(`Cola de reproducción actualizada con ${songs.length} canciones`);
         resolve();
       });
     })

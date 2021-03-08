@@ -71,3 +71,25 @@ button.link {
   @extend button.unstyled;
   text-decoration: underline;
 }
+
+.Toastify{
+  .Toastify__toast{
+    min-height: 0;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+  .Toastify__toast--default {
+    background: #030d31;
+    color: #d9d9d9;
+
+    .Toastify__close-button {
+      color: #d9d9d9;
+      opacity: 1;
+      padding: 8px;
+
+      svg{
+        display: block;
+      }
+    }
+  }
+}
