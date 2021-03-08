@@ -23,6 +23,14 @@ const Search = props => {
     redirect(term);
   }, [term])
 
+  useEffect(() => {
+    return history.listen((location) => { 
+       if(!startsWith(location.pathname, "/search")){
+         setSearchTerm("");
+       }
+    }) 
+ },[history])
+
   const redirect = useCallback(debounce(term => {
     if(term.length > 0){
       history.push(`/search/${btoa(term)}`);

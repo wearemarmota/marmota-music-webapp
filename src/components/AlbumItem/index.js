@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { withRouter, Link } from "react-router-dom";
 import { compose } from "redux";
-import { connect } from "react-redux";
 import sortBy from "lodash/sortBy";
 import AlbumsService from "../../shared/albums-service";
 import withQueueContext from "../../hoc/queue";
-import { setSearchTerm } from "../../redux/actions/search";
 
 import Cover from "./Cover";
 
@@ -54,8 +52,6 @@ class AlbumItem extends Component {
     });
   }
 
-  clearSearchTerm = () => this.props.setSearchTerm("");
-
   render() {
     const album = this.props.album;
     const artist = album.artist;
@@ -63,7 +59,7 @@ class AlbumItem extends Component {
     return (
       <article className="album">
         <div className="cover">
-          <Link to={`/album/${this.props.album.id}`} onClick={this.clearSearchTerm}>
+          <Link to={`/album/${this.props.album.id}`}>
             <Cover
               covers={album.covers}
               title={album.title}
@@ -100,12 +96,7 @@ class AlbumItem extends Component {
   };
 }
 
-const mapDispatchToProps = {
-  setSearchTerm,
-}
-
 export default compose(
-  connect(null, mapDispatchToProps),
   withRouter,
   withQueueContext,
 )(AlbumItem);
