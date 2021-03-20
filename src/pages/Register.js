@@ -36,7 +36,7 @@ const Register = ({ history }) => {
   }
 
   return(
-    <div className="container">
+    <div className="container smallest">
       <h2>Nuevo registro</h2>
       <form onSubmit={onSubmit}>
         <FormGroup>

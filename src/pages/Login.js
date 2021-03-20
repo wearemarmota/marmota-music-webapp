@@ -30,7 +30,7 @@ const Login = ({ history, setAuth, ...props }) => {
   }
 
   return(
-    <div className="container">
+    <div className="container smallest">
       <h2>Login</h2>
       <form onSubmit={onSubmit}>
         <FormGroup>

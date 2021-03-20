@@ -28,6 +28,10 @@ body > div#root > main > .container {
   &.smaller{
     max-width: 800px;
   }
+
+  &.smallest{
+    max-width: 400px;
+  }
 }
 
 h2{
