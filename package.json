@@ -11,6 +11,7 @@
     "classnames": "^2.2.6",
     "env-cmd": "^10.1.0",
     "jsmediatags": "^3.9.3",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.20",
     "node-sass": "^4.14.1",
     "react": "^16.14.0",
@@ -20,7 +21,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-toastify": "^7.0.3",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

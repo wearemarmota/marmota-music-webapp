@@ -1,14 +1,21 @@
+import { compose } from "redux";
+import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
-const ProtectedRoute = props => {
-
-  const storage = window.localStorage;
-  const apiUri = storage.getItem("api_uri");
-
-  return apiUri ?
-    <Route {...props} /> :
-    <Redirect to="/api-settings" />;
-
+const ProtectedRoute = ({onlyAuthorized, onlyUnauthorized, ...props}) => {
+  if(onlyAuthorized && !props.auth.isLogged){
+    return <Redirect to="/login" />;
+  }else if(onlyUnauthorized && props.auth.isLogged){
+    return <Redirect to="/" />
+  }
+  return <Route {...props} />;
 }
 
-export default ProtectedRoute;
+const mapStateToProps = state => {
+  const { auth } = state;
+  return { auth };
+}
+
+export default compose(
+  connect(mapStateToProps)
+)(ProtectedRoute);

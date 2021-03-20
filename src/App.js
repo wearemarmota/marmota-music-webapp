@@ -20,7 +20,8 @@ import AlbumEdit from "./pages/AlbumEdit";
 import Albums from "./pages/Albums";
 import Upload from "./pages/Upload";
 import SearchResults from "./pages/SearchResults";
-import APISettings from "./pages/APISettings";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import { QueueProvider } from "./context/Queue";
 
@@ -45,16 +46,17 @@ function App() {
         <main>
           <Switch>
             <Redirect exact from="/" to="/home" />
-            <ProtectedRoute exact path="/home" component={Home} />
-            <ProtectedRoute exact path="/artists" component={Artists} />
-            <ProtectedRoute exact path="/artist/:artistId" component={Artist} />
-            <ProtectedRoute exact path="/artist/:artistId/edit" component={ArtistEdit} />
-            <ProtectedRoute exact path="/albums" component={Albums} />
-            <ProtectedRoute exact path="/album/:albumId" component={AlbumDetail} />
-            <ProtectedRoute exact path="/album/:albumId/edit" component={AlbumEdit} />
-            <ProtectedRoute exact path="/upload" component={Upload} />
-            <ProtectedRoute exact path="/search/:term?" component={SearchResults} />
-            <Route exact path="/api-settings" component={APISettings} />
+            <ProtectedRoute onlyAuthorized exact path="/home" component={Home} />
+            <ProtectedRoute onlyAuthorized exact path="/artists" component={Artists} />
+            <ProtectedRoute onlyAuthorized exact path="/artist/:artistId" component={Artist} />
+            <ProtectedRoute onlyAuthorized exact path="/artist/:artistId/edit" component={ArtistEdit} />
+            <ProtectedRoute onlyAuthorized exact path="/albums" component={Albums} />
+            <ProtectedRoute onlyAuthorized exact path="/album/:albumId" component={AlbumDetail} />
+            <ProtectedRoute onlyAuthorized exact path="/album/:albumId/edit" component={AlbumEdit} />
+            <ProtectedRoute onlyAuthorized exact path="/upload" component={Upload} />
+            <ProtectedRoute onlyAuthorized exact path="/search/:term?" component={SearchResults} />
+            <ProtectedRoute onlyUnauthorized exact path="/login" component={Login} />
+            <ProtectedRoute onlyUnauthorized exact path="/register" component={Register} />
             <Route component={NotFound} status={404} />
           </Switch>
         </main>

@@ -25,11 +25,12 @@ const Search = props => {
 
   useEffect(() => {
     return history.listen((location) => { 
-       if(!startsWith(location.pathname, "/search")){
-         setSearchTerm("");
-       }
+      if(term === "") return;
+      if(!startsWith(location.pathname, "/search")){
+        setSearchTerm("");
+      }
     }) 
- },[history])
+ },[history, term])
 
   const redirect = useCallback(debounce(term => {
     if(term.length > 0){
@@ -57,7 +58,8 @@ const Search = props => {
 
 const mapStateToProps = state => {
   const { searchTerm: term } = state.search;
-  return { term };
+  const { auth } = state;
+  return { term, auth };
 }
 
 const mapDispatchToProps = {
