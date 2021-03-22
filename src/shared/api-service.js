@@ -44,7 +44,7 @@ const isTokenExpValid = () => {
   const decoded = jwt_decode(token);
   const expiry = decoded.exp;
   const now = Date.now()/1000;
-  const remainingSeconds = Math.abs(expiry - now);
+  const remainingSeconds = expiry - now;
   if(remainingSeconds <= 0){
     logger.warn("Token expired, remove auth");
     store.dispatch(unsetAuth());
