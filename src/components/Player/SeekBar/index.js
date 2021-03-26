@@ -42,6 +42,11 @@ class SeekBar extends Component {
         onMouseLeave={this.endDragging}
         onMouseMove={this.move}
       >
+        {
+          this.props.loadedPortions.map((portion, index) => {
+            return <div key={index} className="portion" style={{left: `${portion.fromPercentage}%`, width: `${portion.toPercentage - portion.fromPercentage}%`}}></div>
+          })
+        }
         <div className="progress" style={{width: `${this.props.currentPercentage}%`}}>
           <div className="progress-shadow"></div>
         </div>

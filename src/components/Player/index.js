@@ -16,6 +16,7 @@ class Player extends Component {
     this.state = {
       currentTime: 0,
       currentPercentage: 0,
+      loadedPortions: [],
     };
     this.currentTimeInterval = null;
   }
@@ -58,6 +59,18 @@ class Player extends Component {
         this.next();
       }
     }
+
+    let loadedPortions = [];
+    for( let i = 0; i < this.audioRef.current.buffered.length; i++ ){
+      let fromSecond = this.audioRef.current.buffered.start(i);
+      let toSecond = this.audioRef.current.buffered.end(i);
+      let fromPercentage = (fromSecond * 100) / audioDuration;
+      let toPercentage = (toSecond * 100) / audioDuration;
+      let portion = { fromSecond, toSecond, fromPercentage, toPercentage };
+      loadedPortions.push(portion);
+      this.setState({ loadedPortions: loadedPortions });
+    }
+
   }
 
   componentWillUnmount() {
@@ -182,7 +195,11 @@ class Player extends Component {
     const { queueContext } = this.props;
     return (
       <div className="player-wrapper">
-        <SeekBar onClick={this.progressBarClick} currentPercentage={this.state.currentPercentage} />
+        <SeekBar
+          onClick={this.progressBarClick}
+          currentPercentage={this.state.currentPercentage}
+          loadedPortions={this.state.loadedPortions}
+        />
         <aside id="player">
 
           <audio
