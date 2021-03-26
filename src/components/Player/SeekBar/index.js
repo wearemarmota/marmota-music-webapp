@@ -1,58 +1,38 @@
-import React, { Component } from "react";
+import { useState, useCallback } from "react";
 import throttle from "lodash/throttle";
 
 import "./index.scss";
 
-class SeekBar extends Component {
-  
-  constructor(props){
-    super(props);
-    this.state = {
-      isDragging: false,
-    }
+const SeekBar = ({ loadedPortions, onClick, currentPercentage }) => {
+
+  const [isDragging, setIsDragging] = useState(false);
+
+  const move = e => {
+    if(!isDragging) return;
+    onClickThrottled(e.nativeEvent);
   }
 
-  startDragging = () => {
-    this.setState({ isDragging: true });
-  }
+  const onClickThrottled = useCallback(throttle(event => onClick(event), 5000), []);
 
-  endDragging = (e) => {
-    this.setState({ isDragging: false });
-  }
-
-  move = (e) => {
-    const event = e.nativeEvent;
-    if(!this.state.isDragging){
-      return;
-    }
-    this.onClickThrottled(event);
-  }
-
-  onClickThrottled = throttle((event) => {
-    this.props.onClick(event)
-  }, 200);
-
-  render(){
-    return (
-      <div
-        className="seekbar"
-        onClick={this.props.onClick}
-        onMouseUp={this.endDragging}
-        onMouseDown={this.startDragging}
-        onMouseLeave={this.endDragging}
-        onMouseMove={this.move}
-      >
-        {
-          this.props.loadedPortions.map((portion, index) => {
-            return <div key={index} className="portion" style={{left: `${portion.fromPercentage}%`, width: `${portion.toPercentage - portion.fromPercentage}%`}}></div>
-          })
-        }
-        <div className="progress" style={{width: `${this.props.currentPercentage}%`}}>
-          <div className="progress-shadow"></div>
-        </div>
+  return(
+    <div
+      className="seekbar"
+      onClick={onClick}
+      onMouseUp={() => setIsDragging(false)}
+      onMouseDown={() => setIsDragging(true)}
+      onMouseLeave={() => setIsDragging(false)}
+      onMouseMove={move}
+    >
+      {
+        loadedPortions.map((portion, index) => {
+          return <div key={index} className="portion" style={{left: `${portion.fromPercentage}%`, width: `${portion.toPercentage - portion.fromPercentage}%`}}></div>
+        })
+      }
+      <div className="progress" style={{width: `${currentPercentage}%`}}>
+        <div className="progress-shadow"></div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default SeekBar;
