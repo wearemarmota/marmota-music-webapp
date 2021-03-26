@@ -40,6 +40,14 @@ table.songs-list {
           padding: 19px 0 19px 10px;
           width: 34px;
           text-align: center;
+
+          button{
+            transition: all .2s;
+            &:disabled{
+              cursor: progress;
+            }
+          }
+
         }
         &.column-position-and-status {
           padding: 19px 0;
