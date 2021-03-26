@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import { useContext } from "react";
 import classNames from "classnames/bind";
-import withQueueContext from "../../hoc/queue";
+
+import QueueContext from "../../context/Queue";
 
 import Cover from "../AlbumItem/Cover";
 import Duration from "../Duration";
@@ -8,26 +9,24 @@ import Header from "./Header";
 
 import "./index.scss";
 
-class Queue extends Component {
-  render() {
-    const { queueContext: queue } = this.props;
-    return (
-      <div id="queue" className={classNames({ visible: queue.visible })}>
-        <Header title="A continuación" closeAction={ () => queue.setVisible(false) } />
-        <div className="queue-content">
-        {
-          (queue.songs.length > 0) ?
-          <SongsList {...this.props} /> :
-          <EmptyQueue />
-        }
-        </div>
+const Queue = props => {
+  const queue = useContext(QueueContext);
+  return(
+    <div id="queue" className={classNames({ visible: queue.visible })}>
+      <Header title="A continuación" closeAction={ () => queue.setVisible(false) } />
+      <div className="queue-content">
+      {
+        queue.songs.length > 0 ?
+        <SongsList {...props} /> :
+        <EmptyQueue />
+      }
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-function SongsList(props) {
-  const { queueContext: queue } = props;
+const SongsList = props => {
+  const queue = useContext(QueueContext);
   return (
     queue.songs.map((song, index) => (
       <SongItem key={index} {...props} song={song} index={index} />
@@ -35,8 +34,10 @@ function SongsList(props) {
   );
 }
 
-function SongItem(props) {
-  const { song, index, queueContext: queue } = props;
+
+const SongItem = props => {
+  const queue = useContext(QueueContext);
+  const { song, index } = props;
   const isCurrentSong = song.uuid === (queue.currentSong && queue.currentSong.uuid);
 
   const removeSongFromQueue = e => {
@@ -102,4 +103,4 @@ function EmptyQueue() {
   </div>;
 }
 
-export default withQueueContext(Queue);
+export default Queue;
