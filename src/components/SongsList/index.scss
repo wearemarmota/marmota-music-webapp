@@ -1,0 +1,219 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+@mixin ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+section.songs-list{
+  display: grid;
+  width: 100%;
+
+  @include media-breakpoint-down("sm") {
+    width: 100vw;
+    margin-left: -25px;
+  }
+
+  grid-template-columns:
+    [like] 48px
+    [position] 36px
+    [title] auto
+    [artist] auto
+    [album] auto
+    [duration] 100px
+    [actions] 48px;
+
+   header, article{
+    > .title{ grid-column: title; }
+    > .position{ grid-column: position; }
+    > .artist{ grid-column: artist; }
+    > .album{ grid-column: album; }
+    > .duration{ grid-column: duration; }
+    > .actions{ grid-column: actions; }
+  }
+
+  header{
+    display: contents;
+    font-size: 12px;
+    text-transform: uppercase;
+    text-align: left;
+    font-weight: bold;
+
+    div{
+      padding: 2px 15px;
+      @include ellipsis;
+    }
+  }
+
+  main{
+    display: contents;
+    font-size: 14px;
+
+    article{
+      display: contents;
+
+      &:hover{
+        > div {
+          background-color: #2b375f;
+          border-bottom: 1px solid transparent;
+        }
+        &[playing=false]{
+          > .position{
+            .cover-component{
+              opacity: .2;
+              filter: grayscale(1);
+            }
+            .number{
+              display: none;
+            }
+            .icon-play{
+              position: absolute;
+              display: block;
+              width: 22px;
+              height: 22px;
+            }
+          }
+        }  
+      }
+      
+      &[playing=true]{
+        > .title{
+          color: #ff0182;
+        }
+        > .position{
+          .cover-component{
+            opacity: .4;
+            filter: grayscale(1);
+          }
+          .number{
+            display: none;
+          }
+          .icon-speaker{
+            position: absolute;
+            display: block;
+            width: 18px;
+            height: 18px;
+          }
+        }
+      }
+
+      > .like{
+        padding: 19px 12px 19px 12px;
+
+        button{
+          transition: all .2s;
+          padding: 5px;
+
+          svg{
+            display: block;
+            width: 14px;
+            height: 14px;
+          }
+      
+          &:disabled{
+            cursor: progress;
+          }
+        }
+      }
+
+      > .position{
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .cover-component{
+          width: 36px;
+          height: 36px;
+          transition: none;
+        }
+        .icon-speaker{
+          display: none;
+        }
+      }
+
+      > .title{
+        @include ellipsis;
+        font-weight: 700;
+      }
+
+      > .artist{
+        @include ellipsis;
+      }
+
+      > .album{
+        @include ellipsis;
+      }
+
+      > .duration{
+        @include ellipsis;
+      }
+
+      > .actions{
+        padding: 0 20px 0 0;
+        button.dropdown-handler {
+          padding: 2px;
+          border: 1px solid transparent;
+          border-radius: 2px;
+          color: #c8c8e7;
+          &:hover {
+            border-color: #c8c8e7;
+          }
+          svg {
+            display: block;
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+
+      > div{
+        padding: 19px 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      &:not(:last-child) > div{
+        border-bottom: 1px solid #2b375f;
+      }
+    }
+  }
+  
+  @include media-breakpoint-down("md") {
+    grid-template-columns:
+      [like] 48px
+      [position] 36px
+      [title] auto
+      [artist] 0px
+      [album] auto
+      [duration] 100px
+      [actions] 48px;
+    
+    header, article{
+      .artist{
+        display: none;
+      }
+    }
+  }
+
+  @include media-breakpoint-down("sm") {
+    grid-template-columns:
+      [like] 48px
+      [position] 36px
+      [title] auto
+      [artist] 0px
+      [album] 0px
+      [duration] 100px
+      [actions] 48px;
+    
+    header, article{
+      .artist, .album{
+        display: none;
+      }
+    }
+  }
+
+}
