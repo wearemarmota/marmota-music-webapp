@@ -2,15 +2,17 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import sortBy from "lodash/sortBy";
 import get from "lodash/get";
+
 import AlbumsService from "../../shared/albums-service";
 import withQueueContext from "../../hoc/queue";
+import { createSongsListItem } from "../../shared/factories";
 
 import Cover from "../../components/AlbumItem/Cover";
 import Header from "./Header";
+import SongsList from "../../components/SongsList";
+import EmptyAlbum from "./EmptyAlbum";
 
 import "./index.scss";
-import List from "./List";
-import EmptyAlbum from "./EmptyAlbum";
 
 class AlbumDetail extends Component {
   constructor(props) {
@@ -40,6 +42,16 @@ class AlbumDetail extends Component {
     AlbumsService.get(this.albumId).then((album) => {
       this.setState({
         album: album,
+        album: {
+          ...album,
+          songs: album.songs.map(song => {
+            return createSongsListItem({
+              song: song,
+              album: album,
+              artist: album.artist,
+            })
+          })
+        },
         loading: false,
       })
     });
@@ -132,13 +144,7 @@ class AlbumDetail extends Component {
           }
 
           { this.state.album.songs.length > 0 && (
-            <List
-              album={this.state.album}
-              songs={this.orderedSongs()}
-              currentSong={this.props.queueContext.currentSong}
-              appendSongToQueue={this.appendSongToQueue}
-              playSong={this.playSong}
-            />
+            <SongsList songs={this.orderedSongs()} />
           )}
 
         </div>
