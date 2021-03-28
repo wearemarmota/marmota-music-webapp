@@ -20,6 +20,7 @@ import AlbumEdit from "./pages/AlbumEdit";
 import Albums from "./pages/Albums";
 import Upload from "./pages/Upload";
 import SearchResults from "./pages/SearchResults";
+import Favorites from "./pages/Favorites";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
@@ -55,6 +56,7 @@ function App() {
             <ProtectedRoute onlyAuthorized exact path="/album/:albumId/edit" component={AlbumEdit} />
             <ProtectedRoute onlyAuthorized exact path="/upload" component={Upload} />
             <ProtectedRoute onlyAuthorized exact path="/search/:term?" component={SearchResults} />
+            <ProtectedRoute onlyAuthorized exact path="/favorites" component={Favorites} />
             <ProtectedRoute onlyUnauthorized exact path="/login" component={Login} />
             <ProtectedRoute onlyUnauthorized exact path="/register" component={Register} />
             <Route component={NotFound} status={404} />

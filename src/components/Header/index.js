@@ -62,6 +62,7 @@ class Header extends Component {
                 <Dropdown.List>
                   <Dropdown.Item hideOnClick><NavLink to="/artists">Todos los artistas</NavLink></Dropdown.Item>
                   <Dropdown.Item hideOnClick><NavLink to="/albums">Todos los álbumes</NavLink></Dropdown.Item>
+                  <Dropdown.Item hideOnClick><NavLink to="/favorites">Tus favoritos</NavLink></Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item hideOnClick><NavLink to="/upload">Agregar contenido</NavLink></Dropdown.Item>
                   <Dropdown.Divider />
