@@ -204,7 +204,7 @@ class Player extends Component {
 
           <audio
             ref={this.audioRef}
-            src={queueContext.currentSong && queueContext.currentSong.fileUri}
+            src={queueContext.currentSong && queueContext.currentSong.source}
           />
 
           <CurrentSong song={queueContext.currentSong} seconds={this.state.currentTime} />
