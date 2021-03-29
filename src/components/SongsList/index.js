@@ -19,7 +19,7 @@ import {
 
 import "./index.scss";
 
-const SongsList = ({ songs, showCovers }) => {
+const SongsList = ({ songs, showCovers = false, queueAll = true }) => {
 
   const queue = useContext(QueueContext);
 
@@ -31,6 +31,18 @@ const SongsList = ({ songs, showCovers }) => {
     });
   };
 
+  const playNext = (index = 0) => {
+    const before = queue.songs.slice(0, queue.currentIndex + 1);
+    const after = queue.songs.slice(queue.currentIndex + 1, queue.songs.length);
+    queue.setSongs([].concat(before, songs[index], after)).then(() => {
+      queue.setCurrentIndex(queue.currentIndex + 1).then(() => {
+        queue.setPlaying(false).then(queue.setPlaying(true));
+      });
+    });
+  };
+
+  const play = queueAll ? replaceQueueAndPlay : playNext;
+
   return(
     <section className="songs-list">
       <ListHeader />
@@ -40,7 +52,7 @@ const SongsList = ({ songs, showCovers }) => {
           index={index}
           song={song}
           showCover={showCovers}
-          replaceQueueAndPlay={replaceQueueAndPlay}
+          play={play}
         />) }
       </main>
     </section>
@@ -61,7 +73,7 @@ const ListHeader = () => {
   );
 }
 
-const ListRow = ({ index, song, showCover, replaceQueueAndPlay }) => {
+const ListRow = ({ index, song, showCover, play }) => {
 
   const {
     isUpdatingFavorite,
@@ -90,7 +102,7 @@ const ListRow = ({ index, song, showCover, replaceQueueAndPlay }) => {
           <span className="number">{ song.position }</span>
         }
         <div className="icon-speaker"><IconSpeaker /></div>
-        <button className="unstyled icon-play" onClick={ e => replaceQueueAndPlay(index) }><IconPlay /></button>
+        <button className="unstyled icon-play" onClick={ e => play(index) }><IconPlay /></button>
       </div>
       <div className="title">{ song.title }</div>
       <div className="artist"><Link to={`/artist/${song.album.artist.id}`}>{song.album.artist.name}</Link></div>
