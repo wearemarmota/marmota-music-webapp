@@ -174,10 +174,11 @@ section.songs-list{
         padding: 19px 15px;
         display: flex;
         align-items: center;
+        border-bottom: 1px solid #2b375f;
       }
 
-      &:not(:last-child) > div{
-        border-bottom: 1px solid #2b375f;
+      &:last-child > div{
+        border-bottom: 1px solid transparent;
       }
     }
   }

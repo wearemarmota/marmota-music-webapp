@@ -64,10 +64,10 @@ const ListHeader = () => {
     <header>
       <div className="like"></div>
       <div className="position"></div>
-      <div className="title">Title</div>
-      <div className="artist">Artist</div>
-      <div className="album">Album</div>
-      <div className="duration">Duration</div>
+      <div className="title">Título</div>
+      <div className="artist">Artista</div>
+      <div className="album">Álbum</div>
+      <div className="duration">Duración</div>
       <div className="actions"></div>
     </header>
   );
