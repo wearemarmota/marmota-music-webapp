@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 import SearchService from "../../shared/search-service";
+import { createSongsListItem } from "../../shared/factories";
+
 import ArtistsList from "../../components/ArtistsList";
 import AlbumsList from "../../components/AlbumsList";
+import SongsList from "../../components/SongsList";
 
 const SearchResults = props => {
 
@@ -21,7 +24,11 @@ const SearchResults = props => {
     SearchService.search(atob(term)).then(results => {
       setArtists(results.artists || []);
       setAlbums(results.albums || []);
-      // ToDo: Include results.songs when we have a valid SongsList component
+      setSongs(results.songs && results.songs.map(song => createSongsListItem({
+        song: song,
+        album: song.album,
+        artist: song.album.artist,
+      })) || []);
     }).catch(error => cleanResults());
   }
 
@@ -48,19 +55,24 @@ const SearchResults = props => {
 }
 
 const Results = ({ artists, albums, songs }) => {
-  // ToDo: Include songs list when we have a valid SongsList component
   return(
     <>
-      { artists.length > 0 &&
+      { songs.length > 0 &&
         <>
-          <h2>Artistas</h2>
-          <ArtistsList artists={artists} />
+          <h2>Canciones</h2>
+          <SongsList songs={songs} showCovers={true} queueAll={false} />
         </>
       }
       { albums.length > 0 &&
         <>
           <h2>Álbums</h2>
           <AlbumsList albums={albums} />
+        </>
+      }
+      { artists.length > 0 &&
+        <>
+          <h2>Artistas</h2>
+          <ArtistsList artists={artists} />
         </>
       }
     </>
