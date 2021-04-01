@@ -7,9 +7,7 @@ import Dropdown from "../../../components/Dropdown";
 
 import "./index.scss";
 
-export default function Header(props) {
-
-  const { isPhantom, album, play, appendAlbumToQueue } = props;
+const Header = ({ isPhantom, album, play, append }) => {
 
   const albumDurationSeconds = album.songs.reduce((n, {duration}) => n + duration, 0);
   const albumDurationMinutes = Math.round(albumDurationSeconds/60);
@@ -29,8 +27,8 @@ export default function Header(props) {
         <div className="context">{album.songs.length} canciones &middot; {albumDurationMinutes} minutos</div>
       </div>
       <div className="actions">
-        <Button primary minWidth onClick={play} disabled={album.songs.length === 0}>Reproducir</Button>
-        <Button minWidth onClick={appendAlbumToQueue} disabled={album.songs.length === 0}>Agregar a la cola</Button>
+        <Button primary minWidth onClick={e => play()} disabled={album.songs.length === 0}>Reproducir</Button>
+        <Button minWidth onClick={e => append()} disabled={album.songs.length === 0}>Agregar a la cola</Button>
         <Dropdown>
           <Dropdown.Handler>
             <Button>
@@ -67,3 +65,5 @@ Header.defaultProps = {
   play: () => {},
   appendAlbumToQueue: () => {},
 }
+
+export default Header;
