@@ -4,6 +4,7 @@ import cloneDeep from "lodash/cloneDeep";
 
 import useFavorite from "../../hooks/useFavorite";
 import QueueContext from "../../context/Queue";
+import { isTouchDevice } from "../../shared/utils";
 
 import Cover from "../AlbumItem/Cover";
 import Duration from "../Duration";
@@ -88,8 +89,12 @@ const ListRow = ({ index, song, showCover, play }) => {
   const playingAnything = queue.currentSong !== null;
   const playingThis = (playingAnything && queue.currentSong.uuid) === song.uuid;
 
+  const onRowClick = () => {
+    if(isTouchDevice()) play(index);
+  }
+
   return(
-    <article playing={playingThis.toString()}>
+    <article playing={playingThis.toString()} onClick={onRowClick}>
       <div className="like">
         <button className="unstyled" disabled={isUpdatingFavorite} onClick={toggleFavorite}>
           { isFavorited ? <IconHeartFilled /> : <IconHeartOutline /> }

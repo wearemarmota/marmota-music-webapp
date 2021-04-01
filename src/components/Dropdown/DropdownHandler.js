@@ -44,8 +44,13 @@ const DropdownHandler = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
+  const onClick = e => {
+    e.stopPropagation();
+    setVisible(!visible);
+  }
+
   return(
-    <div className="dropdown-handler" ref={handlerRef} onClick={e => setVisible(!visible)}>{props.children}</div>
+    <div className="dropdown-handler" ref={handlerRef} onClick={onClick}>{props.children}</div>
   );
 }
 

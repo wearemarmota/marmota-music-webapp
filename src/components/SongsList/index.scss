@@ -56,28 +56,30 @@ section.songs-list{
     article{
       display: contents;
 
-      &:hover{
-        > div {
-          background-color: #2b375f;
-          border-bottom: 1px solid transparent;
-        }
-        &[playing=false]{
-          > .position{
-            .cover-component{
-              opacity: .2;
-              filter: grayscale(1);
-            }
-            .number{
-              display: none;
-            }
-            .icon-play{
-              position: absolute;
-              display: block;
-              width: 22px;
-              height: 22px;
-            }
+      @media (hover: hover){
+        &:hover{
+          > div {
+            background-color: #2b375f;
+            border-bottom: 1px solid transparent;
           }
-        }  
+          &[playing=false]{
+            > .position{
+              .cover-component{
+                opacity: .2;
+                filter: grayscale(1);
+              }
+              .number{
+                display: none;
+              }
+              .icon-play{
+                position: absolute;
+                display: block;
+                width: 22px;
+                height: 22px;
+              }
+            }
+          }  
+        }
       }
       
       &[playing=true]{
