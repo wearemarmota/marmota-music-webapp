@@ -53,9 +53,7 @@ class Player extends Component {
         currentPercentage: currentPercentage,
       });
 
-      if(currentPercentage > 99.99){
-        // Sometimes the currentPercentage remains in 99.99 periodic
-        // so, it nevers increases to 100.
+      if(this.audioRef.current.ended){
         this.next();
       }
     }
@@ -98,41 +96,31 @@ class Player extends Component {
   }
 
   play = () => {
-    this.audioRef.current.play();
-    this.props.queueContext.setPlaying(true);
-    if ('mediaSession' in navigator) {
-
-      const albumCovers = this.props.queueContext.currentSong.album.covers;
-
-      let metadata = {
-        title: this.props.queueContext.currentSong.title,
-        artist: this.props.queueContext.currentSong.album.artist.name,
-        album: this.props.queueContext.currentSong.album.title,
-        artwork: [],
-      };
-
-      if(albumCovers.hasOwnProperty(100)){
-        metadata.artwork.push({
-          src: albumCovers[100],
-          sizes: '100x100',
-          type: 'image/jpg'
-        });
-      }
-
-      if(albumCovers.hasOwnProperty(500)){
-        metadata.artwork.push({
-          src: albumCovers[500],
-          sizes: '500x500',
-          type: 'image/jpg'
-        });
-      }
-
-      if(metadata.artwork.length === 0){
-        delete metadata.artwork;
-      }
+    this.audioRef.current.play().then(() => {
       
-      navigator.mediaSession.metadata = new window.MediaMetadata(metadata);
-    }
+      this.props.queueContext.setPlaying(true);
+      if ('mediaSession' in navigator) {
+  
+        const { currentSong } = this.props.queueContext;
+  
+        let metadata = {
+          title: currentSong.title,
+          artist: currentSong.album.artist.name,
+          album: currentSong.album.title,
+          artwork: Object.keys(currentSong.album.covers).map(size => {
+            if(["100","500"].includes(size)) return {
+              src: currentSong.album.covers[size],
+              sizes: `${size}x${size}`,
+              type: 'image/webp',
+            }
+          }).filter(i => i),
+        };
+  
+        navigator.mediaSession.metadata = new window.MediaMetadata(metadata);
+      }
+
+    });
+
   };
 
   stop = () => {

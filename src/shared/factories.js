@@ -12,7 +12,7 @@ export const createSongsListItem = ({ song, artist, album }) => ({
     covers: {
       original: album.covers.original,
       100: album.covers[100],
-      500: album.covers[100],
+      500: album.covers[500],
     },
     artist: {
       id: artist.id,
