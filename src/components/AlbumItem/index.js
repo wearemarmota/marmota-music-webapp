@@ -1,102 +1,98 @@
-import React, { Component } from "react";
-import { withRouter, Link } from "react-router-dom";
-import { compose } from "redux";
-import sortBy from "lodash/sortBy";
-import AlbumsService from "../../shared/albums-service";
-import withQueueContext from "../../hoc/queue";
+import { useState, useContext, useEffect, useRef } from "react";
+import cloneDeep from "lodash/cloneDeep";
 
+import QueueContext from "../../context/Queue"; 
+import AlbumsService from "../../shared/albums-service";
+import { createSongsListItem } from "../../shared/factories";
+
+import { Link } from "react-router-dom";
 import Cover from "./Cover";
 
 import "./index.scss";
 
-class AlbumItem extends Component {
+const AlbumItem = ({ album, showGlow, showArtist = true, showTitle = true }) => {
+  return(
+    <article className="album">
+      <div className="cover">
+        <Link to={`/album/${album.id}`}>
+          <Cover
+            covers={album.covers}
+            title={album.title}
+            alt={`${album.title} cover`}
+          />
+          {showGlow && (
+            <Cover covers={album.covers} className="cover-component-glow" alt="cover" />
+          )}
+        </Link>
+        <PlayButton album={album} />
+      </div>
 
-  constructor(props){
-    super(props);
-    this.state = {
-      loadingAlbum: false,
-    }
-  }
+      {showTitle && (
+        <h1 className="title">
+          <Link to={`/album/${album.id}`}>{album.title}</Link>
+        </h1>
+      )}
 
-  playAlbum = e => {
-    if(this.state.loadingAlbum){
+      {showArtist && (
+        <div className="artist">
+          <Link to={`/artist/${album.artist.id}`}>{album.artist.name}</Link>
+        </div>
+      )}
+
+    </article>
+  );
+}
+
+const PlayButton = ({ album }) => {
+
+  const [loading, setLoading] = useState(false);
+  const [songs, setSongs] = useState([]);
+  const queue = useContext(QueueContext);
+  const firstUpdate = useRef(true);
+
+  const replaceQueueAndPlay = () => {
+    if(songs.length === 0){
       return;
     }
-    this.setState({ loadingAlbum: true });
-    AlbumsService.get(this.props.album.id).then((album) => {
-      this.setState({ loadingAlbum: false });
-      this.replaceQueueAndPlay(album);
-    });
-  }
-
-  replaceQueueAndPlay = album => {
-    const {
-      setSongs,
-      setCurrentIndex,
-      setPlaying,
-    } = this.props.queueContext;
-
-    // Build an array of songs, each one with the album info
-    // but removing the songs array of him.
-    let songsToAppend = sortBy(album.songs, [function(o){ return o.position; }]);
-
-    songsToAppend.forEach(song => {
-      song.album = Object.assign({}, album);
-      delete song.album.songs;
-    });
-
-    setSongs(songsToAppend).then(() => {
-      setCurrentIndex(0).then(() => {
-        setPlaying(false).then(setPlaying(true));
+    queue.setSongs(cloneDeep(songs)).then(() => {
+      queue.setCurrentIndex(0).then(() => {
+        queue.setPlaying(false).then(queue.setPlaying(true));
       });
     });
   }
 
-  render() {
-    const album = this.props.album;
-    const artist = album.artist;
-
-    return (
-      <article className="album">
-        <div className="cover">
-          <Link to={`/album/${this.props.album.id}`}>
-            <Cover
-              covers={album.covers}
-              title={album.title}
-              alt={`${album.title} cover`}
-            />
-            {this.props.showGlow && (
-              <Cover covers={album.covers} className="cover-component-glow" alt="cover" />
-            )}
-          </Link>
-          <button className="play unstyled" onClick={this.playAlbum} aria-label={`Play ${album.title} album`}>
-            <svg viewBox="0 0 24 24">
-              <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
-            </svg>
-          </button>
-        </div>
-        {this.props.showTitle && (
-          <h1 className="title">
-            <Link to={`/album/${album.id}`} onClick={this.clearSearchTerm}>{album.title}</Link>
-          </h1>
-        )}
-        {this.props.showArtist && (
-          <div className="artist">
-            <Link to={`/artist/${artist.id}`} onClick={this.clearSearchTerm}>{artist.name}</Link>
-          </div>
-        )}
-      </article>
-    );
+  const play = () => {
+    if(songs.length > 0){
+      replaceQueueAndPlay();
+      return;
+    }
+    if(loading) return;
+    setLoading(true);
+    AlbumsService.get(album.id).then(album => {
+      setLoading(false);
+      setSongs(album.songs.map(song => createSongsListItem({
+        song: song,
+        album: album,
+        artist: album.artist,
+      })));
+    });
   }
 
-  static defaultProps = {
-    showGlow: true,
-    showTitle: true,
-    showArtist: true,
-  };
+  useEffect(() => {
+    if(firstUpdate.current){
+      firstUpdate.current = false;
+      return;
+    }
+    replaceQueueAndPlay();
+  }, [songs])
+
+  return (
+    <button className="play unstyled" onClick={play} aria-label={`Play ${album.title} album`}>
+      <svg viewBox="0 0 24 24">
+        <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+      </svg>
+    </button>
+  )
 }
 
-export default compose(
-  withRouter,
-  withQueueContext,
-)(AlbumItem);
+export default AlbumItem;
