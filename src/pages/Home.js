@@ -46,7 +46,7 @@ class Home extends Component {
     });
 
     AlbumsService.list({
-      limit: 6,
+      limit: 12,
       shuffle: 1,
     }).then((albums) => {
       this.setState({
@@ -94,7 +94,7 @@ class Home extends Component {
           <h2>Álbums aleatorios</h2>
           {this.state.loadingRandomAlbums && <p>Cargando...</p>}
           {this.state.randomAlbums.length > 0 && (
-            <AlbumsList albums={this.state.randomAlbums.slice(0, 6)} />
+            <AlbumsList albums={this.state.randomAlbums.slice(0, 12)} />
           )}
           {!this.state.loadingRandomAlbums && this.state.randomAlbums.length <= 0 && (
             <p>No se han encontrado álbums</p>
