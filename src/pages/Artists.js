@@ -1,50 +1,29 @@
-import React, { Component } from "react";
+import { useState, useEffect } from "react";
 
 import ArtistsService from "../shared/artists-service";
 
 import ArtistsList from "../components/ArtistsList";
 
-class Artists extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      artists: [],
-      loading: false,
-    };
-  }
+const Artists = props => {
 
-  componentDidMount() {
-    this.setState({ loading: true });
+  const [artists, setArtists] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    ArtistsService.list({
-      limit: 999,
-      sortBy: 'name',
-      orderBy: 'asc',
-    }).then((artists) => {
-      this.setState({
-        artists: artists,
-        loading: false,
-      });
-    });
-  }
+  useEffect(() => {
+    setLoading(true);
+    ArtistsService.list({ limit: 999, sortBy: 'name', orderBy: 'asc' })
+      .then(artists => setArtists(artists))
+      .finally(() => setLoading(false))
+  }, []);
 
-  render() {
-    return (
-      <div className="container">
-        <h2>Artistas</h2>
-
-        {this.state.loading && <p>Cargando...</p>}
-
-        {this.state.artists.length > 0 && (
-          <ArtistsList artists={this.state.artists} />
-        )}
-
-        {!this.state.loading && this.state.artists.length <= 0 && (
-          <p>No se han encontrado artistas</p>
-        )}
-      </div>
-    );
-  }
+  return(
+    <div className="container">
+      <h2>Artistas</h2>
+      {loading && <p>Cargando...</p>}
+      {artists.length > 0 && <ArtistsList artists={artists} /> }
+      {!loading && artists.length <= 0 && <p>No se han encontrado artistas</p> }
+    </div>
+  )
 }
 
 export default Artists;
