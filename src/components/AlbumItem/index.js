@@ -54,11 +54,13 @@ const PlayButton = ({ album }) => {
     if(songs.length === 0){
       return;
     }
-    queue.setSongs(cloneDeep(songs)).then(() => {
-      queue.setCurrentIndex(0).then(() => {
-        queue.setPlaying(false).then(queue.setPlaying(true));
-      });
-    });
+
+    const { setSongs, setCurrentIndex, setPlaying } = queue;
+
+    setSongs(cloneDeep(songs))
+      .then(setCurrentIndex(0))
+      .then(setPlaying(0))
+      .then(setPlaying(1));
   }
 
   const play = () => {
