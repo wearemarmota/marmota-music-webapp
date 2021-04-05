@@ -15,9 +15,11 @@ button.player-control {
     opacity: 0.5;
   }
 
-  &:hover:not(:disabled){
-    background-color: rgba(0, 0, 0, .2);
-    cursor: pointer;
+  @media (hover: hover){
+    &:hover:not(:disabled){
+      background-color: rgba(0, 0, 0, .2);
+      cursor: pointer;
+    }
   }
 
   &:focus{

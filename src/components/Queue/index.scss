@@ -33,7 +33,6 @@ div#queue {
     z-index: 2;
   }
 
-
   &.visible {
     pointer-events: auto;
     transform: scale(1);
@@ -72,13 +71,15 @@ div#queue {
         }
       }
   
-      &:hover {
-        background-color: #202d4d;
+      @media (hover: hover){
+        &:hover {
+          background-color: #202d4d;
+        }
+        &:active {
+          background-color: #151f43;
+        }
       }
-      &:active {
-        background-color: #151f43;
-      }
-  
+      
       &:last-child:after{
         content: none;
       }
