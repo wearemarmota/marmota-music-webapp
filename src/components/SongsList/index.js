@@ -93,10 +93,15 @@ const ListRow = ({ index, song, showCover, play }) => {
     if(isTouchDevice()) play(index);
   }
 
+  const onHeartClick = e => {
+    e.stopPropagation();
+    toggleFavorite();
+  }
+
   return(
     <article playing={playingThis.toString()} onClick={onRowClick}>
       <div className="like">
-        <button className="unstyled" disabled={isUpdatingFavorite} onClick={toggleFavorite}>
+        <button className="unstyled" disabled={isUpdatingFavorite} onClick={onHeartClick}>
           { isFavorited ? <IconHeartFilled /> : <IconHeartOutline /> }
         </button>
       </div>
@@ -114,7 +119,7 @@ const ListRow = ({ index, song, showCover, play }) => {
       <div className="album"><Link to={`/album/${song.album.id}`}>{song.album.title}</Link></div>
       <div className="duration"><Duration seconds={song.duration} /></div>
       <div className="actions">
-      <Dropdown>
+        <Dropdown>
           <Dropdown.Handler>
             <button className="unstyled dropdown-handler">
               <IconMenu />
