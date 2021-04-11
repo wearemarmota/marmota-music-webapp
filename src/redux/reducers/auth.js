@@ -6,10 +6,10 @@ const initialState = {
   profile: null,
 }
 
-export default function(state = initialState, action){
+const authReducer = (state = initialState, action) => {
   switch(action.type){
     case SET_AUTH: {
-      const { token, profile, exp } = action.payload;
+      const { token, profile } = action.payload;
       return {
         ...state,
         isLogged: true,
@@ -24,3 +24,5 @@ export default function(state = initialState, action){
       return state;
   }
 }
+
+export default authReducer;

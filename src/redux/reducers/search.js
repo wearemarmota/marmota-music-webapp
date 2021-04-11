@@ -4,7 +4,7 @@ const initialState = {
   searchTerm: "",
 }
 
-export default function(state = initialState, action){
+const searchReducer = (state = initialState, action) => {
   switch(action.type){
     case SET_SEARCH_TERM: {
       const { searchTerm } = action.payload;
@@ -17,3 +17,5 @@ export default function(state = initialState, action){
       return state;
   }
 }
+
+export default searchReducer;
