@@ -7,6 +7,7 @@ export const saveAuthToken = store => next => action => {
     case SET_AUTH:            setClientWithAuth(action.payload.token); break;
     case UNSET_AUTH:          setClientWithAuth(null); break;
     case "persist/REHYDRATE": setClientWithAuth(action.payload?.auth?.token || null); break; 
+    // no default
   }
   return next(action);
 }
