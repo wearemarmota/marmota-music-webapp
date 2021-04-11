@@ -34,7 +34,7 @@ const Search = props => {
 
   const redirect = useCallback(debounce(term => {
     if(term.length > 0){
-      history.push(`/search/${btoa(term)}`);
+      history.push(`/search/${encodeURIComponent(term)}`);
     }else if(startsWith(history.location.pathname, "/search")){
       // Redirect to home, but only if we're at search
       history.push(`/`);

@@ -15,21 +15,28 @@ const SearchResults = props => {
   const [artists, setArtists] = useState([]);
   const [albums, setAlbums] = useState([]);
   const [songs, setSongs] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const search = () => {
-    if(!term || !isBase64(term)){
+    if(!term){
       history.push("/");
       return;
     }
-    SearchService.search(atob(term)).then(results => {
-      setArtists(results.artists || []);
-      setAlbums(results.albums || []);
-      setSongs(results.songs && results.songs.map(song => createSongsListItem({
-        song: song,
-        album: song.album,
-        artist: song.album.artist,
-      })) || []);
-    }).catch(error => cleanResults());
+    setLoading(true);
+    SearchService.search(decodeURIComponent(term))
+      .then(results => setResults(results))
+      .catch(error => cleanResults())
+      .finally(() => setLoading(false));
+  }
+
+  const setResults = results => {
+    setArtists(results.artists || []);
+    setAlbums(results.albums || []);
+    setSongs(results.songs.map(song => createSongsListItem({
+      song: song,
+      album: song.album,
+      artist: song.album.artist,
+    })) || []);
   }
 
   const cleanResults = () => {
@@ -40,10 +47,20 @@ const SearchResults = props => {
 
   useEffect(search, [term, history])
 
-  const hasResults = artists.length > 0 || albums.length > 0 || songs.length > 0;
+  const hasResults = (artists && artists.length > 0) || 
+    (albums && albums.length > 0) ||
+    (songs && songs.length > 0);
 
-  if(!term || !isBase64(term)){
+  if(!term){
     return null;
+  }
+  
+  if(loading){
+    return (
+      <div className="container">
+        <Loading />
+      </div>
+    );
   }
   
   return(
@@ -51,6 +68,12 @@ const SearchResults = props => {
       { hasResults && <Results artists={artists} albums={albums} songs={songs} /> }
       { !hasResults && <NoResults term={term} /> }
     </div>
+  );
+}
+
+const Loading = () => {
+  return (
+    <h2>Buscando...</h2>
   );
 }
 
@@ -82,21 +105,12 @@ const Results = ({ artists, albums, songs }) => {
 const NoResults = ({ term }) => {
   return (
     <>
-      <h2>Sin resultados para "{atob(term)}"</h2>
+      <h2>Sin resultados para "{decodeURIComponent(term)}"</h2>
       <div align="center">
       <iframe title="Sad gif" src="https://giphy.com/embed/Qvm2704d1Dqus" width="200" height="200" frameBorder="0" className="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/steve-carell-Qvm2704d1Dqus">via GIPHY</a></p>
       </div>
     </>
   );
-}
-
-const isBase64 = str => {
-  if (str ==='' || str.trim() ===''){ return false; }
-  try {
-      return btoa(atob(str)) == str;
-  } catch (err) {
-      return false;
-  }
 }
 
 export default SearchResults;
