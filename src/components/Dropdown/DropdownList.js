@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useCallback } from "react";
+import { Portal } from "react-portal";
 import classNames from "classnames/bind";
 
 import { DropdownContext } from "./";
@@ -95,13 +96,15 @@ const DropdownList = props => {
   }
 
   return(
-    <ul
-      ref={listRef}
-      className={classNames("dropdown-list", { visible: visible })}
-      style={cssPosition}
-    >
-      {props.children}
-    </ul>
+    <Portal>
+      <ul
+        ref={listRef}
+        className={classNames("dropdown-list", { visible: visible, fixed: props.fixed })}
+        style={cssPosition}
+      >
+        {props.children}
+      </ul>
+    </Portal>
   );
 }
 

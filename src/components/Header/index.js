@@ -57,9 +57,11 @@ class Header extends Component {
             <nav>
               <Dropdown>
                 <Dropdown.Handler>
-                  <DefaultAvatar className="avatar" name={this.props.auth.profile.name.charAt(0).toUpperCase()} />
+                  <button className="unstyled">
+                    <DefaultAvatar className="avatar" name={this.props.auth.profile.name.charAt(0).toUpperCase()} />
+                  </button>
                 </Dropdown.Handler>
-                <Dropdown.List>
+                <Dropdown.List fixed>
                   <Dropdown.Item hideOnClick><NavLink to="/artists">Todos los artistas</NavLink></Dropdown.Item>
                   <Dropdown.Item hideOnClick><NavLink to="/albums">Todos los álbumes</NavLink></Dropdown.Item>
                   <Dropdown.Item hideOnClick><NavLink to="/favorites">Tus favoritos</NavLink></Dropdown.Item>

@@ -1,76 +1,79 @@
-.dropdown{
-  .dropdown-handler{
-    position: relative;
-    display: inline-block;
+.dropdown-handler{
+  // Why flex? https://stackoverflow.com/a/62119014/1378408
+  display: flex;
+}
+
+.dropdown-list{
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 30px 27px;
+  margin: 0;
+  list-style: none;
+  border-radius: 4px;
+  box-shadow: 0 1px 25px 5px #000d2e;
+  background-color: #151f43;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition-property: opacity, transform;
+  transition-duration: 0.2s;
+  min-width: 290px;
+  z-index: 3;
+  text-align: left;
+
+  &.fixed{
+    position: fixed;
   }
-  .dropdown-list{
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 30px 27px;
-    margin: 0;
-    list-style: none;
-    border-radius: 4px;
-    box-shadow: 0 1px 25px 5px #000d2e;
-    background-color: #151f43;
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-    transition-property: opacity, transform;
-    transition-duration: 0.2s;
-    min-width: 290px;
-    z-index: 1;
-    text-align: left;
-  
-    &.visible {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      pointer-events: inherit;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: inherit;
+  }
+
+  li{
+    margin: 0 0;
+    padding: 6px 13px;
+    font-size: 14px;
+    color: #cdcded;
+    line-height: 1;
+
+    &:first-child{
+      margin-top: 0px;
     }
-  
-    li{
-      margin: 0 0;
-      padding: 6px 13px;
-      font-size: 14px;
-      color: #cdcded;
-      line-height: 1;
-  
-      &:first-child{
-        margin-top: 0px;
-      }
-  
-      &:last-child{
-        margin-bottom: 0px;
-      }
-  
-      &.disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-  
-      a {
-        text-decoration: none;
-  
-        &:hover{
-          text-decoration: underline;
-        }
-  
-        &:disabled{
-          opacity: .5;
-        }
-      }
-  
-      button:hover{
+
+    &:last-child{
+      margin-bottom: 0px;
+    }
+
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    a {
+      text-decoration: none;
+
+      &:hover{
         text-decoration: underline;
       }
-  
+
+      &:disabled{
+        opacity: .5;
+      }
     }
-  
-    li.dropdown-divider{
-      background-color: #2b375f;
-      height: 1px;
-      padding: 0;
-      margin: 17px 0 12px 0;
+
+    button:hover{
+      text-decoration: underline;
     }
+
+  }
+
+  li.dropdown-divider{
+    background-color: #2b375f;
+    height: 1px;
+    padding: 0;
+    margin: 17px 0 12px 0;
   }
 }

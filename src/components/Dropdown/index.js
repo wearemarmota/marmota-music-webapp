@@ -39,9 +39,7 @@ const Dropdown = props => {
       handlerRef,
       listRef,
     }}>
-      <div className="dropdown">
-        {props.children}
-      </div>
+      {props.children}
     </DropdownContext.Provider>
   );
 }
