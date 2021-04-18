@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext, useEffect, useRef, useCallback } from "react";
 import cloneDeep from "lodash/cloneDeep";
 
 import QueueContext from "../../context/Queue"; 
@@ -46,38 +46,35 @@ const AlbumItem = ({ album, showGlow, showArtist = true, showTitle = true }) => 
 const PlayButton = ({ album }) => {
 
   const [loading, setLoading] = useState(false);
-  const [songs, setSongs] = useState([]);
-  const queue = useContext(QueueContext);
+  const [albumSongs, setAlbumSongs] = useState([]);
+  const {setSongs, setCurrentIndex, setPlaying} = useContext(QueueContext);
   const firstUpdate = useRef(true);
 
-  const replaceQueueAndPlay = () => {
-    if(songs.length === 0){
+  const replaceQueueAndPlay = useCallback(() => {
+    if(albumSongs.length === 0){
       return;
     }
 
-    const { setSongs, setCurrentIndex, setPlaying } = queue;
-
-    setSongs(cloneDeep(songs))
+    setSongs(cloneDeep(albumSongs))
       .then(setCurrentIndex(0))
       .then(setPlaying(0))
       .then(setPlaying(1));
-  }
+  }, [albumSongs, setSongs, setCurrentIndex, setPlaying]);
 
   const play = () => {
-    if(songs.length > 0){
-      replaceQueueAndPlay();
-      return;
-    }
+    // If the album is already loading:
     if(loading) return;
+    // If the album is already loaded:
+    if(albumSongs.length > 0) return replaceQueueAndPlay();
+    // Else:
     setLoading(true);
-    AlbumsService.get(album.id).then(album => {
-      setLoading(false);
-      setSongs(album.songs.map(song => createSongsListItem({
+    AlbumsService.get(album.id)
+      .then(album => setAlbumSongs(album.songs.map(song => createSongsListItem({
         song: song,
         album: album,
         artist: album.artist,
-      })));
-    });
+      }))))
+      .finally(() => setLoading(false));
   }
 
   useEffect(() => {
@@ -86,7 +83,7 @@ const PlayButton = ({ album }) => {
       return;
     }
     replaceQueueAndPlay();
-  }, [songs])
+  }, [albumSongs, replaceQueueAndPlay])
 
   return (
     <button className="play unstyled" onClick={play} aria-label={`Play ${album.title} album`}>
