@@ -1,3 +1,5 @@
+[![CodeQL](https://github.com/wearemarmota/marmota-music-webapp/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/wearemarmota/marmota-music-webapp/actions/workflows/codeql-analysis.yml)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). [Go to his readme](docs/cra.md).
 
 ## Marmota Music: Web app
