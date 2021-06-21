@@ -7,6 +7,10 @@ svg.cover-component {
   opacity: 0;
   transition: opacity .3s;
 
+  &.preloaded:not(.preloaded-fade-in){
+    transition: opacity 0s;
+  }
+  
   &.loaded{
     opacity: 1;
   }

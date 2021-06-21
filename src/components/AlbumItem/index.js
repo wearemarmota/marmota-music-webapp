@@ -10,7 +10,7 @@ import Cover from "./Cover";
 
 import "./index.scss";
 
-const AlbumItem = ({ album, showGlow, showArtist = true, showTitle = true }) => {
+const AlbumItem = ({ album, showGlow, preloadedFadeIn, showArtist = true, showTitle = true }) => {
   return(
     <article className="album">
       <div className="cover">
@@ -19,10 +19,16 @@ const AlbumItem = ({ album, showGlow, showArtist = true, showTitle = true }) => 
             covers={album.covers}
             title={album.title}
             alt={`${album.title} cover`}
+            preloadedFadeIn={preloadedFadeIn}
           />
-          {showGlow && (
-            <Cover covers={album.covers} className="cover-component-glow" alt="cover" />
-          )}
+          {showGlow &&
+            <Cover
+              covers={album.covers}
+              className="cover-component-glow"
+              alt="cover"
+              preloadedFadeIn={preloadedFadeIn}
+            />
+          }
         </Link>
         <PlayButton album={album} />
       </div>
