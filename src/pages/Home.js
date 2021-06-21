@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { compose } from "redux";
+import { connect } from "react-redux";
 
 import ArtistsService from "../shared/artists-service";
 import AlbumsService from "../shared/albums-service";
@@ -7,10 +9,12 @@ import AlbumsList from "../components/AlbumsList";
 import AlbumsListPhantom from "../components/AlbumsList/Phantom";
 import ArtistsList from "../components/ArtistsList";
 
-const Home = props => {
+import { setHomeLast } from "../redux/actions/lists";
+
+const Home = ({ homeLast, setHomeLast }) => {
 
   const [artists, setArtists] = useState([]);
-  const [lastAlbums, setLastAlbums] = useState([]);
+  const [lastAlbums, setLastAlbums] = useState(homeLast);
   const [randomAlbums, setRandomAlbums] = useState([]);
   const [loadingRandomAlbums, setLoadingRandomAlbums] = useState(false);
   const [loadingLastAlbums, setLoadingLastAlbums] = useState(false);
@@ -26,7 +30,7 @@ const Home = props => {
       .finally(() => setLoadingArtists(false));
 
     AlbumsService.list({ limit: 6, sortBy: 'created_at', orderBy: 'desc' })
-      .then(albums => setLastAlbums(albums))
+      .then(albums => { setLastAlbums(albums); setHomeLast(albums); })
       .finally(() => setLoadingLastAlbums(false));
 
     AlbumsService.list({ limit: 12, shuffle: 1 })
@@ -50,9 +54,13 @@ const Home = props => {
         {/* Some albums */}
 
         <h2>Últimos álbums</h2>
-        { loadingLastAlbums && <AlbumsListPhantom amount={6} /> }
-        { lastAlbums.length > 0 && <AlbumsList albums={lastAlbums.slice(0, 6)} /> }
-        { !loadingLastAlbums && lastAlbums.length <= 0 && <p>No se han encontrado álbums</p> }
+        {
+          lastAlbums.length > 0 ? 
+          <AlbumsList albums={lastAlbums.slice(0, 6)} preloadedFadeIn={false} /> :
+          loadingLastAlbums ?
+          <AlbumsListPhantom amount={6} /> :
+          <p>No se han encontrado álbums</p>
+        }
 
         {/* Some artists */}
 
@@ -73,4 +81,15 @@ const Home = props => {
   )
 }
 
-export default Home;
+const mapStateToProps = state => {
+  const { lists } = state;
+  return { homeLast: lists.homeLast };
+}
+
+const mapDispatchToProps = {
+  setHomeLast,
+}
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+)(Home);
