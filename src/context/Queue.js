@@ -5,7 +5,6 @@ const QueueContext = React.createContext();
 
 class QueueProvider extends Component {
   state = {
-    visible: false,
     songs: [],
     currentIndex: 0,
     playing: false,
@@ -16,19 +15,6 @@ class QueueProvider extends Component {
       this.setState(
         () => {
           return { playing: playing };
-        },
-        () => {
-          resolve();
-        }
-      );
-    });
-  };
-
-  setVisible = (visible) => {
-    return new Promise((resolve, reject) => {
-      this.setState(
-        () => {
-          return { visible: visible };
         },
         () => {
           resolve();
@@ -118,13 +104,12 @@ class QueueProvider extends Component {
   }
   
   render() {
-    const { playing, visible, songs, currentIndex } = this.state;
+    const { playing, songs, currentIndex } = this.state;
     const { children } = this.props;
     const currentSong = this.getCurrentSong();
 
     const {
       setPlaying,
-      setVisible,
       setSongs,
       setCurrentIndex,
       hasNextSong,
@@ -137,11 +122,9 @@ class QueueProvider extends Component {
       <QueueContext.Provider
         value={{
           playing,
-          visible,
           songs,
           currentIndex,
           setPlaying,
-          setVisible,
           setSongs,
           setCurrentIndex,
           currentSong,
