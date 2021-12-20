@@ -19,15 +19,14 @@ let client;
 
 // Awesome idea from: https://daveceddia.com/access-redux-store-outside-react/
 export const setClientWithAuth = (_token = null) => {
-
   token = _token;
 
   let headers = {
-    "Accept": "application/json; charset=utf-8",
+    Accept: "application/json; charset=utf-8",
     "Content-Type": "application/json; charset=utf-8",
   };
 
-  if(token !== null){
+  if (token !== null) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
@@ -40,29 +39,29 @@ export const setClientWithAuth = (_token = null) => {
 setClientWithAuth();
 
 const isTokenExpValid = () => {
-  if(!token) return true;
+  if (!token) return true;
   const decoded = jwt_decode(token);
   const expiry = decoded.exp;
-  const now = Date.now()/1000;
+  const now = Date.now() / 1000;
   const remainingSeconds = expiry - now;
-  if(remainingSeconds <= 0){
+  if (remainingSeconds <= 0) {
     logger.warn("Token expired, remove auth");
     store.dispatch(unsetAuth());
     return false;
   }
   return true;
-}
+};
 
 /**
  * Request Wrapper with default success/error actions
  */
 const request = function (options) {
-
   // isTokenExpValid();
-  if(!isTokenExpValid()) return new Promise((resolve, reject) => {
-    logger.error("Token expired");
-    reject("Token expired");
-  });
+  if (!isTokenExpValid())
+    return new Promise((resolve, reject) => {
+      logger.error("Token expired");
+      reject("Token expired");
+    });
 
   const onSuccess = function (response) {
     logger.log(
