@@ -3,9 +3,16 @@
   "name": "Marmota Music",
   "icons": [
     {
+      "src": "ic_launcher/maskable_icon_x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    },
+    {
       "src": "ic_launcher/web_hi_res_512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any"
     }
   ],
   "start_url": ".",
