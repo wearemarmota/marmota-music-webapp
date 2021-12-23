@@ -7,6 +7,9 @@ import {
   MOVE_QUEUE_NEXT_SONG,
   SET_CURRENT_SONG_INDEX,
   SET_PLAYING,
+  SET_CURRENT_TIME,
+  SET_CURRENT_PERCENTAGE,
+  SET_LOADED_PORTIONS,
 } from "../actionTypes";
 
 export const setQueueVisible = (visible) => ({
@@ -45,4 +48,19 @@ export const moveQueueNextSong = () => ({
 
 export const moveQueuePrevSong = () => ({
   type: MOVE_QUEUE_PREV_SONG,
+});
+
+export const setCurrentTime = (time = 0) => ({
+  type: SET_CURRENT_TIME,
+  payload: { time },
+});
+
+export const setCurrentPercentage = (percentage = 0) => ({
+  type: SET_CURRENT_PERCENTAGE,
+  payload: { percentage },
+});
+
+export const setLoadedPortions = (portions = []) => ({
+  type: SET_LOADED_PORTIONS,
+  payload: { portions },
 });

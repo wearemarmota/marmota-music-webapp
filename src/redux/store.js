@@ -9,6 +9,8 @@ const persistConfig = {
   storage,
 };
 
+// ToDo: Don't persiste queue.playing
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

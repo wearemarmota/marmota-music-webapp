@@ -69,7 +69,6 @@ const SongItem = (props) => {
   );
 
   const click = useCallback(() => {
-    console.log("click", index);
     dispatch(setCurrentSong(index));
     dispatch(setPlaying(true));
   }, [dispatch, index]);
