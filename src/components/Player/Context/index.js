@@ -1,21 +1,32 @@
-import React from "react";
+import { useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setQueueVisible } from "../../../redux/actions/queue";
+
 import Button from "../Button";
 
-import {
-  IconQueue,
-} from "../icons";
+import { IconQueue } from "../icons";
 
 import "./index.scss";
 
-export default function Context(props) {
+const Context = () => {
+  const { visible } = useSelector((state) => state.queue);
+  const dispatch = useDispatch();
 
-  const { isQueueVisible, setQueueVisibility } = props;
+  const toggleQueueVisibility = useCallback(() => {
+    dispatch(setQueueVisible(!visible));
+  }, [visible, dispatch]);
 
   return (
     <div id="context">
-      <Button className="queue" onClick={() => { setQueueVisibility(!isQueueVisible); }} aria-label={`Show queue`}>
+      <Button
+        className="queue"
+        onClick={toggleQueueVisibility}
+        aria-label={`${visible ? "Hide" : "Show"} queue`}
+      >
         <IconQueue />
       </Button>
     </div>
   );
-}
+};
+
+export default Context;

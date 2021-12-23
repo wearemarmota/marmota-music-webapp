@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import cloneDeep from "lodash/cloneDeep";
 
 import AlbumsService from "../../shared/albums-service";
 import { createSongsListItem } from "../../shared/factories";
-import QueueContext from "../../context/Queue";
 
 import Cover from "../../components/AlbumItem/Cover";
 import Header from "./Header";
@@ -12,46 +10,54 @@ import SongsList from "../../components/SongsList";
 import EmptyAlbum from "./EmptyAlbum";
 
 import "./index.scss";
+import { useDispatch } from "react-redux";
+import {
+  addQueueSongs,
+  replaceQueueSongs,
+  setCurrentSong,
+} from "../../redux/actions/queue";
 
-const AlbumDetail = props => {
-
+const AlbumDetail = () => {
   const { albumId } = useParams();
 
   const [loading, setLoading] = useState(false);
   const [album, setAlbum] = useState(null);
-  const queue = useContext(QueueContext);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setLoading(true);
-    AlbumsService.get(albumId).then(album => {
-      album.songs = album.songs.map(song => createSongsListItem({
-        song: song,
-        album: album,
-        artist: album.artist,
-      }));
+    AlbumsService.get(albumId).then((album) => {
+      album.songs = album.songs.map((song) =>
+        createSongsListItem({
+          song: song,
+          album: album,
+          artist: album.artist,
+        })
+      );
       setLoading(false);
       setAlbum(album);
     });
   }, [albumId]);
 
-  if(loading) return <Loading />
-  if(!loading && !album) return <Error />
+  const append = useCallback(() => {
+    if (!album) return;
+    dispatch(addQueueSongs(album.songs));
+  }, [dispatch, album]);
 
-  const play = (index = 0) => {
-    const { setSongs, setCurrentIndex, setPlaying } = queue;
-    setSongs(cloneDeep(album.songs)).then(() => {
-      setCurrentIndex(index).then(() => {
-        setPlaying(false).then(setPlaying(true));
-      });
-    });
-  };
+  const play = useCallback(
+    (index = 0) => {
+      if (!album) return;
+      dispatch(replaceQueueSongs(album.songs));
+      dispatch(setCurrentSong(index));
+    },
+    [dispatch, album]
+  );
 
-  const append = () => {
-    const { songs, setSongs } = queue;
-    setSongs([].concat(songs, album.songs));
-  };
+  if (loading) return <Loading />;
+  if (!loading && !album) return <Error />;
 
-  return(
+  return (
     <>
       <Cover
         covers={album.covers}
@@ -61,20 +67,23 @@ const AlbumDetail = props => {
 
       <div className="container small">
         <Header album={album} play={play} append={append} />
-        { album.songs.length <= 0 && <EmptyAlbum /> }
-        { album.songs.length > 0 && <SongsList songs={album.songs} /> }
+        {album.songs.length <= 0 && <EmptyAlbum />}
+        {album.songs.length > 0 && <SongsList songs={album.songs} />}
       </div>
     </>
-
   );
-}
+};
 
-const Loading = () => <div className="container small">
-  <Header isPhantom />
-</div>;
+const Loading = () => (
+  <div className="container small">
+    <Header isPhantom />
+  </div>
+);
 
-const Error = () => <div className="container small">
-  <p>Mmm... algo ha ido mal</p>
-</div>;
+const Error = () => (
+  <div className="container small">
+    <p>Mmm... algo ha ido mal</p>
+  </div>
+);
 
 export default AlbumDetail;

@@ -1,20 +1,22 @@
-import { useContext } from "react";
+import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames/bind";
-
-import QueueContext from "../../context/Queue";
 
 import Cover from "../AlbumItem/Cover";
 import Duration from "../Duration";
 import Header from "./Header";
 
 import "./index.scss";
-import { setQueueVisible } from "../../redux/actions/queue";
+import {
+  moveQueuePrevSong,
+  removeIndex,
+  setCurrentSong,
+  setPlaying,
+  setQueueVisible,
+} from "../../redux/actions/queue";
 
 const Queue = (props) => {
-  const queue = useContext(QueueContext);
-
-  const { visible } = useSelector((state) => state.queue);
+  const { visible, songs } = useSelector((state) => state.queue);
   const dispatch = useDispatch();
 
   const hideQueue = () => dispatch(setQueueVisible(false));
@@ -23,57 +25,59 @@ const Queue = (props) => {
     <div id="queue" className={classNames({ visible: visible })}>
       <Header title="A continuación" closeAction={hideQueue} />
       <div className="queue-content">
-        {queue.songs.length > 0 ? <SongsList {...props} /> : <EmptyQueue />}
+        {songs.length > 0 ? <SongsList {...props} /> : <EmptyQueue />}
       </div>
     </div>
   );
 };
 
 const SongsList = (props) => {
-  const queue = useContext(QueueContext);
-  return queue.songs.map((song, index) => (
+  const { songs } = useSelector((state) => state.queue);
+  return songs.map((song, index) => (
     <SongItem key={index} {...props} song={song} index={index} />
   ));
 };
 
 const SongItem = (props) => {
-  const queue = useContext(QueueContext);
   const { song, index } = props;
-  const isCurrentSong =
-    song.uuid === (queue.currentSong && queue.currentSong.uuid);
+  const { songs, currentSong } = useSelector((state) => state.queue);
 
-  const removeSongFromQueue = (e) => {
-    e.stopPropagation();
+  const dispatch = useDispatch();
 
-    if (index < queue.currentIndex) {
-      // If removing a previous song:
-      queue.songs.splice(index, 1);
-      queue.setSongs(queue.songs).then(queue.previous());
-    } else if (index === queue.currentIndex) {
-      // If removing the current song:
-      queue.songs.splice(index, 1);
-      queue.setSongs(queue.songs).then(() => {
-        if (queue.songs.length > 0) {
-          queue.setPlaying(false).then(queue.setPlaying(true));
-        } else {
-          queue.setPlaying(false);
+  const isCurrentSong = song.uuid === songs[currentSong]?.uuid;
+
+  const removeSongFromQueue = useCallback(
+    (e) => {
+      e.stopPropagation();
+      if (index < currentSong) {
+        // If removing a previous song:
+        dispatch(moveQueuePrevSong());
+        dispatch(removeIndex(index));
+      } else if (index === currentSong) {
+        // If removing the current song:
+        if (currentSong >= songs.length - 1 && songs.length > 1) {
+          dispatch(moveQueuePrevSong());
         }
-      });
-    } else if (index > queue.currentIndex) {
-      // If removing later song
-      queue.songs.splice(index, 1);
-      queue.setSongs(queue.songs);
-    }
-  };
+        dispatch(setPlaying(false));
+        dispatch(removeIndex(index));
+      } else if (index > currentSong) {
+        // If removing later song
+        dispatch(removeIndex(index));
+      }
+    },
+    [dispatch, currentSong, songs]
+  );
+
+  const click = useCallback(() => {
+    console.log("click", index);
+    dispatch(setCurrentSong(index));
+    dispatch(setPlaying(true));
+  }, [dispatch, index]);
 
   return (
     <div
       className={classNames("song-item", { current: isCurrentSong })}
-      onClick={() => {
-        queue.setCurrentIndex(index).then(() => {
-          queue.setPlaying(false).then(queue.setPlaying(true));
-        });
-      }}
+      onClick={click}
     >
       <Cover
         title={song.album.title}
