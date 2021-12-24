@@ -69,6 +69,7 @@ const PlayButton = ({ album }) => {
     if (albumSongs.length === 0) return;
     dispatch(replaceQueueSongs(albumSongs));
     dispatch(setCurrentSong(0));
+    dispatch(setPlaying(false));
     dispatch(setPlaying(true));
   }, [albumSongs]);
 

@@ -35,6 +35,7 @@ const SongsList = ({ songs, showCovers = false, queueAll = true }) => {
     (index = 0) => {
       dispatch(replaceQueueSongs(songs));
       dispatch(setCurrentSong(index));
+      dispatch(setPlaying(false));
       dispatch(setPlaying(true));
     },
     [dispatch]

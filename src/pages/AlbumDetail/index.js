@@ -15,6 +15,7 @@ import {
   addQueueSongs,
   replaceQueueSongs,
   setCurrentSong,
+  setPlaying,
 } from "../../redux/actions/queue";
 
 const AlbumDetail = () => {
@@ -50,6 +51,8 @@ const AlbumDetail = () => {
       if (!album) return;
       dispatch(replaceQueueSongs(album.songs));
       dispatch(setCurrentSong(index));
+      dispatch(setPlaying(false));
+      dispatch(setPlaying(true));
     },
     [dispatch, album]
   );

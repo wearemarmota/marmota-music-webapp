@@ -23,7 +23,10 @@ const Player = () => {
 
   const previous = () => dispatch(moveQueuePrevSong());
   const next = () => dispatch(moveQueueNextSong());
-  const play = () => dispatch(setPlaying(true));
+  const play = () => {
+    dispatch(setPlaying(false));
+    dispatch(setPlaying(true));
+  };
   const pause = () => dispatch(setPlaying(false));
 
   const currentSongObj = useMemo(
