@@ -108,7 +108,7 @@ export const PlayerProvider = ({ children }) => {
     }
   }, [playing, currentSongObj, audio]);
 
-  useInterval(() => updateAudioProgress(), 1000);
+  useInterval(() => updateAudioProgress(), playing ? 1000 : null);
 
   useEffect(() => {
     if ("mediaSession" in navigator) {
