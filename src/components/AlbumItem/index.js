@@ -71,7 +71,7 @@ const PlayButton = ({ album }) => {
     dispatch(setCurrentSong(0));
     dispatch(setPlaying(false));
     dispatch(setPlaying(true));
-  }, [albumSongs]);
+  }, [dispatch, albumSongs]);
 
   const play = () => {
     // If the album is already loading:

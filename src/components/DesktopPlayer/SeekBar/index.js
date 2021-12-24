@@ -21,7 +21,7 @@ const SeekBar = () => {
       const newTime = (clickPositionPercentage * audio.duration) / 100;
       seekTime(newTime);
     },
-    [seekTime]
+    [seekTime, audio]
   );
 
   return (
