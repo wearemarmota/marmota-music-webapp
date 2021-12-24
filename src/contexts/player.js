@@ -27,7 +27,7 @@ export const PlayerProvider = ({ children }) => {
   const audio = useMemo(() => new Audio(), []);
 
   useEffect(() => {
-    audio.src = currentSongObj.source;
+    audio.src = currentSongObj?.source || null;
   }, [currentSongObj, audio]);
 
   const updateAudioProgress = useCallback(() => {
