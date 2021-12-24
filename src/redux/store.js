@@ -7,9 +7,8 @@ import rootReducer from "./reducers";
 const persistConfig = {
   key: "root",
   storage,
+  version: 1, // Must be updated when reducer's structure change
 };
-
-// ToDo: Don't persiste queue.playing
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
