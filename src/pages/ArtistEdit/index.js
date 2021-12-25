@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from "react";
-import debounce from "lodash/debounce";
+import { useParams } from "react-router-dom";
+import { useDebounce } from "react-use";
 
 import ArtistsService from "../../shared/artists-service";
 import Logger from "../../shared/logger";
@@ -12,24 +13,23 @@ import "./index.scss";
 
 const logger = new Logger("ArtistEdit");
 
-const ArtistEdit = props => {
-
-  const artistId = props.match.params.artistId;
+const ArtistEdit = () => {
+  const { artistId } = useParams();
 
   const [name, setName] = useState("");
   const [artist, setArtist] = useState(null);
   const refInputAvatar = useRef(null);
 
-  const loadArtist = () => {
+  const loadArtist = useCallback(() => {
     logger.log("loadArtist");
     ArtistsService.get(artistId).then((artist) => {
       logger.log(artist);
       setArtist(artist);
       setName(artist.name);
     });
-  }
+  }, [artistId]);
 
-  const handleChangeAvatar = e => {
+  const handleChangeAvatar = (e) => {
     logger.log("handleChangeAvatar");
     const file = e.target.files[0] || null;
     if (!file) {
@@ -37,44 +37,46 @@ const ArtistEdit = props => {
       return;
     }
 
-    ArtistsService.updateAvatar(artist.id, file).then((result) => {
-      logger.log("updateAvatar then", result);
-      loadArtist();
-    }).catch((error) => {
-      logger.error(error);
-    })
+    ArtistsService.updateAvatar(artist.id, file)
+      .then((result) => {
+        logger.log("updateAvatar then", result);
+        loadArtist();
+      })
+      .catch((error) => {
+        logger.error(error);
+      });
 
     e.preventDefault();
-  }
+  };
 
-  const handleChangeName = e => {
+  const handleChangeName = (e) => {
     logger.log("handleChangeName");
     setName(e.target.value);
-  }
+  };
 
-  const updateName = () => {
-    logger.log("updateAlbumTitle");
-    ArtistsService.update(artistId, name).then((result) => {
-      logger.log(result);
-    });
-  }
-
-  // const updateNameDebounced = debounce(updateName, 1000);
-  // const updateNameDebounced = useRef(() => debounce(updateName, 1000));
-  const updateNameDebounced = useCallback(debounce(updateName, 1000), [name]);
-
+  useDebounce(
+    () => {
+      if (name === artist.name) return;
+      logger.log("Update artist name", name);
+      ArtistsService.update(artistId, name).then((result) => {
+        logger.log(result);
+        setArtist((current) => {
+          current.name = name;
+          return current;
+        });
+      });
+    },
+    1000,
+    [name]
+  );
 
   useEffect(() => {
     loadArtist();
-  }, []);
+  }, [loadArtist]);
 
-  useEffect(() => {
-    updateNameDebounced();
-  }, [name])
-  
-  if(!artist) return null;
+  if (!artist) return null;
 
-  return(
+  return (
     <div className="container smaller">
       <h2>Editar artista</h2>
       <form>
@@ -82,7 +84,10 @@ const ArtistEdit = props => {
           <div className="col-5 col-sm-4">
             <label name="avatar">
               <svg viewBox="0 0 24 24" className="upload-icon">
-                <path fill="currentColor" d="M12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22M12,7L7,12H10V16H14V12H17L12,7Z" />
+                <path
+                  fill="currentColor"
+                  d="M12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22M12,7L7,12H10V16H14V12H17L12,7Z"
+                />
               </svg>
               <ArtistImage images={artist.images} name={artist.name} />
               <input
@@ -108,6 +113,6 @@ const ArtistEdit = props => {
       </form>
     </div>
   );
-}
+};
 
 export default ArtistEdit;

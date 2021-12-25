@@ -1,4 +1,4 @@
-import { createContext, useEffect, useMemo, useCallback, useRef } from "react";
+import { createContext, useEffect, useMemo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useInterval } from "react-use";
 
@@ -10,21 +10,31 @@ import {
   setPlaying,
   moveQueuePrevSong,
 } from "../redux/actions/queue";
+import Logger from "../shared/logger";
+
+const logger = new Logger("PlayerContext");
 
 export const PlayerContext = createContext();
 
 export const PlayerProvider = ({ children }) => {
   const dispatch = useDispatch();
-  const { songs, currentSong, currentTime, playing } = useSelector(
-    (state) => state.queue
-  );
+  const { songs, currentSong, playing } = useSelector((state) => state.queue);
 
   const currentSongObj = useMemo(
     () => songs[currentSong],
     [currentSong, songs]
   );
 
-  const audio = useMemo(() => new Audio(), []);
+  const hasNextSong = useMemo(
+    () => !!songs[currentSong + 1],
+    [currentSong, songs]
+  );
+
+  const audio = useMemo(() => {
+    const audio = new Audio();
+    audio.autoplay = true;
+    return audio;
+  }, []);
 
   useEffect(() => {
     audio.src = currentSongObj?.source || null;
@@ -50,7 +60,14 @@ export const PlayerProvider = ({ children }) => {
       loadedPortions.push(portion);
       dispatch(setLoadedPortions(loadedPortions));
     }
-  }, [dispatch, currentTime]);
+  }, [
+    dispatch,
+    audio.buffered,
+    audio.currentTime,
+    audio.ended,
+    audio.duration,
+    hasNextSong,
+  ]);
 
   const seekTime = useCallback(
     (time) => {
@@ -61,48 +78,46 @@ export const PlayerProvider = ({ children }) => {
       audio.currentTime = time;
       updateAudioProgress();
     },
-    [updateAudioProgress]
+    [updateAudioProgress, audio]
   );
 
-  const previous = () => dispatch(moveQueuePrevSong());
-  const next = () => dispatch(moveQueueNextSong());
-  const play = () => {
+  const previous = useCallback(() => dispatch(moveQueuePrevSong()), [dispatch]);
+  const next = useCallback(() => dispatch(moveQueueNextSong()), [dispatch]);
+  const play = useCallback(() => {
     dispatch(setPlaying(false));
     dispatch(setPlaying(true));
-  };
-  const pause = () => dispatch(setPlaying(false));
+  }, [dispatch]);
+  const pause = useCallback(() => dispatch(setPlaying(false)), [dispatch]);
   const seekBackward = useCallback(
     () => seekTime(audio.currentTime - 10),
-    [seekTime]
+    [seekTime, audio.currentTime]
   );
   const seekForward = useCallback(
     () => seekTime(audio.currentTime + 10),
-    [seekTime]
+    [seekTime, audio.currentTime]
   );
 
   const artworks = useMemo(() => {
     if (!currentSongObj) return [];
     return Object.keys(currentSongObj.album.covers)
       .map((size) => {
-        if (["100", "500"].includes(size))
+        if (["100", "500"].includes(size)) {
           return {
             src: currentSongObj.album.covers[size],
             sizes: `${size}x${size}`,
             type: "image/webp",
           };
+        } else {
+          return null;
+        }
       })
       .filter((i) => i);
   }, [currentSongObj]);
 
-  const hasNextSong = useMemo(
-    () => !!songs[currentSong + 1],
-    [currentSong, songs]
-  );
-
   // Sync audioref play with redux state
   useEffect(() => {
     if (playing) {
-      audio.play();
+      audio.play().catch((reason) => logger.warn("Unable to play", reason));
     } else {
       audio.pause();
     }
@@ -123,7 +138,6 @@ export const PlayerProvider = ({ children }) => {
   }, [currentSongObj, artworks]);
 
   useEffect(() => {
-    pause();
     if ("mediaSession" in navigator) {
       navigator.mediaSession.setActionHandler("play", function () {
         play();
@@ -144,7 +158,11 @@ export const PlayerProvider = ({ children }) => {
         next();
       });
     }
-  }, []);
+  }, [play, pause, seekBackward, seekForward, previous, next]);
+
+  useEffect(() => {
+    dispatch(setPlaying(false));
+  }, [dispatch]);
 
   const value = {
     audio,

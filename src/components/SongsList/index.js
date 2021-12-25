@@ -39,7 +39,7 @@ const SongsList = ({ songs, showCovers = false, queueAll = true }) => {
       dispatch(setPlaying(false));
       dispatch(setPlaying(true));
     },
-    [dispatch]
+    [dispatch, songs]
   );
 
   const playNext = useCallback(

@@ -2,36 +2,35 @@ import { useState } from "react";
 
 import FavoritesService from "../shared/favorites-service";
 
-export default (songId, _isFavorited = false) => {
-
+const useFavorite = (songId, _isFavorited = false) => {
   const [isUpdatingFavorite, setIsUpdatingFavorite] = useState(false);
   const [isFavorited, setIsFavorited] = useState(_isFavorited);
 
   const addToFavorites = () => {
-    if(isUpdatingFavorite) return;
+    if (isUpdatingFavorite) return;
     setIsUpdatingFavorite(true);
     FavoritesService.create(songId).then(() => {
       setIsUpdatingFavorite(false);
       setIsFavorited(true);
     });
-  }
+  };
 
   const removeFromFavorites = () => {
-    if(isUpdatingFavorite) return;
+    if (isUpdatingFavorite) return;
     setIsUpdatingFavorite(true);
     FavoritesService.remove(songId).then(() => {
       setIsUpdatingFavorite(false);
       setIsFavorited(false);
     });
-  }
+  };
 
   const toggleFavorite = () => {
-    if(isFavorited){
+    if (isFavorited) {
       removeFromFavorites(songId);
-    }else{
+    } else {
       addToFavorites(songId);
     }
-  }
+  };
 
   return {
     addToFavorites,
@@ -39,6 +38,7 @@ export default (songId, _isFavorited = false) => {
     toggleFavorite,
     isUpdatingFavorite,
     isFavorited,
-  }
+  };
+};
 
-}
+export default useFavorite;

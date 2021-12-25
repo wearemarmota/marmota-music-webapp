@@ -38,8 +38,7 @@ const SongsList = (props) => {
   ));
 };
 
-const SongItem = (props) => {
-  const { song, index } = props;
+const SongItem = ({ song, index }) => {
   const { songs, currentSong } = useSelector((state) => state.queue);
 
   const dispatch = useDispatch();
@@ -65,7 +64,7 @@ const SongItem = (props) => {
         dispatch(removeIndex(index));
       }
     },
-    [dispatch, currentSong, songs]
+    [dispatch, currentSong, songs, index]
   );
 
   const click = useCallback(() => {
