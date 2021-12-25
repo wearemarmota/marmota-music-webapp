@@ -100,17 +100,18 @@ const ListRow = ({ index, song, showCover, play }) => {
 
   const playingThis = songs[currentSong]?.uuid === song.uuid;
 
-  const onRowClick = () => {
-    if (isTouchDevice()) play(index);
-  };
-
   const onHeartClick = (e) => {
     e.stopPropagation();
     toggleFavorite();
   };
 
   return (
-    <article playing={playingThis.toString()} onClick={onRowClick}>
+    <article
+      playing={playingThis.toString()}
+      onClick={() => {
+        if (isTouchDevice()) play(index);
+      }}
+    >
       <div className="like">
         <button
           className="unstyled"
