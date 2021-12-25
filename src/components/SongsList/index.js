@@ -14,6 +14,7 @@ import {
 import Cover from "../AlbumItem/Cover";
 import Duration from "../Duration";
 import Dropdown from "../Dropdown";
+import { Loader } from "../Icons";
 
 import {
   IconSpeaker,
@@ -116,7 +117,9 @@ const ListRow = ({ index, song, showCover, play }) => {
           disabled={isUpdatingFavorite}
           onClick={onHeartClick}
         >
-          {isFavorited ? <IconHeartFilled /> : <IconHeartOutline />}
+          {isUpdatingFavorite && <Loader />}
+          {!isUpdatingFavorite &&
+            (isFavorited ? <IconHeartFilled /> : <IconHeartOutline />)}
         </button>
       </div>
       <div className="position">

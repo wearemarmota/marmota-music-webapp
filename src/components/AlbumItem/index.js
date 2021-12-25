@@ -11,6 +11,7 @@ import {
 } from "../../redux/actions/queue";
 
 import Cover from "./Cover";
+import { Loader } from "../Icons";
 
 import "./index.scss";
 
@@ -109,31 +110,7 @@ const PlayButton = ({ album }) => {
       onClick={play}
       aria-label={`Play ${album.title} album`}
     >
-      {loading && (
-        <svg
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-          viewBox="16 16 70 70"
-          enableBackground="new 0 0 0 0"
-          xmlSpace="preserve"
-        >
-          <path
-            fill="#fff"
-            d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50"
-          >
-            <animateTransform
-              attributeName="transform"
-              attributeType="XML"
-              type="rotate"
-              dur=".5s"
-              from="0 50 50"
-              to="360 50 50"
-              repeatCount="indefinite"
-            />
-          </path>
-        </svg>
-      )}
+      {loading && <Loader />}
       {!loading && (
         <svg viewBox="0 0 24 24">
           <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
