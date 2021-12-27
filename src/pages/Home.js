@@ -7,6 +7,7 @@ import AlbumsService from "../shared/albums-service";
 import AlbumsList from "../components/AlbumsList";
 import AlbumsListPhantom from "../components/AlbumsList/Phantom";
 import ArtistsList from "../components/ArtistsList";
+import ArtistsListPhantom from "../components/ArtistsList/Phantom";
 
 import { setHomeLast } from "../redux/actions/lists";
 
@@ -26,7 +27,7 @@ const Home = () => {
     setLoadingLastAlbums(true);
     setLoadingRandomAlbums(true);
 
-    ArtistsService.list()
+    ArtistsService.list({ limit: 6, shuffle: 1 })
       .then((artists) => setArtists(artists))
       .finally(() => setLoadingArtists(false));
 
@@ -53,33 +54,26 @@ const Home = () => {
       />
 
       <div className="container" style={{ marginTop: "-20vw" }}>
-        {/* Some albums */}
+        <h2>Últimas incorporaciones</h2>
 
-        <h2>Últimos álbums</h2>
         {lastAlbums.length > 0 ? (
-          <AlbumsList albums={lastAlbums.slice(0, 6)} preloadedFadeIn={false} />
+          <AlbumsList albums={lastAlbums} preloadedFadeIn={false} />
         ) : loadingLastAlbums ? (
           <AlbumsListPhantom amount={6} />
         ) : (
           <p>No se han encontrado álbums</p>
         )}
 
-        {/* Some artists */}
-
-        <h2>Artistas destacados</h2>
-        {loadingArtists && <p>Cargando...</p>}
-        {artists.length > 0 && <ArtistsList artists={artists.slice(0, 6)} />}
+        <h2>Algunos artistas</h2>
+        {loadingArtists && <ArtistsListPhantom amount={6} />}
+        {artists.length > 0 && <ArtistsList artists={artists} />}
         {!loadingArtists && artists.length <= 0 && (
           <p>No se han encontrado artistas</p>
         )}
 
-        {/* Random albums */}
-
-        <h2>Álbums aleatorios</h2>
-        {loadingRandomAlbums && <p>Cargando...</p>}
-        {randomAlbums.length > 0 && (
-          <AlbumsList albums={randomAlbums.slice(0, 12)} />
-        )}
+        <h2>Vamos a tener suerte</h2>
+        {loadingRandomAlbums && <AlbumsListPhantom amount={12} />}
+        {randomAlbums.length > 0 && <AlbumsList albums={randomAlbums} />}
         {!loadingRandomAlbums && randomAlbums.length <= 0 && (
           <p>No se han encontrado álbums</p>
         )}
@@ -87,18 +81,5 @@ const Home = () => {
     </>
   );
 };
-
-// const mapStateToProps = state => {
-//   const { lists } = state;
-//   return { homeLast: lists.homeLast };
-// }
-
-// const mapDispatchToProps = {
-//   setHomeLast,
-// }
-
-// export default compose(
-//   connect(mapStateToProps, mapDispatchToProps),
-// )(Home);
 
 export default Home;

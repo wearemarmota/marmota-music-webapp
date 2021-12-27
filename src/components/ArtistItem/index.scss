@@ -1,12 +1,13 @@
 article.artist {
   text-align: center;
-  img, svg{
+  img,
+  svg {
     width: 100%;
     height: 100%;
     border-radius: 100%;
     margin-bottom: 20px;
   }
-  .name{
+  .name {
     font-size: 16px;
     font-weight: bold;
     color: white;
@@ -14,10 +15,25 @@ article.artist {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  a{
+  a {
     text-decoration: none;
-    &:hover{
+    &:hover {
       text-decoration: underline;
+    }
+  }
+
+  &.phantom {
+    div.circle {
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
+      margin-bottom: 20px;
+      background-color: #151f43;
+      aspect-ratio: 1/1;
+    }
+    .name {
+      color: #081c4e;
+      line-height: 1.3;
     }
   }
 }
