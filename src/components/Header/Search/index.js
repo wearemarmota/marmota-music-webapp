@@ -59,15 +59,4 @@ const Search = () => {
   );
 };
 
-// const mapStateToProps = (state) => {
-//   const { searchTerm: term } = state.search;
-//   const { auth } = state;
-//   return { term, auth };
-// };
-
-// const mapDispatchToProps = {
-//   setSearchTerm,
-// };
-
-// export default compose(connect(mapStateToProps, mapDispatchToProps))(Search);
 export default Search;
